@@ -14,6 +14,7 @@ $dosha_client $mol_book2_catalog
 	spreads *
 		steps <= Steps_page $dosha_client_steps
 			dosha_value? <=> dosha?
+		profile <= Profile_page $dosha_client_profile
 		found <= Found_page $dosha_client_found
 		company_page <= Company_page $dosha_company
 			menu_title \Компания
