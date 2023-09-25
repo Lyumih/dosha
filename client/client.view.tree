@@ -20,7 +20,7 @@ $dosha_client $mol_book2_catalog
 			title \🎭 Чат
 			sub <= chat_pages
 		rating <= Rating_page $dosha_client_rating
-		presentation <= Persentation_page $hyoo_slides
+		presentation <= Persentation_page $hyoo_page
 			title \📽 Презентация
 		- Отдельное приложение ДоШа Компания
 		company_page <= Company_page $dosha_company
