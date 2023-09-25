@@ -1,0 +1,11 @@
+$dosha_client_steps $mol_page
+	dosha_value? 10000
+	title \Шаги
+	body /
+		<= All_dosha $mol_text text <= all_dosha_label \
+		<= Add_dosha $mol_number
+			value? <=> add_dosha? 0
+			value_max 40000
+		<= Add_dosha_save $mol_button_major
+			title \Добавить шаги за сегодня
+			click? <= add_today_steps? null

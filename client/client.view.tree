@@ -1,0 +1,22 @@
+$dosha_client $mol_book2_catalog
+	dosha? 10000
+	menu_title \ДоШа
+	param \client
+	plugins /
+		<= Theme $mol_theme_auto
+	menu_tools /
+		<= Chat $mol_chat
+			seed \dosha_chat_v1
+			pages => chat_pages
+	menu_foot /
+		<= Lights $mol_lights_toggle
+		<= GitHub $mol_link_source uri \https://github.com/Lyumih/dosha
+	spreads *
+		steps <= Steps_page $dosha_client_steps
+			dosha_value? <=> dosha?
+		found <= Found_page $dosha_client_found
+		company_page <= Company_page $dosha_company
+			menu_title \Компания
+		chat <= Chat_page $mol_view
+			title \Чат
+			sub <= chat_pages
