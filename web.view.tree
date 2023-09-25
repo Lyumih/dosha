@@ -790,6 +790,19 @@ $mol_form $mol_list
 		<= Foot $mol_row
 			sub <= foot <= buttons /$mol_view
 
+$dosha_client_profile $mol_page
+	title \Профиль
+	body /
+		<= Profile_form $mol_form
+			form_fields /
+				<= Full_name_field $mol_form_field
+					name \ФИО
+					Content <= Full_name $mol_string
+						value? <=> full_name? \Иванов Михаил Павлович
+			buttons /
+				<= Profile_form_save $mol_button_major
+					title \Сохранить
+
 $dosha_client_found $mol_page
 	title \Фонды
 	body /
@@ -870,6 +883,7 @@ $dosha_client $mol_book2_catalog
 	spreads *
 		steps <= Steps_page $dosha_client_steps
 			dosha_value? <=> dosha?
+		profile <= Profile_page $dosha_client_profile
 		found <= Found_page $dosha_client_found
 		company_page <= Company_page $dosha_company
 			menu_title \Компания

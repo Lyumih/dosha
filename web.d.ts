@@ -3009,6 +3009,18 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $dosha_client_profile extends $mol_page {
+        title(): string;
+        body(): readonly any[];
+        full_name(next?: any): string;
+        Full_name(): $$.$mol_string;
+        Full_name_field(): $$.$mol_form_field;
+        Profile_form_save(): $mol_button_major;
+        Profile_form(): $$.$mol_form;
+    }
+}
+
+declare namespace $ {
     class $dosha_client_found extends $mol_page {
         title(): string;
         body(): readonly any[];
@@ -3141,6 +3153,7 @@ declare namespace $ {
         Lights(): $$.$mol_lights_toggle;
         GitHub(): $mol_link_source;
         Steps_page(): $$.$dosha_client_steps;
+        Profile_page(): $dosha_client_profile;
         Found_page(): $$.$dosha_client_found;
         Company_page(): $dosha_company;
         Chat_page(): $mol_view;

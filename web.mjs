@@ -10253,6 +10253,69 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $dosha_client_profile extends $mol_page {
+        title() {
+            return "Профиль";
+        }
+        body() {
+            return [
+                this.Profile_form()
+            ];
+        }
+        full_name(next) {
+            if (next !== undefined)
+                return next;
+            return "Иванов Михаил Павлович";
+        }
+        Full_name() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.full_name(next);
+            return obj;
+        }
+        Full_name_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "ФИО";
+            obj.Content = () => this.Full_name();
+            return obj;
+        }
+        Profile_form_save() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Сохранить";
+            return obj;
+        }
+        Profile_form() {
+            const obj = new this.$.$mol_form();
+            obj.form_fields = () => [
+                this.Full_name_field()
+            ];
+            obj.buttons = () => [
+                this.Profile_form_save()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "full_name", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Full_name", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Full_name_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Profile_form_save", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Profile_form", null);
+    $.$dosha_client_profile = $dosha_client_profile;
+})($ || ($ = {}));
+//dosha/client/profile/-view.tree/profile.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $dosha_client_found extends $mol_page {
         title() {
             return "Фонды";
@@ -10735,6 +10798,7 @@ var $;
         spreads() {
             return {
                 steps: this.Steps_page(),
+                profile: this.Profile_page(),
                 found: this.Found_page(),
                 company_page: this.Company_page(),
                 chat: this.Chat_page()
@@ -10764,6 +10828,10 @@ var $;
         Steps_page() {
             const obj = new this.$.$dosha_client_steps();
             obj.dosha_value = (next) => this.dosha(next);
+            return obj;
+        }
+        Profile_page() {
+            const obj = new this.$.$dosha_client_profile();
             return obj;
         }
         Found_page() {
@@ -10800,6 +10868,9 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Steps_page", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client.prototype, "Profile_page", null);
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Found_page", null);
