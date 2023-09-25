@@ -25488,6 +25488,9 @@ var $;
         param() {
             return "client";
         }
+        menu_filter_enabled() {
+            return false;
+        }
         plugins() {
             return [
                 this.Theme()

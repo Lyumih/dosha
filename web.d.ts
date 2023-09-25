@@ -6245,6 +6245,7 @@ declare namespace $ {
         dosha(next?: any): number;
         menu_title(): string;
         param(): string;
+        menu_filter_enabled(): boolean;
         plugins(): readonly any[];
         menu_tools(): readonly any[];
         menu_foot(): readonly any[];
