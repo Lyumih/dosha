@@ -3,6 +3,7 @@ $dosha_client $mol_book2_catalog
 	dosha? 10000
 	menu_title \👣 ДоШа
 	param \client
+	menu_filter_enabled false
 	plugins /
 		<= Theme $mol_theme_auto
 	menu_tools /
