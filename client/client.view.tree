@@ -1,6 +1,6 @@
 $dosha_client $mol_book2_catalog
 	dosha? 10000
-	menu_title \ДоШа
+	menu_title \👣 ДоШа
 	param \client
 	plugins /
 		<= Theme $mol_theme_auto
@@ -22,4 +22,4 @@ $dosha_client $mol_book2_catalog
 		rating <= Rating_page $dosha_client_rating
 		- Отдельное приложение ДоШа Компания
 		company_page <= Company_page $dosha_company
-			menu_title \🧮 Компания
+			menu_title \🧮 Компания *
