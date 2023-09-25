@@ -1,5 +1,5 @@
 $dosha_client_rating $mol_page
-	title \Рейтинг
+	title \🏅 Рейтинг
 	body /
 		<= Month_title $mol_text text \Рейтинг людей за месяц
 		- Это заглушка из https://mol.hyoo.ru/#!section=demos/demo=mol_chart_demo_simple . С чартами надо будет отдельно разбираться

@@ -1,6 +1,6 @@
 $dosha_client_steps $mol_page
 	dosha_value? 10000
-	title \Шаги
+	title \👟 Шаги
 	body /
 		<= All_dosha $mol_text text <= all_dosha_label \
 		<= Add_dosha $mol_number

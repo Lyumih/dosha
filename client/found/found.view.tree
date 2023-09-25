@@ -1,5 +1,5 @@
 $dosha_client_found $mol_page
-	title \Фонды
+	title \🏥 Фонды
 	body /
 		<= You_found $mol_text text <= you_found \# Ваш фонд: **Лиза Алерт**
 		-

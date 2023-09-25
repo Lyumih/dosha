@@ -1,5 +1,5 @@
 $dosha_client_profile $mol_page
-	title \Профиль
+	title \🧢 Профиль
 	body /
 		<= Profile_form $mol_form
 			form_fields /
