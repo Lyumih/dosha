@@ -747,7 +747,7 @@ $mol_text_list_item $mol_paragraph
 
 $dosha_client_steps $mol_page
 	dosha_value? 10000
-	title \Шаги
+	title \👟 Шаги
 	body /
 		<= All_dosha $mol_text text <= all_dosha_label \
 		<= Add_dosha $mol_number
@@ -791,7 +791,7 @@ $mol_form $mol_list
 			sub <= foot <= buttons /$mol_view
 
 $dosha_client_profile $mol_page
-	title \Профиль
+	title \🧢 Профиль
 	body /
 		<= Profile_form $mol_form
 			form_fields /
@@ -804,7 +804,7 @@ $dosha_client_profile $mol_page
 					title \Сохранить
 
 $dosha_client_found $mol_page
-	title \Фонды
+	title \🏥 Фонды
 	body /
 		<= You_found $mol_text text <= you_found \# Ваш фонд: **Лиза Алерт**
 		-
@@ -1267,7 +1267,7 @@ $mol_chart $mol_view
 			hue_shift <= hue_shift 111
 
 $dosha_client_rating $mol_page
-	title \Рейтинг
+	title \🏅 Рейтинг
 	body /
 		<= Month_title $mol_text text \Рейтинг людей за месяц
 		- Это заглушка из https://mol.hyoo.ru/#!section=demos/demo=mol_chart_demo_simple . С чартами надо будет отдельно разбираться
@@ -1349,9 +1349,9 @@ $dosha_client $mol_book2_catalog
 		profile <= Profile_page $dosha_client_profile
 		found <= Found_page $dosha_client_found
 		chat <= Chat_page $mol_view
-			title \Чат
+			title \🎭 Чат
 			sub <= chat_pages
 		rating <= Rating_page $dosha_client_rating
 		- Отдельное приложение ДоШа Компания
 		company_page <= Company_page $dosha_company
-			menu_title \Компания
+			menu_title \🧮 Компания

@@ -10544,7 +10544,7 @@ var $;
             return 10000;
         }
         title() {
-            return "Шаги";
+            return "👟 Шаги";
         }
         body() {
             return [
@@ -10871,7 +10871,7 @@ var $;
 (function ($) {
     class $dosha_client_profile extends $mol_page {
         title() {
-            return "Профиль";
+            return "🧢 Профиль";
         }
         body() {
             return [
@@ -10934,7 +10934,7 @@ var $;
 (function ($) {
     class $dosha_client_found extends $mol_page {
         title() {
-            return "Фонды";
+            return "🏥 Фонды";
         }
         body() {
             return [
@@ -14200,7 +14200,7 @@ var $;
 (function ($) {
     class $dosha_client_rating extends $mol_page {
         title() {
-            return "Рейтинг";
+            return "🏅 Рейтинг";
         }
         body() {
             return [
@@ -14691,7 +14691,7 @@ var $;
         }
         Chat_page() {
             const obj = new this.$.$mol_view();
-            obj.title = () => "Чат";
+            obj.title = () => "🎭 Чат";
             obj.sub = () => this.chat_pages();
             return obj;
         }
@@ -14701,7 +14701,7 @@ var $;
         }
         Company_page() {
             const obj = new this.$.$dosha_company();
-            obj.menu_title = () => "Компания";
+            obj.menu_title = () => "🧮 Компания";
             return obj;
         }
     }
