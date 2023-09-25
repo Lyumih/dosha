@@ -13720,6 +13720,1712 @@ var $;
 //dosha/client/rating/-view.tree/rating.view.tree.ts
 ;
 "use strict";
+var $;
+(function ($) {
+    class $mol_portion_indicator extends $mol_view {
+        style() {
+            return {
+                ...super.style(),
+                width: this.width_style()
+            };
+        }
+        width_style() {
+            return "0";
+        }
+    }
+    $.$mol_portion_indicator = $mol_portion_indicator;
+    class $mol_portion extends $mol_view {
+        portion() {
+            return 0;
+        }
+        sub() {
+            return [
+                this.indicator()
+            ];
+        }
+        indicator_width_style() {
+            return "0";
+        }
+        indicator() {
+            const obj = new this.$.$mol_portion_indicator();
+            obj.width_style = () => this.indicator_width_style();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_portion.prototype, "indicator", null);
+    $.$mol_portion = $mol_portion;
+})($ || ($ = {}));
+//mol/portion/-view.tree/portion.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_portion extends $.$mol_portion {
+            indicator_width_style() {
+                return this.portion() * 100 + '%';
+            }
+        }
+        $$.$mol_portion = $mol_portion;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/portion/portion.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/portion/portion.view.css", "[mol_portion] {\n\tdisplay: inline-flex;\n\tflex: 0 1 8rem;\n\twidth: 8rem;\n\tmax-height: calc( 1rem + 1.5em );\n\talign-self: stretch;\n\tvertical-align: inherit;\n\tborder-radius: var(--mol_gap_round);\n\tbackground: var(--mol_theme_line);\n}\n\n[mol_portion_indicator] {\n\tpadding: .25rem 0 0;\n\tbackground-color: var(--mol_theme_control);\n\tcolor: var(--mol_theme_control);\n\tborder-radius: var(--mol_gap_round);\n}\n");
+})($ || ($ = {}));
+//mol/portion/-css/portion.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $hyoo_slides_page extends $mol_book2 {
+        role() {
+            return "";
+        }
+        contents(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        slide(val) {
+            if (val !== undefined)
+                return val;
+            return 0;
+        }
+        Placeholder() {
+            return null;
+        }
+        pages() {
+            return [
+                this.Speaker(),
+                this.Listener()
+            ];
+        }
+        speaker_tools() {
+            return [];
+        }
+        uri_base() {
+            return "";
+        }
+        speaker_content() {
+            return [];
+        }
+        Speaker_content() {
+            const obj = new this.$.$mol_text();
+            obj.uri_base = () => this.uri_base();
+            obj.flow_tokens = () => this.speaker_content();
+            return obj;
+        }
+        Speaker() {
+            const obj = new this.$.$mol_page();
+            obj.head = () => this.speaker_tools();
+            obj.body = () => [
+                this.Speaker_content()
+            ];
+            return obj;
+        }
+        tools() {
+            return [];
+        }
+        listener_content() {
+            return [];
+        }
+        Listener_content() {
+            const obj = new this.$.$mol_text();
+            obj.code_sidebar_showed = () => false;
+            obj.minimal_height = () => 0;
+            obj.uri_base = () => this.uri_base();
+            obj.flow_tokens = () => this.listener_content();
+            return obj;
+        }
+        uri_page() {
+            return "";
+        }
+        Link() {
+            const obj = new this.$.$mol_link();
+            obj.uri = () => this.uri_page();
+            obj.sub = () => [
+                this.uri_page()
+            ];
+            obj.minimal_height = () => 24;
+            return obj;
+        }
+        progress() {
+            return 0;
+        }
+        Progress() {
+            const obj = new this.$.$mol_portion();
+            obj.portion = () => this.progress();
+            return obj;
+        }
+        Listener_head() {
+            return this.Listener().Head();
+        }
+        Listener() {
+            const obj = new this.$.$mol_page();
+            obj.tools = () => this.tools();
+            obj.title = () => this.title();
+            obj.Tools = () => null;
+            obj.sub = () => [
+                this.Listener_head(),
+                this.Listener_content(),
+                this.Link(),
+                this.Progress()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides_page.prototype, "contents", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides_page.prototype, "slide", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides_page.prototype, "Speaker_content", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides_page.prototype, "Speaker", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides_page.prototype, "Listener_content", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides_page.prototype, "Link", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides_page.prototype, "Progress", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides_page.prototype, "Listener", null);
+    $.$hyoo_slides_page = $hyoo_slides_page;
+})($ || ($ = {}));
+//hyoo/slides/page/-view.tree/page.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $hyoo_slides_page extends $.$hyoo_slides_page {
+            uri_page() {
+                return this.uri_base() + `#slide=${this.slide()}`;
+            }
+            pages() {
+                return [
+                    ...this.role() === 'listener' ? [] : [this.Speaker()],
+                    this.Listener(),
+                ];
+            }
+        }
+        $$.$hyoo_slides_page = $hyoo_slides_page;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hyoo/slides/page/page.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("hyoo/slides/page/page.view.css", "[hyoo_slides_page] {\n\tdisplay: flex;\n\theight: 100%;\n\twidth: 100%;\n\tflex: none;\n}\n\n[hyoo_slides_page_listener_title] {\n\tjustify-content: center;\n}\n\n[hyoo_slides_page_speaker] {\n\tflex: 1 0 30rem;\n\tmax-width: 80vw;\n\tmin-width: 20vw;\n}\n\n[hyoo_slides_page_speaker_head] {\n\tflex-wrap: nowrap;\n}\n\n[hyoo_slides_page_listener] {\n\tflex: 1 0 100vh;\n\tbackground-color: var(--mol_theme_back);\n}\n\n[hyoo_slides_page_speaker_body] {\n\tfont-size: 1rem;\n}\n\n[hyoo_slides_page_speaker_body] ,\n[hyoo_slides_page_listener_body] {\n\tdisplay: flex;\n\tflex-direction: column;\n\tpadding: 0;\n}\n\n[hyoo_slides_page_speaker_content] {\n\tflex: 1 0 auto;\n\tmax-width: none;\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_slides_page_listener_content] {\n\tflex: 1 1 auto;\n\tmargin: auto 0;\n\tpadding: .5rem;\n\tmax-width: none;\n\tflex-wrap: wrap;\n\talign-content: space-evenly;\n\tjustify-content: space-evenly;\n\talign-items: flex-start;\n\tbox-shadow: none;\n\tbackground: none;\n\tflex-direction: row;\n}\n[hyoo_slides_page_listener_content] > * {\n\tflex-shrink: 1;\n}\n[hyoo_slides_page_listener_content] [mol_text] {\n\tmax-width: none;\n}\n\n[hyoo_slides_page_slide_number] {\n\tmargin: .5rem;\n\tword-break: normal;\n}\n\n[hyoo_slides_page_listener_content_row] {\n\tmargin: .5rem;\n}\n\n/* [hyoo_slides_page_listener_content_quote] {\n\tmax-width: 30em;\n} */\n\n[hyoo_slides_page] [mol_text_type=\"code\"] ,\n[hyoo_slides_page] [mol_text_type=\"code-indent\"] {\n\twhite-space: pre;\n}\n\n[hyoo_slides_page_listener_content_quote] {\n\tmargin: 0;\n\tpadding: 0;\n\tbox-shadow: none;\n\tbackground: transparent;\n\tcolor: inherit;\n}\n\n[hyoo_slides_page_progress] {\n\tflex: 0 0 auto;\n\twidth: auto;\n}\n\n[hyoo_slides_page_link] {\n\tpadding: 0 .75rem;\n\tjustify-content: center;\n}\n");
+})($ || ($ = {}));
+//hyoo/slides/page/-css/page.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_microphone extends $mol_icon {
+        path() {
+            return "M12,2C13.66,2 15,3.34 15,5V11C15,12.66 13.66,14 12,14C10.34,14 9,12.66 9,11V5C9,3.34 10.34,2 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7C7,13.76 9.24,16 12,16C14.76,16 17,13.76 17,11H19Z";
+        }
+    }
+    $.$mol_icon_microphone = $mol_icon_microphone;
+})($ || ($ = {}));
+//mol/icon/microphone/-view.tree/microphone.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_bar extends $mol_view {
+    }
+    $.$mol_bar = $mol_bar;
+})($ || ($ = {}));
+//mol/bar/-view.tree/bar.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/bar/bar.view.css", "[mol_bar] {\n\tdisplay: flex;\n\t/* box-shadow: inset 0 0 0 1px var(--mol_theme_line); */\n\tborder-radius: var(--mol_gap_round);\n}\n");
+})($ || ($ = {}));
+//mol/bar/-css/bar.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_chevron_left extends $mol_icon {
+        path() {
+            return "M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z";
+        }
+    }
+    $.$mol_icon_chevron_left = $mol_icon_chevron_left;
+})($ || ($ = {}));
+//mol/icon/chevron/left/-view.tree/left.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_chevron_right extends $mol_icon {
+        path() {
+            return "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z";
+        }
+    }
+    $.$mol_icon_chevron_right = $mol_icon_chevron_right;
+})($ || ($ = {}));
+//mol/icon/chevron/right/-view.tree/right.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_paginator extends $mol_bar {
+        sub() {
+            return [
+                this.Backward(),
+                this.Value(),
+                this.Forward()
+            ];
+        }
+        backward_hint() {
+            return this.$.$mol_locale.text('$mol_paginator_backward_hint');
+        }
+        backward(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        Backward_icon() {
+            const obj = new this.$.$mol_icon_chevron_left();
+            return obj;
+        }
+        Backward() {
+            const obj = new this.$.$mol_button_minor();
+            obj.hint = () => this.backward_hint();
+            obj.click = (event) => this.backward(event);
+            obj.sub = () => [
+                this.Backward_icon()
+            ];
+            return obj;
+        }
+        value(next) {
+            if (next !== undefined)
+                return next;
+            return 0;
+        }
+        Value() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.value()
+            ];
+            return obj;
+        }
+        forward_hint() {
+            return this.$.$mol_locale.text('$mol_paginator_forward_hint');
+        }
+        forward(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        Forward_icon() {
+            const obj = new this.$.$mol_icon_chevron_right();
+            return obj;
+        }
+        Forward() {
+            const obj = new this.$.$mol_button_minor();
+            obj.hint = () => this.forward_hint();
+            obj.click = (event) => this.forward(event);
+            obj.sub = () => [
+                this.Forward_icon()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_paginator.prototype, "backward", null);
+    __decorate([
+        $mol_mem
+    ], $mol_paginator.prototype, "Backward_icon", null);
+    __decorate([
+        $mol_mem
+    ], $mol_paginator.prototype, "Backward", null);
+    __decorate([
+        $mol_mem
+    ], $mol_paginator.prototype, "value", null);
+    __decorate([
+        $mol_mem
+    ], $mol_paginator.prototype, "Value", null);
+    __decorate([
+        $mol_mem
+    ], $mol_paginator.prototype, "forward", null);
+    __decorate([
+        $mol_mem
+    ], $mol_paginator.prototype, "Forward_icon", null);
+    __decorate([
+        $mol_mem
+    ], $mol_paginator.prototype, "Forward", null);
+    $.$mol_paginator = $mol_paginator;
+})($ || ($ = {}));
+//mol/paginator/-view.tree/paginator.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_paginator extends $.$mol_paginator {
+            backward(event) {
+                if (event.defaultPrevented)
+                    return;
+                event.preventDefault();
+                this.value(this.value() - 1);
+            }
+            forward(event) {
+                if (event.defaultPrevented)
+                    return;
+                event.preventDefault();
+                this.value(this.value() + 1);
+            }
+        }
+        $$.$mol_paginator = $mol_paginator;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/paginator/paginator.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/paginator/paginator.view.css", "[mol_paginator] {\n\talign-items: flex-start;\n}\n\n[mol_paginator_value] {\n\tpadding: .5rem 0;\n}\n");
+})($ || ($ = {}));
+//mol/paginator/-css/paginator.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_external extends $mol_icon {
+        path() {
+            return "M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z";
+        }
+    }
+    $.$mol_icon_external = $mol_icon_external;
+})($ || ($ = {}));
+//mol/icon/external/-view.tree/external.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_range2(item = index => index, size = () => Number.POSITIVE_INFINITY) {
+        return new Proxy(new $mol_range2_array(), {
+            get(target, field) {
+                if (typeof field === 'string') {
+                    if (field === 'length')
+                        return size();
+                    const index = Number(field);
+                    if (index < 0)
+                        return undefined;
+                    if (index >= size())
+                        return undefined;
+                    if (index === Math.trunc(index))
+                        return item(index);
+                }
+                return target[field];
+            },
+            set(target, field) {
+                return $mol_fail(new TypeError(`Lazy range is read only (trying to set field ${JSON.stringify(field)})`));
+            },
+            ownKeys(target) {
+                return [...Array(size())].map((v, i) => String(i)).concat('length');
+            },
+            getOwnPropertyDescriptor(target, field) {
+                if (field === "length")
+                    return {
+                        value: size(),
+                        writable: true,
+                        enumerable: false,
+                        configurable: false,
+                    };
+                const index = Number(field);
+                if (index === Math.trunc(index))
+                    return {
+                        get: () => this.get(target, field, this),
+                        enumerable: true,
+                        configurable: true,
+                    };
+                return Object.getOwnPropertyDescriptor(target, field);
+            }
+        });
+    }
+    $.$mol_range2 = $mol_range2;
+    class $mol_range2_array extends Array {
+        concat(...tail) {
+            if (tail.length === 0)
+                return this;
+            if (tail.length > 1) {
+                let list = this;
+                for (let item of tail)
+                    list = list.concat(item);
+                return list;
+            }
+            return $mol_range2(index => index < this.length ? this[index] : tail[0][index - this.length], () => this.length + tail[0].length);
+        }
+        filter(check, context) {
+            const filtered = new $mol_range2_array();
+            for (let index = 0; index < this.length; ++index) {
+                const item = this[index];
+                if (check.call(context, item, index, this))
+                    filtered.push(item);
+            }
+            return filtered;
+        }
+        forEach(proceed, context) {
+            for (let [key, value] of this.entries())
+                proceed.call(context, value, key, this);
+        }
+        map(proceed, context) {
+            return $mol_range2(index => proceed.call(context, this[index], index, this), () => this.length);
+        }
+        reduce(merge, result) {
+            let index = 0;
+            if (arguments.length === 1) {
+                result = this[index++];
+            }
+            for (; index < this.length; ++index) {
+                result = merge(result, this[index], index, this);
+            }
+            return result;
+        }
+        toReversed() {
+            return $mol_range2(index => this[this.length - 1 - index], () => this.length);
+        }
+        slice(from = 0, to = this.length) {
+            return $mol_range2(index => this[from + index], () => Math.min(to, this.length) - from);
+        }
+        some(check, context) {
+            for (let index = 0; index < this.length; ++index) {
+                if (check.call(context, this[index], index, this))
+                    return true;
+            }
+            return false;
+        }
+        every(check, context) {
+            for (let index = 0; index < this.length; ++index) {
+                if (!check.call(context, this[index], index, this))
+                    return false;
+            }
+            return true;
+        }
+        reverse() {
+            return $mol_fail(new TypeError(`Mutable reverse is forbidden. Use toReversed instead.`));
+        }
+        sort() {
+            return $mol_fail(new TypeError(`Mutable sort is forbidden. Use toSorted instead.`));
+        }
+        [Symbol.toPrimitive]() {
+            return $mol_guid();
+        }
+    }
+    $.$mol_range2_array = $mol_range2_array;
+})($ || ($ = {}));
+//mol/range2/range2.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_defer = $mol_after_frame;
+})($ || ($ = {}));
+//mol/defer/defer.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_speech extends $mol_plugin {
+        static speaker_make() {
+            return new Promise(done => {
+                const API = $mol_dom_context.speechSynthesis;
+                if (API.getVoices().length)
+                    return done(API);
+                const on_voices = (event) => {
+                    if (!API.getVoices().length)
+                        return;
+                    API.removeEventListener('voiceschanged', on_voices);
+                    done(API);
+                };
+                API.addEventListener('voiceschanged', on_voices);
+            });
+        }
+        static speaker() {
+            return $mol_wire_sync(this).speaker_make();
+        }
+        static voices() {
+            const lang = this.$.$mol_locale.lang();
+            return this.speaker().getVoices().filter(voice => voice.lang.split('-')[0] === lang);
+        }
+        static say(text) {
+            const speaker = this.speaker();
+            speaker.cancel();
+            speaker.resume();
+            const rate = 1;
+            const voice = this.voices()[this.voices().length - 1];
+            const pitch = 1;
+            var utter = new SpeechSynthesisUtterance(text);
+            utter.voice = voice;
+            utter.rate = rate;
+            utter.pitch = pitch;
+            speaker.speak(utter);
+            return null;
+        }
+        static speaking(next = true) {
+            if (next)
+                this.speaker().resume();
+            else
+                this.speaker().pause();
+            return next;
+        }
+        static hearer() {
+            $mol_wire_solid();
+            let Api;
+            for (const prefix of ['', 'webkit', 'moz', 'ms']) {
+                if (Api = window[prefix + 'SpeechRecognition']) {
+                    break;
+                }
+            }
+            const api = new Api;
+            api.interimResults = true;
+            api.maxAlternatives = 1;
+            api.continuous = true;
+            api.lang = $mol_locale.lang();
+            api.onnomatch = (event) => {
+                api.stop();
+                return null;
+            };
+            api.onresult = (event) => {
+                this.recognition_index([...event.results].filter(res => res.isFinal).length);
+                const recognition = event.results[event.resultIndex];
+                const index = event.resultIndex + this.recognition_offset();
+                this.recognition(index, recognition);
+                return null;
+            };
+            api.onerror = (event) => {
+                if (event.error === 'no-speech')
+                    return null;
+                console.log(event);
+                console.error(new Error(event.error || event));
+                api.stop();
+                return null;
+            };
+            api.onend = (event) => {
+                if (this.recognition_index() > 0) {
+                    this.recognition_offset(this.recognition_offset() + this.recognition_index());
+                }
+                this.recognition_index(-1);
+                if (this.hearing())
+                    api.start();
+            };
+            api.onspeechend = (event) => {
+                api.stop();
+            };
+            return api;
+        }
+        static hearing(next) {
+            if (next === undefined)
+                return false;
+            if (next) {
+                this.hearer().start();
+            }
+            else {
+                this.hearer().stop();
+            }
+            return next;
+        }
+        static recognition_index(next = -1) {
+            $mol_wire_solid();
+            return next;
+        }
+        static recognition_offset(next = 0) {
+            $mol_wire_solid();
+            return next;
+        }
+        static recognition(index, next) {
+            $mol_wire_solid();
+            return next ?? null;
+        }
+        static recognitions() {
+            if (!this.hearing())
+                return [];
+            return $mol_range2(index => this.recognition(index), () => Math.max(0, this.recognition_index() + this.recognition_offset()));
+        }
+        static commands() {
+            return this.recognitions().map(result => result[0].transcript.toLowerCase().trim().replace(/[,\.]/g, ''));
+        }
+        static text() {
+            return this.recognitions().map(result => result[0].transcript).join('');
+        }
+        commands_skip(next = 0) {
+            $mol_wire_solid();
+            $mol_speech.hearing();
+            return next;
+        }
+        render() {
+            const matchers = this.matchers();
+            const commands = $mol_speech.commands();
+            for (let i = this.commands_skip(); i < commands.length; ++i) {
+                for (let matcher of matchers) {
+                    const found = commands[i].match(matcher);
+                    if (!found)
+                        continue;
+                    new $mol_defer(() => {
+                        if (this.event_catch(found.slice(1))) {
+                            this.commands_skip(i + 1);
+                        }
+                    });
+                    return null;
+                }
+            }
+            return null;
+        }
+        event_catch(found) {
+            return false;
+        }
+        patterns() {
+            return [];
+        }
+        matchers() {
+            return this.patterns().map(pattern => {
+                return new RegExp(this.prefix() + pattern + this.suffix(), 'i');
+            });
+        }
+        prefix() {
+            return '';
+        }
+        suffix() {
+            return '[,\\s]+(?:please|would you kindly|пожалуйста|пожалуй 100|будь любезен|будь любезна|будь добра?)\.?$';
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_speech.prototype, "commands_skip", null);
+    __decorate([
+        $mol_mem
+    ], $mol_speech.prototype, "render", null);
+    __decorate([
+        $mol_mem
+    ], $mol_speech.prototype, "matchers", null);
+    __decorate([
+        $mol_mem
+    ], $mol_speech, "speaker", null);
+    __decorate([
+        $mol_mem
+    ], $mol_speech, "voices", null);
+    __decorate([
+        $mol_action
+    ], $mol_speech, "say", null);
+    __decorate([
+        $mol_mem
+    ], $mol_speech, "speaking", null);
+    __decorate([
+        $mol_mem
+    ], $mol_speech, "hearer", null);
+    __decorate([
+        $mol_mem
+    ], $mol_speech, "hearing", null);
+    __decorate([
+        $mol_mem
+    ], $mol_speech, "recognition_index", null);
+    __decorate([
+        $mol_mem
+    ], $mol_speech, "recognition_offset", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_speech, "recognition", null);
+    __decorate([
+        $mol_mem
+    ], $mol_speech, "recognitions", null);
+    __decorate([
+        $mol_mem
+    ], $mol_speech, "commands", null);
+    __decorate([
+        $mol_mem
+    ], $mol_speech, "text", null);
+    $.$mol_speech = $mol_speech;
+})($ || ($ = {}));
+//mol/speech/speech.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $hyoo_slides extends $mol_view {
+        attr() {
+            return {
+                ...super.attr(),
+                hyoo_slides_role: this.role()
+            };
+        }
+        style() {
+            return {
+                ...super.style(),
+                "touch-action": "none"
+            };
+        }
+        contents(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        auto() {
+            return [
+                this.message_listener()
+            ];
+        }
+        Menu() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => "Slides";
+            obj.tools = () => this.menu_tools();
+            obj.body = () => [
+                this.Menu_items()
+            ];
+            return obj;
+        }
+        Menu_item(id) {
+            const obj = new this.$.$mol_link();
+            obj.title = () => this.menu_item_title(id);
+            obj.arg = () => ({
+                slides: this.menu_item_uri(id)
+            });
+            return obj;
+        }
+        menu_options() {
+            return {
+                "https://nin-jin.github.io/slides/slides/": "Презентация приложения для проведения презентаций",
+                "https://nin-jin.github.io/slides/reactivity/": "Разбираемся в сортах реактивности",
+                "https://nin-jin.github.io/slides/orp/": "Объектное Реактивное Программирование",
+                "https://nin-jin.github.io/slides/tree/": "Tree - единый AST чтобы править всеми",
+                "https://nin-jin.github.io/slides/sourcemap/": "Что не так с сорсмапами и как с ними не связываться?",
+                "https://nin-jin.github.io/slides/virt/": "Автоматическая виртуализация рендеринга произвольной вёрстки",
+                "https://nin-jin.github.io/slides/css-in-ts/": "Продвинутый CSS-in-TS",
+                "https://nin-jin.github.io/slides/mol/": "$mol - лучшее средство от геморроя",
+                "https://nin-jin.github.io/slides/fibers/": "Квантовая механика вычисления на JS",
+                "https://nin-jin.github.io/slides/testing/": "Фрактальное тестирование",
+                "https://nin-jin.github.io/slides/consensus/": "Консистентно о Консенсусе",
+                "https://nin-jin.github.io/slides/absurd/": "Проблема останова лжеца Гёделя и брадобрея Кантора"
+            };
+        }
+        Loader() {
+            const obj = new this.$.$mol_frame();
+            obj.uri = () => this.uri_slides();
+            return obj;
+        }
+        Page(id) {
+            const obj = new this.$.$hyoo_slides_page();
+            obj.tools = () => this.tools();
+            obj.title = () => this.page_title(id);
+            obj.slide = (val) => this.page_slide(id, val);
+            obj.uri_base = () => this.uri_base();
+            obj.role = () => this.role();
+            obj.listener_content = () => this.listener_content(id);
+            obj.speaker_content = () => this.speaker_content(id);
+            obj.progress = () => this.progress(id);
+            obj.speaker_tools = () => this.speaker_tools();
+            return obj;
+        }
+        plugins() {
+            return [
+                this.Theme(),
+                this.Nav(),
+                this.Touch(),
+                this.Speech_next(),
+                this.Speech_next_auto(),
+                this.Speech_slide(),
+                this.Speech_prev(),
+                this.Speech_start(),
+                this.Speech_end(),
+                this.Speech_about(),
+                this.Speech_repeat(),
+                this.Speech_on(),
+                this.Speech_off(),
+                this.Lights_toggle(),
+                this.Sing()
+            ];
+        }
+        role() {
+            return "";
+        }
+        message_listener() {
+            return null;
+        }
+        Source_link() {
+            const obj = new this.$.$mol_link_source();
+            obj.uri = () => "https://github.com/hyoo-ru/slides.hyoo.ru";
+            return obj;
+        }
+        menu_tools() {
+            return [
+                this.Source_link()
+            ];
+        }
+        menu_items() {
+            return [];
+        }
+        Menu_items() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => this.menu_items();
+            return obj;
+        }
+        menu_item_title(id) {
+            return "";
+        }
+        menu_item_uri(id) {
+            return "";
+        }
+        uri_slides() {
+            return "";
+        }
+        tools() {
+            return [];
+        }
+        page_title(id) {
+            return "";
+        }
+        page_slide(id, val) {
+            if (val !== undefined)
+                return val;
+            return 0;
+        }
+        uri_base() {
+            return "";
+        }
+        listener_content(id) {
+            return [];
+        }
+        speaker_content(id) {
+            return [];
+        }
+        progress(id) {
+            return 0;
+        }
+        Speech_toggle_icon() {
+            const obj = new this.$.$mol_icon_microphone();
+            return obj;
+        }
+        speech_enabled(val) {
+            if (val !== undefined)
+                return val;
+            return false;
+        }
+        speech_toggle_hint() {
+            return this.$.$mol_locale.text('$hyoo_slides_speech_toggle_hint');
+        }
+        Speech_toggle() {
+            const obj = new this.$.$mol_check_icon();
+            obj.Icon = () => this.Speech_toggle_icon();
+            obj.checked = (val) => this.speech_enabled(val);
+            obj.hint = () => this.speech_toggle_hint();
+            return obj;
+        }
+        speech_text() {
+            return "";
+        }
+        Speech_text() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.speech_text()
+            ];
+            return obj;
+        }
+        Paginator() {
+            const obj = new this.$.$mol_paginator();
+            obj.value = (val) => this.slide(val);
+            return obj;
+        }
+        open_listener_hint() {
+            return this.$.$mol_locale.text('$hyoo_slides_open_listener_hint');
+        }
+        Open_listener_icon() {
+            const obj = new this.$.$mol_icon_external();
+            return obj;
+        }
+        Open_listener() {
+            const obj = new this.$.$mol_link();
+            obj.target = () => "_blank";
+            obj.hint = () => this.open_listener_hint();
+            obj.arg = () => ({
+                role: "listener",
+                slide: null
+            });
+            obj.sub = () => [
+                this.Open_listener_icon()
+            ];
+            return obj;
+        }
+        Lights() {
+            const obj = new this.$.$mol_lights_toggle();
+            return obj;
+        }
+        Close_icon() {
+            const obj = new this.$.$mol_icon_cross();
+            return obj;
+        }
+        Close() {
+            const obj = new this.$.$mol_link();
+            obj.arg = () => ({
+                slides: null
+            });
+            obj.sub = () => [
+                this.Close_icon()
+            ];
+            return obj;
+        }
+        speaker_tools() {
+            return [
+                this.Speech_toggle(),
+                this.Speech_text(),
+                this.Paginator(),
+                this.Open_listener(),
+                this.Lights(),
+                this.Close()
+            ];
+        }
+        Theme() {
+            const obj = new this.$.$mol_theme_auto();
+            return obj;
+        }
+        slide_keys() {
+            return [];
+        }
+        slide(val) {
+            if (val !== undefined)
+                return val;
+            return 0;
+        }
+        Nav() {
+            const obj = new this.$.$mol_nav();
+            obj.keys_y = () => this.slide_keys();
+            obj.keys_x = () => this.slide_keys();
+            obj.current_y = (val) => this.slide(val);
+            obj.current_x = (val) => this.slide(val);
+            return obj;
+        }
+        event_next(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        event_prev(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        Touch() {
+            const obj = new this.$.$mol_touch();
+            obj.swipe_to_left = (event) => this.event_next(event);
+            obj.swipe_to_right = (event) => this.event_prev(event);
+            return obj;
+        }
+        speech_next() {
+            return [
+                "next",
+                "forward",
+                "дальше",
+                "далее",
+                "даша",
+                "дарья",
+                "дай",
+                "доля",
+                "удали",
+                "впер[её]д",
+                "период",
+                "перевод",
+                "следующий слайд"
+            ];
+        }
+        Speech_next() {
+            const obj = new this.$.$mol_speech();
+            obj.event_catch = (val) => this.event_next(val);
+            obj.patterns = () => this.speech_next();
+            return obj;
+        }
+        speech_next_auto() {
+            return [];
+        }
+        Speech_next_auto() {
+            const obj = new this.$.$mol_speech();
+            obj.event_catch = (val) => this.event_next(val);
+            obj.suffix = () => "";
+            obj.patterns = () => this.speech_next_auto();
+            return obj;
+        }
+        event_slide(val) {
+            if (val !== undefined)
+                return val;
+            return null;
+        }
+        speech_slide() {
+            return [
+                "number (\\d+)",
+                "(\\d+) slide",
+                "номер (\\d+)",
+                "(\\d+) слайд"
+            ];
+        }
+        Speech_slide() {
+            const obj = new this.$.$mol_speech();
+            obj.event_catch = (val) => this.event_slide(val);
+            obj.patterns = () => this.speech_slide();
+            return obj;
+        }
+        speech_prev() {
+            return [
+                "back",
+                "назад",
+                "назар",
+                "надо",
+                "предыдущий слайд"
+            ];
+        }
+        Speech_prev() {
+            const obj = new this.$.$mol_speech();
+            obj.event_catch = (val) => this.event_prev(val);
+            obj.patterns = () => this.speech_prev();
+            return obj;
+        }
+        event_start(val) {
+            if (val !== undefined)
+                return val;
+            return null;
+        }
+        speech_start() {
+            return [
+                "to beginning",
+                "first slide",
+                "начало",
+                "начала",
+                "первый слайд",
+                "первый слой"
+            ];
+        }
+        Speech_start() {
+            const obj = new this.$.$mol_speech();
+            obj.event_catch = (val) => this.event_start(val);
+            obj.patterns = () => this.speech_start();
+            return obj;
+        }
+        event_end(val) {
+            if (val !== undefined)
+                return val;
+            return null;
+        }
+        speech_end() {
+            return [
+                "to ending",
+                "last slide",
+                "конец",
+                "последний слайд"
+            ];
+        }
+        Speech_end() {
+            const obj = new this.$.$mol_speech();
+            obj.event_catch = (val) => this.event_end(val);
+            obj.patterns = () => this.speech_end();
+            return obj;
+        }
+        event_about(val) {
+            if (val !== undefined)
+                return val;
+            return null;
+        }
+        speech_about() {
+            return [
+                "about( \\S+?)+",
+                "search( \\S+?)+",
+                "про( \\S+?)+",
+                "найти( \\S+?)+",
+                "найди( \\S+?)+"
+            ];
+        }
+        Speech_about() {
+            const obj = new this.$.$mol_speech();
+            obj.event_catch = (val) => this.event_about(val);
+            obj.patterns = () => this.speech_about();
+            return obj;
+        }
+        event_repeat(val) {
+            if (val !== undefined)
+                return val;
+            return null;
+        }
+        speech_repeat() {
+            return [
+                "repeat",
+                "повтори",
+                "повторите"
+            ];
+        }
+        Speech_repeat() {
+            const obj = new this.$.$mol_speech();
+            obj.event_catch = (val) => this.event_repeat(val);
+            obj.patterns = () => this.speech_repeat();
+            return obj;
+        }
+        event_speech_on(val) {
+            if (val !== undefined)
+                return val;
+            return null;
+        }
+        speech_on() {
+            return [
+                "continue",
+                "продолжай"
+            ];
+        }
+        Speech_on() {
+            const obj = new this.$.$mol_speech();
+            obj.event_catch = (val) => this.event_speech_on(val);
+            obj.patterns = () => this.speech_on();
+            return obj;
+        }
+        event_speech_off(val) {
+            if (val !== undefined)
+                return val;
+            return null;
+        }
+        speech_off() {
+            return [
+                "shut up",
+                "hush",
+                "замолчи",
+                "помолчи"
+            ];
+        }
+        Speech_off() {
+            const obj = new this.$.$mol_speech();
+            obj.event_catch = (val) => this.event_speech_off(val);
+            obj.patterns = () => this.speech_off();
+            return obj;
+        }
+        event_lights_toggle(val) {
+            if (val !== undefined)
+                return val;
+            return null;
+        }
+        lights_toggle() {
+            return [
+                "lights off",
+                "lights on",
+                "toggle lights",
+                "свет",
+                "след",
+                "цвет"
+            ];
+        }
+        Lights_toggle() {
+            const obj = new this.$.$mol_speech();
+            obj.event_catch = (val) => this.event_lights_toggle(val);
+            obj.patterns = () => this.lights_toggle();
+            return obj;
+        }
+        event_sing(val) {
+            if (val !== undefined)
+                return val;
+            return null;
+        }
+        sing() {
+            return [
+                "sing( \\S+?)*",
+                "спой( \\S+?)*"
+            ];
+        }
+        Sing() {
+            const obj = new this.$.$mol_speech();
+            obj.event_catch = (val) => this.event_sing(val);
+            obj.patterns = () => this.sing();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "contents", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Menu", null);
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_slides.prototype, "Menu_item", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Loader", null);
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_slides.prototype, "Page", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Source_link", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Menu_items", null);
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_slides.prototype, "page_slide", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Speech_toggle_icon", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "speech_enabled", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Speech_toggle", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Speech_text", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Paginator", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Open_listener_icon", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Open_listener", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Lights", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Close_icon", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Close", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Theme", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "slide", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Nav", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "event_next", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "event_prev", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Touch", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Speech_next", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Speech_next_auto", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "event_slide", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Speech_slide", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Speech_prev", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "event_start", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Speech_start", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "event_end", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Speech_end", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "event_about", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Speech_about", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "event_repeat", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Speech_repeat", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "event_speech_on", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Speech_on", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "event_speech_off", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Speech_off", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "event_lights_toggle", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Lights_toggle", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "event_sing", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_slides.prototype, "Sing", null);
+    $.$hyoo_slides = $hyoo_slides;
+})($ || ($ = {}));
+//hyoo/slides/-view.tree/slides.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const blacklist = new Set([
+        '//cse.google.com/adsense/search/async-ads.js'
+    ]);
+    function $mol_offline() {
+        if (typeof window === 'undefined') {
+            self.addEventListener('install', (event) => {
+                ;
+                self.skipWaiting();
+            });
+            self.addEventListener('activate', (event) => {
+                caches.delete('v1');
+                caches.delete('$mol_offline');
+                self.clients.claim();
+                console.info('$mol_offline activated');
+            });
+            self.addEventListener('fetch', (event) => {
+                const request = event.request;
+                if (blacklist.has(request.url.replace(/^https?:/, ''))) {
+                    return event.respondWith(new Response(null, {
+                        status: 418,
+                        statusText: 'Blocked'
+                    }));
+                }
+                if (request.method !== 'GET' || !/^https?:/.test(request.url)) {
+                    return event.respondWith(fetch(request));
+                }
+                const fresh = fetch(event.request).then(response => {
+                    event.waitUntil(caches.open('$mol_offline').then(cache => cache.put(event.request, response)));
+                    return response.clone();
+                });
+                event.waitUntil(fresh);
+                event.respondWith(caches.match(event.request).then(response => response || fresh));
+            });
+            self.addEventListener('beforeinstallprompt', (event) => {
+                console.log(event);
+                event.prompt();
+            });
+        }
+        else if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+            console.warn('HTTPS or localhost is required for service workers.');
+        }
+        else if (!navigator.serviceWorker) {
+            console.warn('Service Worker is not supported.');
+        }
+        else {
+            navigator.serviceWorker.register('web.js');
+        }
+    }
+    $.$mol_offline = $mol_offline;
+})($ || ($ = {}));
+//mol/offline/offline.web.ts
+;
+"use strict";
+var $;
+(function ($) {
+    try {
+        $mol_offline();
+    }
+    catch (error) {
+        console.error(error);
+    }
+})($ || ($ = {}));
+//mol/offline/install/install.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $hyoo_slides extends $.$hyoo_slides {
+            sub() {
+                if (!this.uri_slides()) {
+                    return [this.Menu()];
+                }
+                return [
+                    this.Loader(),
+                    ...this.$.$mol_print.active()
+                        ? $mol_range2(index => this.Page(index), () => this.slide_keys().length)
+                        : [this.Page(this.slide())]
+                ];
+            }
+            uri_base() {
+                return this.uri_slides().replace(/[^/]*$/, '');
+            }
+            menu_items() {
+                return Object.keys(this.menu_options()).map(uri => this.Menu_item(uri));
+            }
+            menu_item_uri(uri) {
+                return uri;
+            }
+            menu_item_title(uri) {
+                return this.menu_options()[uri];
+            }
+            contents(next = '') {
+                if (!this.uri_slides())
+                    return '';
+                this.Loader().window();
+                return next;
+            }
+            message_listener() {
+                return new $mol_dom_listener($mol_dom_context, 'message', $mol_wire_async((event) => {
+                    const data = event.data;
+                    if (event.source !== this.Loader().window())
+                        return;
+                    if (!Array.isArray(data))
+                        return;
+                    if (data[0] !== 'done')
+                        return;
+                    this.contents(data[1]);
+                }));
+            }
+            content_pages() {
+                return this.contents().split(/^(?=[#=])/mg);
+            }
+            page_tokens(index) {
+                const tokens = [];
+                this.$.$mol_syntax2_md_flow.tokenize(this.content_pages()[index] || '', (name, found, chunks) => tokens.push({ name, found, chunks }));
+                return tokens;
+            }
+            page_title(index) {
+                for (let token of this.page_tokens(index)) {
+                    if (token.name === 'header')
+                        return token.chunks[2];
+                }
+                return '';
+            }
+            title() {
+                return this.page_title(this.slide()) || super.title();
+            }
+            speaker_content(index) {
+                return this.page_tokens(index).filter(token => {
+                    if (token.name === 'header')
+                        return false;
+                    if (token.name !== 'block')
+                        return false;
+                    if (token.found.indexOf('![') >= 0)
+                        return false;
+                    if (token.found.indexOf('""') >= 0)
+                        return false;
+                    return true;
+                });
+            }
+            listener_content(index) {
+                return this.page_tokens(index).filter(token => {
+                    if (token.name === 'header')
+                        return false;
+                    if (token.name !== 'block')
+                        return true;
+                    if (token.found.indexOf('![') >= 0)
+                        return true;
+                    if (token.found.indexOf('""') >= 0)
+                        return true;
+                    return false;
+                });
+            }
+            slide(next) {
+                if (next !== undefined) {
+                    const count = this.content_pages().length;
+                    if (next >= count)
+                        next = count - 1;
+                    if (next < 0)
+                        next = 0;
+                }
+                const local = $mol_state_local.value(`slide(${JSON.stringify(this.uri_slides())})`, next);
+                const arg = $mol_state_arg.value('slide', next?.valueOf && String(next));
+                return (local ?? Number(arg)) || 0;
+            }
+            page_slide(index, next) {
+                if (next !== undefined)
+                    this.slide(next);
+                return index;
+            }
+            slide_keys() {
+                return this.content_pages().map((_, index) => index);
+            }
+            role(next) {
+                return $mol_state_arg.value(this.state_key('role'), next) || 'speaker';
+            }
+            uri_slides() {
+                return $mol_state_arg.value(this.state_key('slides')) ?? '';
+            }
+            event_next(next) {
+                this.slide(this.slide() + 1);
+            }
+            event_prev(next) {
+                this.slide(this.slide() - 1);
+            }
+            event_start(next) {
+                this.slide(0);
+            }
+            event_end(next) {
+                this.slide(this.content_pages().length - 1);
+            }
+            event_slide([numb]) {
+                this.slide(Number(numb));
+            }
+            event_about([topic]) {
+                let matcher = topic;
+                const pages = this.content_pages();
+                while (matcher.length > 2) {
+                    for (let i = 0; i < pages.length; ++i) {
+                        if (!pages[i].toLowerCase().match(matcher))
+                            continue;
+                        this.slide(i);
+                        return;
+                    }
+                    matcher = matcher.substring(0, matcher.length - 1);
+                }
+                matcher = topic;
+                while (matcher.length > 2) {
+                    for (let i = 0; i < pages.length; ++i) {
+                        if (!pages[i].toLowerCase().match(matcher))
+                            continue;
+                        this.slide(i);
+                        return;
+                    }
+                    matcher = matcher.substring(0, matcher.length - 1);
+                }
+            }
+            event_repeat(next) {
+                const commands = $mol_speech.commands();
+                const command = commands[commands.length - 2];
+                if (command)
+                    $mol_speech.say(command);
+            }
+            event_speech_on(next) {
+                $mol_speech.speaking(true);
+            }
+            event_speech_off(next) {
+                $mol_speech.speaking(false);
+            }
+            event_sing() {
+                this.$.$mol_speech.say('Не хочу! Не буду!');
+            }
+            speech_enabled(next) {
+                return $mol_speech.hearing(next);
+            }
+            speech_text() {
+                const commands = $mol_speech.commands();
+                return commands.length && commands[commands.length - 1] || '';
+            }
+            lights(next) {
+                return this.$.$mol_lights(next);
+            }
+            event_lights_toggle() {
+                this.lights(!this.lights());
+            }
+            timings() {
+                return this.content_pages().map(page => page.length);
+            }
+            timing_total() {
+                return this.timings().slice(1).reduce((a, b) => a + b, 0);
+            }
+            progress(index) {
+                const timing = this.timings().slice(1, index + 1).reduce((a, b) => a + b, 0);
+                return timing / this.timing_total();
+            }
+            speech_next_auto() {
+                const texts = this.speaker_content(this.slide());
+                if (texts.length === 0)
+                    return [];
+                const found = /[\s\S]*\s([a-zа-яё]+)[^a-zа-яё]*?/ui.exec(texts[texts.length - 1].found);
+                if (!found)
+                    return [];
+                const suffix = found[1].replace(/(.)$/, '$1?');
+                return [suffix];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $hyoo_slides.prototype, "menu_items", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_slides.prototype, "contents", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_slides.prototype, "message_listener", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_slides.prototype, "content_pages", null);
+        __decorate([
+            $mol_mem_key
+        ], $hyoo_slides.prototype, "page_tokens", null);
+        __decorate([
+            $mol_mem_key
+        ], $hyoo_slides.prototype, "page_title", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_slides.prototype, "title", null);
+        __decorate([
+            $mol_mem_key
+        ], $hyoo_slides.prototype, "speaker_content", null);
+        __decorate([
+            $mol_mem_key
+        ], $hyoo_slides.prototype, "listener_content", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_slides.prototype, "slide", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_slides.prototype, "slide_keys", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_slides.prototype, "lights", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_slides.prototype, "timings", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_slides.prototype, "timing_total", null);
+        __decorate([
+            $mol_mem_key
+        ], $hyoo_slides.prototype, "progress", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_slides.prototype, "speech_next_auto", null);
+        $$.$hyoo_slides = $hyoo_slides;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hyoo/slides/slides.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("hyoo/slides/slides.view.css", "[hyoo_slides] {\n\t-webkit-print-color-adjust: exact;\n\tflex-direction: column;\n}\n[hyoo_slides][hyoo_slides_role=\"listener\"] [hyoo_slides_page_listener_content] {\n\tfont-size: 1.5em;\n}\n\n[hyoo_slides_menu] {\n\tmax-width: 40rem;\n\tflex: auto;\n}\n\n[hyoo_slides_loader] {\n\tposition: fixed;\n\tleft: 0;\n\ttop: 0;\n\tright: 0;\n\tbottom: 0;\n\twidth: 100%;\n\theight: 100%;\n}\n[hyoo_slides_loader]:not([mol_view_error]) {\n\tvisibility: hidden;\n}\n\n[hyoo_slides_speech_toggle] {\n\talign-items: center;\n}\n\n[hyoo_slides_speech_text] {\n\tline-height: 1;\n\tdisplay: flex;\n\talign-items: flex-end;\n\talign-self: center;\n\tflex: 1 1 auto;\n\tmax-height: 2rem;\n}\n");
+})($ || ($ = {}));
+//hyoo/slides/-css/slides.view.css.ts
+;
+"use strict";
 //mol/type/partial/deep/deep.ts
 ;
 "use strict";
@@ -14036,6 +15742,7 @@ var $;
                 found: this.Found_page(),
                 chat: this.Chat_page(),
                 rating: this.Rating_page(),
+                presentation: this.Persentation_page(),
                 company_page: this.Company_page()
             };
         }
@@ -14083,6 +15790,11 @@ var $;
             const obj = new this.$.$dosha_client_rating();
             return obj;
         }
+        Persentation_page() {
+            const obj = new this.$.$hyoo_slides();
+            obj.title = () => "📽 Презентация";
+            return obj;
+        }
         Company_page() {
             const obj = new this.$.$dosha_company();
             obj.menu_title = () => "🧮 Компания *";
@@ -14119,6 +15831,9 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Rating_page", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client.prototype, "Persentation_page", null);
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Company_page", null);

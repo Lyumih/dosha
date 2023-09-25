@@ -1304,6 +1304,238 @@ $dosha_client_rating $mol_page
 						<= Plan
 						<= Fact_dots
 
+$mol_portion_indicator $mol_view
+	style *
+		^
+		width <= width_style \0
+
+$mol_portion $mol_view
+	portion 0
+	sub /
+		<= indicator $mol_portion_indicator
+			width_style <= indicator_width_style \0
+
+$hyoo_slides_page $mol_book2
+	role \
+	contents?val \
+	slide?val 0
+	Placeholder null
+	pages /
+		<= Speaker $mol_page
+			head <= speaker_tools /
+			body /
+				<= Speaker_content $mol_text
+					uri_base <= uri_base \
+					flow_tokens <= speaker_content /
+		<= Listener $mol_page
+			tools <= tools /
+			title <= title
+			Head => Listener_head
+			Tools null
+			sub /
+				<= Listener_head
+				<= Listener_content $mol_text
+					code_sidebar_showed false
+					minimal_height 0
+					uri_base <= uri_base \
+					flow_tokens <= listener_content /
+				<= Link $mol_link
+					uri <= uri_page \
+					sub / <= uri_page \
+					minimal_height 24
+				<= Progress $mol_portion
+					portion <= progress 0
+
+$mol_icon_microphone $mol_icon path \M12,2C13.66,2 15,3.34 15,5V11C15,12.66 13.66,14 12,14C10.34,14 9,12.66 9,11V5C9,3.34 10.34,2 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7C7,13.76 9.24,16 12,16C14.76,16 17,13.76 17,11H19Z
+
+$mol_bar $mol_view
+
+$mol_icon_chevron_left $mol_icon path \M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z
+
+$mol_icon_chevron_right $mol_icon path \M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z
+
+$mol_paginator $mol_bar
+	sub /
+		<= Backward $mol_button_minor
+			hint <= backward_hint @ \Backward
+			click?event <=> backward?event null
+			sub / <= Backward_icon $mol_icon_chevron_left
+		<= Value $mol_view sub / <= value? 0
+		<= Forward $mol_button_minor
+			hint <= forward_hint @ \Forward
+			click?event <=> forward?event null
+			sub / <= Forward_icon $mol_icon_chevron_right
+
+$mol_icon_external $mol_icon path \M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z
+
+$hyoo_slides $mol_view
+	attr *
+		^
+		hyoo_slides_role <= role \
+	style *
+		^
+		touch-action \none
+	contents?val \
+	auto /
+		<= message_listener null
+	Menu $mol_page
+		title \Slides
+		tools <= menu_tools /
+			<= Source_link $mol_link_source
+				uri \https://github.com/hyoo-ru/slides.hyoo.ru
+		body /
+			<= Menu_items $mol_list
+				rows <= menu_items /$mol_view
+	Menu_item!id $mol_link
+		title <= menu_item_title!id \
+		arg * slides <= menu_item_uri!id \
+	menu_options *
+		https://nin-jin.github.io/slides/slides/ \Презентация приложения для проведения презентаций
+		https://nin-jin.github.io/slides/reactivity/ \Разбираемся в сортах реактивности
+		https://nin-jin.github.io/slides/orp/ \Объектное Реактивное Программирование
+		https://nin-jin.github.io/slides/tree/ \Tree - единый AST чтобы править всеми
+		https://nin-jin.github.io/slides/sourcemap/ \Что не так с сорсмапами и как с ними не связываться?
+		https://nin-jin.github.io/slides/virt/ \Автоматическая виртуализация рендеринга произвольной вёрстки
+		https://nin-jin.github.io/slides/css-in-ts/ \Продвинутый CSS-in-TS
+		https://nin-jin.github.io/slides/mol/ \$mol - лучшее средство от геморроя
+		https://nin-jin.github.io/slides/fibers/ \Квантовая механика вычисления на JS
+		https://nin-jin.github.io/slides/testing/ \Фрактальное тестирование
+		https://nin-jin.github.io/slides/consensus/ \Консистентно о Консенсусе
+		https://nin-jin.github.io/slides/absurd/ \Проблема останова лжеца Гёделя и брадобрея Кантора
+	Loader $mol_frame
+		uri <= uri_slides \
+	Page!index $hyoo_slides_page
+		tools <= tools /
+		title <= page_title!index \
+		slide?val <=> page_slide!index?val 0
+		uri_base <= uri_base \
+		role <= role \
+		listener_content <= listener_content!index /
+		speaker_content <= speaker_content!index /
+		progress <= progress!index 0
+		speaker_tools <= speaker_tools /
+			<= Speech_toggle $mol_check_icon
+				Icon <= Speech_toggle_icon $mol_icon_microphone
+				checked?val <=> speech_enabled?val false
+				hint <= speech_toggle_hint @ \Speech contol
+			<= Speech_text $mol_view sub / <= speech_text \
+			<= Paginator $mol_paginator value?val <=> slide?val
+			<= Open_listener $mol_link
+				target \_blank
+				hint <= open_listener_hint @ \Open slides window
+				arg *
+					role \listener
+					slide null
+				sub /
+					<= Open_listener_icon $mol_icon_external
+			<= Lights $mol_lights_toggle
+			<= Close $mol_link
+				arg *
+					slides null
+				sub /
+					<= Close_icon $mol_icon_cross
+	plugins /
+		<= Theme $mol_theme_auto
+		<= Nav $mol_nav
+			keys_y <= slide_keys /
+			keys_x <= slide_keys /
+			current_y?val <=> slide?val 0
+			current_x?val <=> slide?val 0
+		<= Touch $mol_touch
+			swipe_to_left?event <=> event_next?event null
+			swipe_to_right?event <=> event_prev?event null
+		<= Speech_next $mol_speech
+			event_catch?val <=> event_next?val null
+			patterns <= speech_next /
+				\next
+				\forward
+				\дальше
+				\далее
+				\даша
+				\дарья
+				\дай
+				\доля
+				\удали
+				\впер[её]д
+				\период
+				\перевод
+				\следующий слайд
+		<= Speech_next_auto $mol_speech
+			event_catch?val <=> event_next?val null
+			suffix \
+			patterns <= speech_next_auto /
+		<= Speech_slide $mol_speech
+			event_catch?val <=> event_slide?val null
+			patterns <= speech_slide /
+				\number (\d+)
+				\(\d+) slide
+				\номер (\d+)
+				\(\d+) слайд
+		<= Speech_prev $mol_speech
+			event_catch?val <=> event_prev?val null
+			patterns <= speech_prev /
+				\back
+				\назад
+				\назар
+				\надо
+				\предыдущий слайд
+		<= Speech_start $mol_speech
+			event_catch?val <=> event_start?val null
+			patterns <= speech_start /
+				\to beginning
+				\first slide
+				\начало
+				\начала
+				\первый слайд
+				\первый слой
+		<= Speech_end $mol_speech
+			event_catch?val <=> event_end?val null
+			patterns <= speech_end /
+				\to ending
+				\last slide
+				\конец
+				\последний слайд
+		<= Speech_about $mol_speech
+			event_catch?val <=> event_about?val null
+			patterns <= speech_about /
+				\about( \S+?)+
+				\search( \S+?)+
+				\про( \S+?)+
+				\найти( \S+?)+
+				\найди( \S+?)+
+		<= Speech_repeat $mol_speech
+			event_catch?val <=> event_repeat?val null
+			patterns <= speech_repeat /
+				\repeat
+				\повтори
+				\повторите
+		<= Speech_on $mol_speech
+			event_catch?val <=> event_speech_on?val null
+			patterns <= speech_on /
+				\continue
+				\продолжай
+		<= Speech_off $mol_speech
+			event_catch?val <=> event_speech_off?val null
+			patterns <= speech_off /
+				\shut up
+				\hush
+				\замолчи
+				\помолчи
+		<= Lights_toggle $mol_speech
+			event_catch?val <=> event_lights_toggle?val null
+			patterns <= lights_toggle /
+				\lights off
+				\lights on
+				\toggle lights
+				\свет
+				\след
+				\цвет
+		<= Sing $mol_speech
+			event_catch?val <=> event_sing?val null
+			patterns <= sing /
+				\sing( \S+?)*
+				\спой( \S+?)*
+
 $mol_icon_download $mol_icon path \M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z
 
 $mol_button_download $mol_button_minor
@@ -1352,6 +1584,8 @@ $dosha_client $mol_book2_catalog
 			title \🎭 Чат
 			sub <= chat_pages
 		rating <= Rating_page $dosha_client_rating
+		presentation <= Persentation_page $hyoo_slides
+			title \📽 Презентация
 		- Отдельное приложение ДоШа Компания
 		company_page <= Company_page $dosha_company
 			menu_title \🧮 Компания *

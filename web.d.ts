@@ -3763,6 +3763,315 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_portion_indicator extends $mol_view {
+        style(): Record<string, any>;
+        width_style(): string;
+    }
+    class $mol_portion extends $mol_view {
+        portion(): number;
+        sub(): readonly any[];
+        indicator_width_style(): string;
+        indicator(): $mol_portion_indicator;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_portion extends $.$mol_portion {
+        indicator_width_style(): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $hyoo_slides_page extends $mol_book2 {
+        role(): string;
+        contents(val?: any): string;
+        slide(val?: any): number;
+        Placeholder(): any;
+        pages(): readonly any[];
+        speaker_tools(): readonly any[];
+        uri_base(): string;
+        speaker_content(): readonly any[];
+        Speaker_content(): $$.$mol_text;
+        Speaker(): $mol_page;
+        tools(): readonly any[];
+        listener_content(): readonly any[];
+        Listener_content(): $$.$mol_text;
+        uri_page(): string;
+        Link(): $$.$mol_link;
+        progress(): number;
+        Progress(): $$.$mol_portion;
+        Listener_head(): $mol_view;
+        Listener(): $mol_page;
+    }
+}
+
+declare namespace $.$$ {
+    class $hyoo_slides_page extends $.$hyoo_slides_page {
+        uri_page(): string;
+        pages(): $mol_page[];
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_icon_microphone extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_bar extends $mol_view {
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_icon_chevron_left extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_chevron_right extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_paginator extends $mol_bar {
+        sub(): readonly any[];
+        backward_hint(): string;
+        backward(event?: any): any;
+        Backward_icon(): $mol_icon_chevron_left;
+        Backward(): $mol_button_minor;
+        value(next?: any): number;
+        Value(): $mol_view;
+        forward_hint(): string;
+        forward(event?: any): any;
+        Forward_icon(): $mol_icon_chevron_right;
+        Forward(): $mol_button_minor;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_paginator extends $.$mol_paginator {
+        backward(event: Event): void;
+        forward(event: Event): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_icon_external extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    function $mol_range2<Item = number>(item?: (index: number) => Item, size?: () => number): Item[];
+    class $mol_range2_array<Item> extends Array<Item> {
+        concat(...tail: Item[][]): Item[];
+        filter<Context>(check: (val: Item, index: number, list: Item[]) => boolean, context?: Context): Item[];
+        forEach<Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => void, context?: Context): void;
+        map<Item_out, Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => Item_out, context?: Context): Item_out[];
+        reduce<Result>(merge: (result: Result, val: Item, index: number, list: Item[]) => Result, result?: Result): Result | undefined;
+        toReversed(): Item[];
+        slice(from?: number, to?: number): Item[];
+        some<Context>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
+        every<Context = null>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
+        reverse(): never;
+        sort(): never;
+        [Symbol.toPrimitive](): string;
+    }
+}
+
+declare namespace $ {
+    let $mol_defer: typeof $mol_after_frame;
+}
+
+declare namespace $ {
+    class $mol_speech extends $mol_plugin {
+        static speaker_make(): Promise<SpeechSynthesis>;
+        static speaker(): SpeechSynthesis;
+        static voices(): SpeechSynthesisVoice[];
+        static say(text: string): null;
+        static speaking(next?: boolean): boolean;
+        static hearer(): any;
+        static hearing(next?: boolean): boolean;
+        static recognition_index(next?: number): number;
+        static recognition_offset(next?: number): number;
+        static recognition(index: number, next?: SpeechRecognitionResult): SpeechRecognitionResult | null;
+        static recognitions(): SpeechRecognitionResult[];
+        static commands(): string[];
+        static text(): string;
+        commands_skip(next?: number): number;
+        render(): null;
+        event_catch(found?: string[]): boolean;
+        patterns(): readonly string[];
+        matchers(): RegExp[];
+        prefix(): string;
+        suffix(): string;
+    }
+}
+
+declare namespace $ {
+    class $hyoo_slides extends $mol_view {
+        attr(): Record<string, any>;
+        style(): Record<string, any>;
+        contents(val?: any): string;
+        auto(): readonly any[];
+        Menu(): $mol_page;
+        Menu_item(id: any): $$.$mol_link;
+        menu_options(): Record<string, any>;
+        Loader(): $$.$mol_frame;
+        Page(id: any): $$.$hyoo_slides_page;
+        plugins(): readonly any[];
+        role(): string;
+        message_listener(): any;
+        Source_link(): $mol_link_source;
+        menu_tools(): readonly any[];
+        menu_items(): readonly $mol_view[];
+        Menu_items(): $$.$mol_list;
+        menu_item_title(id: any): string;
+        menu_item_uri(id: any): string;
+        uri_slides(): string;
+        tools(): readonly any[];
+        page_title(id: any): string;
+        page_slide(id: any, val?: any): number;
+        uri_base(): string;
+        listener_content(id: any): readonly any[];
+        speaker_content(id: any): readonly any[];
+        progress(id: any): number;
+        Speech_toggle_icon(): $mol_icon_microphone;
+        speech_enabled(val?: any): boolean;
+        speech_toggle_hint(): string;
+        Speech_toggle(): $mol_check_icon;
+        speech_text(): string;
+        Speech_text(): $mol_view;
+        Paginator(): $$.$mol_paginator;
+        open_listener_hint(): string;
+        Open_listener_icon(): $mol_icon_external;
+        Open_listener(): $$.$mol_link;
+        Lights(): $$.$mol_lights_toggle;
+        Close_icon(): $mol_icon_cross;
+        Close(): $$.$mol_link;
+        speaker_tools(): readonly any[];
+        Theme(): $$.$mol_theme_auto;
+        slide_keys(): readonly any[];
+        slide(val?: any): number;
+        Nav(): $$.$mol_nav;
+        event_next(event?: any): any;
+        event_prev(event?: any): any;
+        Touch(): $$.$mol_touch;
+        speech_next(): readonly any[];
+        Speech_next(): $mol_speech;
+        speech_next_auto(): readonly any[];
+        Speech_next_auto(): $mol_speech;
+        event_slide(val?: any): any;
+        speech_slide(): readonly any[];
+        Speech_slide(): $mol_speech;
+        speech_prev(): readonly any[];
+        Speech_prev(): $mol_speech;
+        event_start(val?: any): any;
+        speech_start(): readonly any[];
+        Speech_start(): $mol_speech;
+        event_end(val?: any): any;
+        speech_end(): readonly any[];
+        Speech_end(): $mol_speech;
+        event_about(val?: any): any;
+        speech_about(): readonly any[];
+        Speech_about(): $mol_speech;
+        event_repeat(val?: any): any;
+        speech_repeat(): readonly any[];
+        Speech_repeat(): $mol_speech;
+        event_speech_on(val?: any): any;
+        speech_on(): readonly any[];
+        Speech_on(): $mol_speech;
+        event_speech_off(val?: any): any;
+        speech_off(): readonly any[];
+        Speech_off(): $mol_speech;
+        event_lights_toggle(val?: any): any;
+        lights_toggle(): readonly any[];
+        Lights_toggle(): $mol_speech;
+        event_sing(val?: any): any;
+        sing(): readonly any[];
+        Sing(): $mol_speech;
+    }
+}
+
+declare namespace $ {
+    function $mol_offline(): void;
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $hyoo_slides extends $.$hyoo_slides {
+        sub(): $mol_page[] | ($mol_frame | $hyoo_slides_page)[];
+        uri_base(): string;
+        menu_items(): $mol_link[];
+        menu_item_uri(uri: string): string;
+        menu_item_title(uri: string): any;
+        contents(next?: string): string;
+        message_listener(): $mol_dom_listener;
+        content_pages(): string[];
+        page_tokens(index: number): readonly {
+            name: string;
+            found: string;
+            chunks: string[];
+        }[];
+        page_title(index: number): string;
+        title(): string;
+        speaker_content(index: number): {
+            name: string;
+            found: string;
+            chunks: string[];
+        }[];
+        listener_content(index: number): {
+            name: string;
+            found: string;
+            chunks: string[];
+        }[];
+        slide(next?: number): number;
+        page_slide(index: number, next?: number): number;
+        slide_keys(): number[];
+        role(next?: 'speaker' | 'listener'): string;
+        uri_slides(): string;
+        event_next(next?: Event): void;
+        event_prev(next?: Event): void;
+        event_start(next?: Event): void;
+        event_end(next?: Event): void;
+        event_slide([numb]: [string]): void;
+        event_about([topic]: [string]): void;
+        event_repeat(next?: Event): void;
+        event_speech_on(next?: Event): void;
+        event_speech_off(next?: Event): void;
+        event_sing(): void;
+        speech_enabled(next?: boolean): boolean;
+        speech_text(): string;
+        lights(next?: boolean): boolean;
+        event_lights_toggle(): void;
+        timings(): number[];
+        timing_total(): number;
+        progress(index: number): number;
+        speech_next_auto(): string[];
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     type $mol_type_partial_deep<Val> = Val extends object ? Val extends Function ? Val : {
         [field in keyof Val]?: $mol_type_partial_deep<Val[field]> | undefined;
     } : Val;
@@ -3871,6 +4180,7 @@ declare namespace $ {
         Found_page(): $$.$dosha_client_found;
         Chat_page(): $mol_view;
         Rating_page(): $dosha_client_rating;
+        Persentation_page(): $$.$hyoo_slides;
         Company_page(): $dosha_company;
     }
 }
