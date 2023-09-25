@@ -399,6 +399,7 @@
     "$mol_wire_stale",
     "$mol_offline_install",
     "$mol_offline",
+    "$dosha_client_partners",
     "$dosha_company",
     "$dosha_company_report"
   ],

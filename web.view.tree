@@ -2241,6 +2241,9 @@ $hyoo_page $mol_book2
 		safe_showing? <=> safe? false
 		search => search
 
+$dosha_client_partners $mol_page
+	title \🎁 Партнёры
+
 $dosha_company_report $mol_page
 	title \Отчёт
 	body /
@@ -2275,12 +2278,13 @@ $dosha_client $mol_book2_catalog
 			dosha_value? <=> dosha?
 		profile <= Profile_page $dosha_client_profile
 		found <= Found_page $dosha_client_found
+		rating <= Rating_page $dosha_client_rating
 		chat <= Chat_page $mol_view
 			title \🎭 Чат
 			sub <= chat_pages
-		rating <= Rating_page $dosha_client_rating
 		presentation <= Persentation_page $hyoo_page
 			title \📽 Презентация
+		partners <= Partners_page $dosha_client_partners
 		- Отдельное приложение ДоШа Компания
 		company_page <= Company_page $dosha_company
 			menu_title \🧮 Компания *

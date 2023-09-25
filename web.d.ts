@@ -6196,6 +6196,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $dosha_client_partners extends $mol_page {
+        title(): string;
+    }
+}
+
+declare namespace $ {
     class $dosha_company_report extends $mol_page {
         title(): string;
         body(): readonly any[];
@@ -6237,9 +6243,10 @@ declare namespace $ {
         Steps_page(): $$.$dosha_client_steps;
         Profile_page(): $dosha_client_profile;
         Found_page(): $$.$dosha_client_found;
-        Chat_page(): $mol_view;
         Rating_page(): $dosha_client_rating;
+        Chat_page(): $mol_view;
         Persentation_page(): $$.$hyoo_page;
+        Partners_page(): $dosha_client_partners;
         Company_page(): $dosha_company;
     }
 }

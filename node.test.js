@@ -25340,6 +25340,18 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $dosha_client_partners extends $mol_page {
+        title() {
+            return "🎁 Партнёры";
+        }
+    }
+    $.$dosha_client_partners = $dosha_client_partners;
+})($ || ($ = {}));
+//dosha/client/partners/-view.tree/partners.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $dosha_company_report extends $mol_page {
         title() {
             return "Отчёт";
@@ -25460,9 +25472,10 @@ var $;
                 steps: this.Steps_page(),
                 profile: this.Profile_page(),
                 found: this.Found_page(),
-                chat: this.Chat_page(),
                 rating: this.Rating_page(),
+                chat: this.Chat_page(),
                 presentation: this.Persentation_page(),
+                partners: this.Partners_page(),
                 company_page: this.Company_page()
             };
         }
@@ -25500,19 +25513,23 @@ var $;
             const obj = new this.$.$dosha_client_found();
             return obj;
         }
+        Rating_page() {
+            const obj = new this.$.$dosha_client_rating();
+            return obj;
+        }
         Chat_page() {
             const obj = new this.$.$mol_view();
             obj.title = () => "🎭 Чат";
             obj.sub = () => this.chat_pages();
             return obj;
         }
-        Rating_page() {
-            const obj = new this.$.$dosha_client_rating();
-            return obj;
-        }
         Persentation_page() {
             const obj = new this.$.$hyoo_page();
             obj.title = () => "📽 Презентация";
+            return obj;
+        }
+        Partners_page() {
+            const obj = new this.$.$dosha_client_partners();
             return obj;
         }
         Company_page() {
@@ -25547,13 +25564,16 @@ var $;
     ], $dosha_client.prototype, "Found_page", null);
     __decorate([
         $mol_mem
-    ], $dosha_client.prototype, "Chat_page", null);
-    __decorate([
-        $mol_mem
     ], $dosha_client.prototype, "Rating_page", null);
     __decorate([
         $mol_mem
+    ], $dosha_client.prototype, "Chat_page", null);
+    __decorate([
+        $mol_mem
     ], $dosha_client.prototype, "Persentation_page", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client.prototype, "Partners_page", null);
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Company_page", null);
