@@ -14624,7 +14624,7 @@ var $;
             return 10000;
         }
         menu_title() {
-            return "ДоШа";
+            return "👣 ДоШа";
         }
         param() {
             return "client";
@@ -14701,7 +14701,7 @@ var $;
         }
         Company_page() {
             const obj = new this.$.$dosha_company();
-            obj.menu_title = () => "🧮 Компания";
+            obj.menu_title = () => "🧮 Компания *";
             return obj;
         }
     }
