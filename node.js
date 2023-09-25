@@ -10636,6 +10636,18 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $dosha_client_history extends $mol_page {
+        title() {
+            return "📅 История";
+        }
+    }
+    $.$dosha_client_history = $dosha_client_history;
+})($ || ($ = {}));
+//dosha/client/history/-view.tree/history.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_labeler extends $mol_list {
         rows() {
             return [
@@ -14342,6 +14354,31 @@ var $;
     $.$dosha_client_rating = $dosha_client_rating;
 })($ || ($ = {}));
 //dosha/client/rating/-view.tree/rating.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $dosha_client_city extends $mol_page {
+        title() {
+            return "🏓 Ваш город";
+        }
+        body() {
+            return [
+                this.City_label()
+            ];
+        }
+        City_label() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "Найдите совместные увлечения в вашем городе";
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $dosha_client_city.prototype, "City_label", null);
+    $.$dosha_client_city = $dosha_client_city;
+})($ || ($ = {}));
+//dosha/client/city/-view.tree/city.view.tree.ts
 ;
 "use strict";
 let $hyoo_sync_revision = "bccfe4d";
@@ -25478,9 +25515,11 @@ var $;
         spreads() {
             return {
                 steps: this.Steps_page(),
+                history: this.History_page(),
                 profile: this.Profile_page(),
                 found: this.Found_page(),
                 rating: this.Rating_page(),
+                city: this.City_page(),
                 chat: this.Chat_page(),
                 presentation: this.Persentation_page(),
                 partners: this.Partners_page(),
@@ -25513,6 +25552,10 @@ var $;
             obj.dosha_value = (next) => this.dosha(next);
             return obj;
         }
+        History_page() {
+            const obj = new this.$.$dosha_client_history();
+            return obj;
+        }
         Profile_page() {
             const obj = new this.$.$dosha_client_profile();
             return obj;
@@ -25523,6 +25566,10 @@ var $;
         }
         Rating_page() {
             const obj = new this.$.$dosha_client_rating();
+            return obj;
+        }
+        City_page() {
+            const obj = new this.$.$dosha_client_city();
             return obj;
         }
         Chat_page() {
@@ -25566,6 +25613,9 @@ var $;
     ], $dosha_client.prototype, "Steps_page", null);
     __decorate([
         $mol_mem
+    ], $dosha_client.prototype, "History_page", null);
+    __decorate([
+        $mol_mem
     ], $dosha_client.prototype, "Profile_page", null);
     __decorate([
         $mol_mem
@@ -25573,6 +25623,9 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Rating_page", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client.prototype, "City_page", null);
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Chat_page", null);

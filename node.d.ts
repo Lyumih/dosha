@@ -3068,6 +3068,12 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $dosha_client_history extends $mol_page {
+        title(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_labeler extends $mol_list {
         rows(): readonly any[];
         label(): readonly $mol_view_content[];
@@ -3889,6 +3895,14 @@ declare namespace $ {
         Marker_hor(): $$.$mol_plot_mark_hor;
         Marker_cross(): $$.$mol_plot_mark_cross;
         Chart(): $mol_chart;
+    }
+}
+
+declare namespace $ {
+    class $dosha_client_city extends $mol_page {
+        title(): string;
+        body(): readonly any[];
+        City_label(): $$.$mol_text;
     }
 }
 
@@ -6349,9 +6363,11 @@ declare namespace $ {
         Lights(): $$.$mol_lights_toggle;
         GitHub(): $mol_link_source;
         Steps_page(): $$.$dosha_client_steps;
+        History_page(): $dosha_client_history;
         Profile_page(): $dosha_client_profile;
         Found_page(): $$.$dosha_client_found;
         Rating_page(): $dosha_client_rating;
+        City_page(): $dosha_client_city;
         Chat_page(): $mol_view;
         Persentation_page(): $$.$hyoo_page;
         Partners_page(): $dosha_client_partners;

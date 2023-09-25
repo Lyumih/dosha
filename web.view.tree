@@ -745,6 +745,7 @@ $mol_text_list_item $mol_paragraph
 		^
 		mol_text_list_item_index <= index 0
 
+- Страница для списания шагов. Быстрый апи - добавить шаги. В идеале апи из Google Fit с автоматическим балансом
 $dosha_client_steps $mol_page
 	dosha_value? 10000
 	title \👟 Шаги
@@ -756,6 +757,10 @@ $dosha_client_steps $mol_page
 		<= Add_dosha_save $mol_button_major
 			title \Добавить шаги за сегодня
 			click? <= add_today_steps? null
+
+- История пользователя, сколько заработал, куда и что пошло, в какие фонды
+$dosha_client_history $mol_page
+	title \📅 История
 
 $mol_labeler $mol_list
 	rows /
@@ -790,6 +795,7 @@ $mol_form $mol_list
 		<= Foot $mol_row
 			sub <= foot <= buttons /$mol_view
 
+- Страница с профилем пользователя. Личная информация, контакты, должность, изменение настроек.
 $dosha_client_profile $mol_page
 	title \🧢 Профиль
 	body /
@@ -803,6 +809,7 @@ $dosha_client_profile $mol_page
 				<= Profile_form_save $mol_button_major
 					title \Сохранить
 
+- Страница с фондами. Выбрать фонд, предложить новый, сколько уже было перевено средств в фонды и какие
 $dosha_client_found $mol_page
 	title \🏥 Фонды
 	body /
@@ -1266,6 +1273,7 @@ $mol_chart $mol_view
 			hue_base <= hue_base 140
 			hue_shift <= hue_shift 111
 
+- Страница с рейтингом, общие количество переведённы денег на фонд, а также наградами
 $dosha_client_rating $mol_page
 	title \🏅 Рейтинг
 	body /
@@ -1303,6 +1311,12 @@ $dosha_client_rating $mol_page
 					graphs /
 						<= Plan
 						<= Fact_dots
+
+- Сделать: Ваш город - селект, создать мероприятие, присоединиться к мероприятию
+$dosha_client_city $mol_page
+	title \🏓 Ваш город
+	body /
+		<= City_label $mol_text text \Найдите совместные увлечения в вашем городе
 
 $mol_avatar $mol_icon
 	view_box \0 0 24 24
@@ -2241,6 +2255,7 @@ $hyoo_page $mol_book2
 		safe_showing? <=> safe? false
 		search => search
 
+- Страница с партнёрами, абонементы, акции, интеграции
 $dosha_client_partners $mol_page
 	title \🎁 Партнёры
 
@@ -2252,6 +2267,7 @@ $dosha_company_report $mol_page
 			title \Скачать отчёт для оплаты
 			blob <= download $mol_blob
 
+- Приложение для компании - информация по сотрудникам, настройка цветовой схемы, распечатка отчётов для оплаты, админка
 $dosha_company $mol_book2_catalog
 	menu_title \ДоШа Компания
 	param \company
@@ -2260,6 +2276,7 @@ $dosha_company $mol_book2_catalog
 			title \Пользователи
 		report_page <= Report_page $dosha_company_report
 
+- Приложение ДоШа - Добрые Шаги. Главное меню и навигация
 $dosha_client $mol_book2_catalog
 	dosha? 10000
 	menu_title \👣 ДоШа
@@ -2276,9 +2293,11 @@ $dosha_client $mol_book2_catalog
 	spreads *
 		steps <= Steps_page $dosha_client_steps
 			dosha_value? <=> dosha?
+		history <= History_page $dosha_client_history
 		profile <= Profile_page $dosha_client_profile
 		found <= Found_page $dosha_client_found
 		rating <= Rating_page $dosha_client_rating
+		city <= City_page $dosha_client_city
 		chat <= Chat_page $mol_view
 			title \🎭 Чат
 			sub <= chat_pages
