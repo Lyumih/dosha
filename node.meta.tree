@@ -70,6 +70,9 @@
 	pack home git \https://github.com/hyoo-ru/hyoo.ru.git
 	pack idea git \https://github.com/hyoo-ru/idea.hyoo.ru.git
 	pack intern git \https://github.com/hyoo-ru/intern.hyoo.ru.git
-\/hyoo/slides
+\/hyoo/sync
+	build $hyoo_sync_revision \git rev-parse --short HEAD
+\/hyoo/page
 	include \/mol/offline/install
-	deploy \/hyoo/slides/logo/logo.svg
+	deploy \/hyoo/page/logo/logo.svg
+	deploy \/hyoo/page/logo/logo.png
