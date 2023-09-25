@@ -16,8 +16,10 @@ $dosha_client $mol_book2_catalog
 			dosha_value? <=> dosha?
 		profile <= Profile_page $dosha_client_profile
 		found <= Found_page $dosha_client_found
-		company_page <= Company_page $dosha_company
-			menu_title \Компания
 		chat <= Chat_page $mol_view
 			title \Чат
 			sub <= chat_pages
+		rating <= Rating_page $dosha_client_rating
+		- Отдельное приложение ДоШа Компания
+		company_page <= Company_page $dosha_company
+			menu_title \Компания
