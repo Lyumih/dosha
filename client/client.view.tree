@@ -5,7 +5,7 @@ $dosha_client $mol_view
 	title \👣 ДоШа
 	sub /
 		<= Auth_page $dosha_client_auth
-			login_success? <=> login?
+			login_success? <=> login? null
 		<= Secure $mol_book2_catalog
 			menu_title \👣 ДоШа
 			param \client
