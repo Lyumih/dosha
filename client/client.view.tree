@@ -1,32 +1,40 @@
 - Приложение ДоШа - Добрые Шаги. Главное меню и навигация
-$dosha_client $mol_book2_catalog
+$dosha_client $mol_view
 	dosha? 10000
-	menu_title \👣 ДоШа
-	param \client
-	menu_filter_enabled false
-	plugins /
-		<= Theme $mol_theme_auto
-	menu_tools /
-		<= Chat $mol_chat
-			seed \dosha_chat_v1
-			pages => chat_pages
-	menu_foot /
-		<= Lights $mol_lights_toggle
-		<= GitHub $mol_link_source uri \https://github.com/Lyumih/dosha
-	spreads *
-		steps <= Steps_page $dosha_client_steps
-			dosha_value? <=> dosha?
-		history <= History_page $dosha_client_history
-		profile <= Profile_page $dosha_client_profile
-		found <= Found_page $dosha_client_found
-		rating <= Rating_page $dosha_client_rating
-		city <= City_page $dosha_client_city
-		chat <= Chat_page $mol_view
-			title \🎭 Чат
-			sub <= chat_pages
-		presentation <= Persentation_page $hyoo_page
-			title \📽 Презентация
-		partners <= Partners_page $dosha_client_partners
-		- Отдельное приложение ДоШа Компания
-		company_page <= Company_page $dosha_company
-			menu_title \🧮 Компания *
+	auth? true
+	sub /
+		<= Auth_page $dosha_client_auth
+			login_success? <=> login?
+		<= Secure $mol_book2_catalog
+			menu_title \👣 ДоШа
+			param \client
+			menu_filter_enabled false
+			plugins /
+				<= Theme $mol_theme_auto
+			menu_tools /
+				<= Chat $mol_chat
+					seed \dosha_chat_v1
+					pages => chat_pages
+			menu_foot /
+				<= Lights $mol_lights_toggle
+				<= GitHub $mol_link_source uri \https://github.com/Lyumih/dosha
+				<= Logout $mol_button_minor
+					click? <=> logout? null
+					sub / <= Logout_icon $mol_icon_logout
+			spreads *
+				steps <= Steps_page $dosha_client_steps
+					dosha_value? <=> dosha?
+				history <= History_page $dosha_client_history
+				profile <= Profile_page $dosha_client_profile
+				found <= Found_page $dosha_client_found
+				rating <= Rating_page $dosha_client_rating
+				city <= City_page $dosha_client_city
+				chat <= Chat_page $mol_view
+					title \🎭 Чат
+					sub <= chat_pages
+				presentation <= Persentation_page $hyoo_page
+					title \📽 Презентация
+				partners <= Partners_page $dosha_client_partners
+				- Отдельное приложение ДоШа Компания
+				company_page <= Company_page $dosha_company
+					menu_title \🧮 Компания *
