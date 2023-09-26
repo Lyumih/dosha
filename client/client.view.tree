@@ -2,6 +2,7 @@
 $dosha_client $mol_view
 	dosha? 10000
 	auth? true
+	title \👣 ДоШа
 	sub /
 		<= Auth_page $dosha_client_auth
 			login_success? <=> login?
