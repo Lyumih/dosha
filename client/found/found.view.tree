@@ -18,15 +18,18 @@ $dosha_client_found $mol_page
 				<= Found_new*0 $mol_link_iconed
 					title <= found_new_title* \
 					uri <= found_new_uri* \
-		<= Offer_found_form $mol_form
+		<= New_found_form $mol_form
 			form_fields /
-				<= Offer_found_name_field $mol_form_field
+				<= New_found_title_field $mol_form_field
 					name \Имя нового фонда
-					Content <= Offer_found_name $mol_string
-				<= Offer_found_link_field $mol_form_field
+					Content <= New_found_title $mol_string
+						value? <=> new_found_title? \
+				<= New_found_uri_field $mol_form_field
 					name \Ссылка на фонд
-					Content <= Offer_found_link $mol_string
+					Content <= New_found_uri $mol_string
+						value? <=> new_found_uri? \
 			buttons /
-				<= Offer_found_add $mol_button_minor
+				<= New_found_add $mol_button_minor
 					title \Предложить новый фонд
+					click? <=> add_new_found? null
 
