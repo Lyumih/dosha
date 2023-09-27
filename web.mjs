@@ -9448,24 +9448,26 @@ var $;
             obj.text = () => "# Фонды, с которыми мы уже работаем";
             return obj;
         }
-        Liza_alert() {
+        found_active_title(id) {
+            return "";
+        }
+        found_active_uri(id) {
+            return "";
+        }
+        Found_active(id) {
             const obj = new this.$.$mol_link_iconed();
-            obj.title = () => "Лиза Алерт";
-            obj.uri = () => "https://lizaalert.org/";
+            obj.title = () => this.found_active_title(id);
+            obj.uri = () => this.found_active_uri(id);
             return obj;
         }
-        Shag_v_zhizn() {
-            const obj = new this.$.$mol_link_iconed();
-            obj.title = () => "Шаг в жизнь";
-            obj.uri = () => "https://shag-v-zhizn.ru/";
-            return obj;
+        active_founds() {
+            return [
+                this.Found_active("0")
+            ];
         }
         Active_founds() {
             const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Liza_alert(),
-                this.Shag_v_zhizn()
-            ];
+            obj.rows = () => this.active_founds();
             return obj;
         }
         Waiting_founds_label() {
@@ -9473,17 +9475,26 @@ var $;
             obj.text = () => "# Фонды, которые скоро добавим в работу";
             return obj;
         }
-        Chance() {
+        found_new_title(id) {
+            return "";
+        }
+        found_new_uri(id) {
+            return "";
+        }
+        Found_new(id) {
             const obj = new this.$.$mol_link_iconed();
-            obj.title = () => "Подари Шанс";
-            obj.uri = () => "https://chance.su/";
+            obj.title = () => this.found_new_title(id);
+            obj.uri = () => this.found_new_uri(id);
             return obj;
+        }
+        new_founds() {
+            return [
+                this.Found_new("0")
+            ];
         }
         New_founds() {
             const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Chance()
-            ];
+            obj.rows = () => this.new_founds();
             return obj;
         }
         Offer_found_name() {
@@ -9533,11 +9544,8 @@ var $;
         $mol_mem
     ], $dosha_client_found.prototype, "Active_founds_label", null);
     __decorate([
-        $mol_mem
-    ], $dosha_client_found.prototype, "Liza_alert", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_found.prototype, "Shag_v_zhizn", null);
+        $mol_mem_key
+    ], $dosha_client_found.prototype, "Found_active", null);
     __decorate([
         $mol_mem
     ], $dosha_client_found.prototype, "Active_founds", null);
@@ -9545,8 +9553,8 @@ var $;
         $mol_mem
     ], $dosha_client_found.prototype, "Waiting_founds_label", null);
     __decorate([
-        $mol_mem
-    ], $dosha_client_found.prototype, "Chance", null);
+        $mol_mem_key
+    ], $dosha_client_found.prototype, "Found_new", null);
     __decorate([
         $mol_mem
     ], $dosha_client_found.prototype, "New_founds", null);
@@ -9578,7 +9586,33 @@ var $;
     var $$;
     (function ($$) {
         class $dosha_client_found extends $.$dosha_client_found {
+            founds() {
+                const url = 'https://dosha-api-default-rtdb.firebaseio.com/founds.json';
+                const data = $mol_fetch.json(url);
+                return data ?? [];
+            }
+            active_founds() {
+                return this.founds().filter((f) => f.active).map((found) => this.Found_active(found.uri));
+            }
+            found_active_title(id) {
+                return this.founds().find((found) => found.uri === id)?.title || '';
+            }
+            found_active_uri(id) {
+                return this.founds().find((found) => found.uri === id)?.uri || '';
+            }
+            new_founds() {
+                return this.founds().filter((f) => !f.active).map((found) => this.Found_new(found.uri));
+            }
+            found_new_title(id) {
+                return this.founds().find((found) => found.uri === id)?.title || '';
+            }
+            found_new_uri(id) {
+                return this.founds().find((found) => found.uri === id)?.uri || '';
+            }
         }
+        __decorate([
+            $mol_mem
+        ], $dosha_client_found.prototype, "founds", null);
         $$.$dosha_client_found = $dosha_client_found;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

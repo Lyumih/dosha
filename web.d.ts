@@ -2841,11 +2841,16 @@ declare namespace $ {
         You_found(): $$.$mol_text;
         Make_auto(): $mol_button_minor;
         Active_founds_label(): $$.$mol_text;
-        Liza_alert(): $$.$mol_link_iconed;
-        Shag_v_zhizn(): $$.$mol_link_iconed;
+        found_active_title(id: any): string;
+        found_active_uri(id: any): string;
+        Found_active(id: any): $$.$mol_link_iconed;
+        active_founds(): readonly any[];
         Active_founds(): $$.$mol_list;
         Waiting_founds_label(): $$.$mol_text;
-        Chance(): $$.$mol_link_iconed;
+        found_new_title(id: any): string;
+        found_new_uri(id: any): string;
+        Found_new(id: any): $$.$mol_link_iconed;
+        new_founds(): readonly any[];
         New_founds(): $$.$mol_list;
         Offer_found_name(): $$.$mol_string;
         Offer_found_name_field(): $$.$mol_form_field;
@@ -2858,6 +2863,13 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $dosha_client_found extends $.$dosha_client_found {
+        founds(): any;
+        active_founds(): readonly any[];
+        found_active_title(id: any): string;
+        found_active_uri(id: any): string;
+        new_founds(): readonly any[];
+        found_new_title(id: any): string;
+        found_new_uri(id: any): string;
     }
 }
 
