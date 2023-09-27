@@ -2982,24 +2982,29 @@ declare namespace $ {
         Found_new(id: any): $$.$mol_link_iconed;
         new_founds(): readonly any[];
         New_founds(): $$.$mol_list;
-        Offer_found_name(): $$.$mol_string;
-        Offer_found_name_field(): $$.$mol_form_field;
-        Offer_found_link(): $$.$mol_string;
-        Offer_found_link_field(): $$.$mol_form_field;
-        Offer_found_add(): $mol_button_minor;
-        Offer_found_form(): $$.$mol_form;
+        new_found_title(next?: any): string;
+        New_found_title(): $$.$mol_string;
+        New_found_title_field(): $$.$mol_form_field;
+        new_found_uri(next?: any): string;
+        New_found_uri(): $$.$mol_string;
+        New_found_uri_field(): $$.$mol_form_field;
+        add_new_found(next?: any): any;
+        New_found_add(): $mol_button_minor;
+        New_found_form(): $$.$mol_form;
     }
 }
 
 declare namespace $.$$ {
     class $dosha_client_found extends $.$dosha_client_found {
-        founds(): any;
+        founds(): any[];
         active_founds(): readonly any[];
+        new_founds(): readonly any[];
         found_active_title(id: any): string;
         found_active_uri(id: any): string;
-        new_founds(): readonly any[];
         found_new_title(id: any): string;
         found_new_uri(id: any): string;
+        add_new_found(next?: any): void;
+        add_new_found_fetch(title: string, uri: string): void;
     }
 }
 

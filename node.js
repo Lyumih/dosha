@@ -10051,7 +10051,7 @@ var $;
                 this.Active_founds(),
                 this.Waiting_founds_label(),
                 this.New_founds(),
-                this.Offer_found_form()
+                this.New_found_form()
             ];
         }
         you_found() {
@@ -10121,39 +10121,57 @@ var $;
             obj.rows = () => this.new_founds();
             return obj;
         }
-        Offer_found_name() {
+        new_found_title(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        New_found_title() {
             const obj = new this.$.$mol_string();
+            obj.value = (next) => this.new_found_title(next);
             return obj;
         }
-        Offer_found_name_field() {
+        New_found_title_field() {
             const obj = new this.$.$mol_form_field();
             obj.name = () => "Имя нового фонда";
-            obj.Content = () => this.Offer_found_name();
+            obj.Content = () => this.New_found_title();
             return obj;
         }
-        Offer_found_link() {
+        new_found_uri(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        New_found_uri() {
             const obj = new this.$.$mol_string();
+            obj.value = (next) => this.new_found_uri(next);
             return obj;
         }
-        Offer_found_link_field() {
+        New_found_uri_field() {
             const obj = new this.$.$mol_form_field();
             obj.name = () => "Ссылка на фонд";
-            obj.Content = () => this.Offer_found_link();
+            obj.Content = () => this.New_found_uri();
             return obj;
         }
-        Offer_found_add() {
+        add_new_found(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        New_found_add() {
             const obj = new this.$.$mol_button_minor();
             obj.title = () => "Предложить новый фонд";
+            obj.click = (next) => this.add_new_found(next);
             return obj;
         }
-        Offer_found_form() {
+        New_found_form() {
             const obj = new this.$.$mol_form();
             obj.form_fields = () => [
-                this.Offer_found_name_field(),
-                this.Offer_found_link_field()
+                this.New_found_title_field(),
+                this.New_found_uri_field()
             ];
             obj.buttons = () => [
-                this.Offer_found_add()
+                this.New_found_add()
             ];
             return obj;
         }
@@ -10184,22 +10202,31 @@ var $;
     ], $dosha_client_found.prototype, "New_founds", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_found.prototype, "Offer_found_name", null);
+    ], $dosha_client_found.prototype, "new_found_title", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_found.prototype, "Offer_found_name_field", null);
+    ], $dosha_client_found.prototype, "New_found_title", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_found.prototype, "Offer_found_link", null);
+    ], $dosha_client_found.prototype, "New_found_title_field", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_found.prototype, "Offer_found_link_field", null);
+    ], $dosha_client_found.prototype, "new_found_uri", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_found.prototype, "Offer_found_add", null);
+    ], $dosha_client_found.prototype, "New_found_uri", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_found.prototype, "Offer_found_form", null);
+    ], $dosha_client_found.prototype, "New_found_uri_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_found.prototype, "add_new_found", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_found.prototype, "New_found_add", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_found.prototype, "New_found_form", null);
     $.$dosha_client_found = $dosha_client_found;
 })($ || ($ = {}));
 //dosha/client/found/-view.tree/found.view.tree.ts
@@ -10213,10 +10240,15 @@ var $;
             founds() {
                 const url = 'https://dosha-api-default-rtdb.firebaseio.com/founds.json';
                 const data = $mol_fetch.json(url);
-                return data ?? [];
+                console.log(data, [...Object.values(data)]);
+                return [...Object.values(data)] ?? [];
             }
             active_founds() {
-                return this.founds().filter((f) => f.active).map((found) => this.Found_active(found.uri));
+                console.log('active_founds');
+                return this.founds().filter((f) => f.active).map((found) => this.Found_active(found.uri)) || [];
+            }
+            new_founds() {
+                return this.founds().filter((f) => f.uri && f.active !== true).map((found) => this.Found_new(found.uri)) || [];
             }
             found_active_title(id) {
                 return this.founds().find((found) => found.uri === id)?.title || '';
@@ -10224,14 +10256,24 @@ var $;
             found_active_uri(id) {
                 return this.founds().find((found) => found.uri === id)?.uri || '';
             }
-            new_founds() {
-                return this.founds().filter((f) => !f.active).map((found) => this.Found_new(found.uri));
-            }
             found_new_title(id) {
                 return this.founds().find((found) => found.uri === id)?.title || '';
             }
             found_new_uri(id) {
                 return this.founds().find((found) => found.uri === id)?.uri || '';
+            }
+            add_new_found(next) {
+                console.log('test', next);
+                if (this.new_found_title() && this.new_found_uri()) {
+                    this.add_new_found_fetch(this.new_found_title(), this.new_found_uri());
+                }
+            }
+            add_new_found_fetch(title, uri) {
+                const url = 'https://dosha-api-default-rtdb.firebaseio.com/founds.json';
+                const data = $mol_fetch.json(url, {
+                    method: 'POST',
+                    body: JSON.stringify({ title, uri }),
+                });
             }
         }
         __decorate([
