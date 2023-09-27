@@ -10242,27 +10242,31 @@ var $;
             new_founds() {
                 return this.founds().filter((f) => f.uri && f.active !== true).map((found) => this.Found_new(found.uri)) || [];
             }
+            get_found(id) {
+                return this.founds().find((found) => found.uri === id);
+            }
             found_active_title(id) {
-                return this.founds().find((found) => found.uri === id)?.title || '';
+                return this.get_found(id)?.title || '';
             }
             found_active_uri(id) {
-                return this.founds().find((found) => found.uri === id)?.uri || '';
+                return this.get_found(id)?.uri || '';
             }
             found_new_title(id) {
-                return this.founds().find((found) => found.uri === id)?.title || '';
+                return this.get_found(id)?.title || '';
             }
             found_new_uri(id) {
-                return this.founds().find((found) => found.uri === id)?.uri || '';
+                return this.get_found(id)?.uri || '';
             }
             add_new_found(next) {
                 console.log('test', next);
                 if (this.new_found_title() && this.new_found_uri()) {
                     this.add_new_found_fetch(this.new_found_title(), this.new_found_uri());
+                    this.founds();
                 }
             }
             add_new_found_fetch(title, uri) {
                 const url = 'https://dosha-api-default-rtdb.firebaseio.com/founds.json';
-                const data = $mol_fetch.json(url, {
+                $mol_fetch.json(url, {
                     method: 'POST',
                     body: JSON.stringify({ title, uri }),
                 });

@@ -2999,6 +2999,7 @@ declare namespace $.$$ {
         founds(): any[];
         active_founds(): readonly any[];
         new_founds(): readonly any[];
+        get_found(id: string): any;
         found_active_title(id: any): string;
         found_active_uri(id: any): string;
         found_new_title(id: any): string;
