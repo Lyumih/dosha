@@ -39,7 +39,6 @@ namespace $.$$ {
 			console.log( 'test', next )
 			if( this.new_found_title() && this.new_found_uri() ) {
 				this.add_new_found_fetch( this.new_found_title(), this.new_found_uri() )
-				// this.founds()
 			}
 		}
 
