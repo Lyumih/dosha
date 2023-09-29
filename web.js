@@ -10712,33 +10712,88 @@ var $;
         }
         spreads() {
             return {
-                my: this.My(),
-                all: this.All(),
-                create: this.Create()
+                favorite: this.Favorite_page(),
+                all: this.All_page(),
+                constructor: this.Constructor_page(),
+                add: this.Add_page()
             };
         }
-        My() {
-            const obj = new this.$.$mol_page();
+        Favorite_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "Любимые тренировки";
             return obj;
         }
-        All() {
+        Favorite_page() {
             const obj = new this.$.$mol_page();
+            obj.title = () => "Любимые";
+            obj.body = () => [
+                this.Favorite_text()
+            ];
             return obj;
         }
-        Create() {
+        All_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "Список всех тренировок";
+            return obj;
+        }
+        All_page() {
             const obj = new this.$.$mol_page();
+            obj.title = () => "Все";
+            obj.body = () => [
+                this.All_text()
+            ];
+            return obj;
+        }
+        Сonstructor_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "Создай свой конструктор тренировок";
+            return obj;
+        }
+        Constructor_page() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => "Конструктор";
+            obj.body = () => [
+                this.Сonstructor_text()
+            ];
+            return obj;
+        }
+        Add_text() {
+            const obj = new this.$.$mol_text();
+            return obj;
+        }
+        Add_page() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => "Создать";
+            obj.body = () => [
+                this.Add_text()
+            ];
             return obj;
         }
     }
     __decorate([
         $mol_mem
-    ], $dosha_client_training.prototype, "My", null);
+    ], $dosha_client_training.prototype, "Favorite_text", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_training.prototype, "All", null);
+    ], $dosha_client_training.prototype, "Favorite_page", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_training.prototype, "Create", null);
+    ], $dosha_client_training.prototype, "All_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_training.prototype, "All_page", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_training.prototype, "\u0421onstructor_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_training.prototype, "Constructor_page", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_training.prototype, "Add_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_training.prototype, "Add_page", null);
     $.$dosha_client_training = $dosha_client_training;
 })($ || ($ = {}));
 //dosha/client/training/-view.tree/training.view.tree.ts

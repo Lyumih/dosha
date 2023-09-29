@@ -3234,9 +3234,14 @@ declare namespace $ {
         menu_title(): string;
         param(): string;
         spreads(): Record<string, any>;
-        My(): $mol_page;
-        All(): $mol_page;
-        Create(): $mol_page;
+        Favorite_text(): $$.$mol_text;
+        Favorite_page(): $mol_page;
+        All_text(): $$.$mol_text;
+        All_page(): $mol_page;
+        Сonstructor_text(): $$.$mol_text;
+        Constructor_page(): $mol_page;
+        Add_text(): $$.$mol_text;
+        Add_page(): $mol_page;
     }
 }
 

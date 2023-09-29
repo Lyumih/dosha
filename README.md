@@ -1,6 +1,8 @@
 # dosha
 
-ДоШа - Добрый шаги
+ДоШа - Добрый шаг.
+
+Добрый шаг - это как Добрый кола, только благотворительность
 
 Посмотреть работающее приложение можно тут: https://lyumih.github.io/dosha/
 Репозиторий: https://git.codenrock.com/kokoc-2023/cnrprod-team-57549/activity-and-charity
