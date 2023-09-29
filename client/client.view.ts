@@ -7,9 +7,6 @@ namespace $.$$ {
 		logout() {
 			this.auth( false )
 		}
-		login() {
-			this.auth( true )
-		}
 
 		@$mol_mem
 		auth( next?: boolean ) {
