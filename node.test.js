@@ -10283,6 +10283,18 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $dosha_client_training extends $mol_page {
+        title() {
+            return "🏋 Тренировка";
+        }
+    }
+    $.$dosha_client_training = $dosha_client_training;
+})($ || ($ = {}));
+//dosha/client/training/-view.tree/training.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_svg_group extends $mol_svg {
         dom_name() {
             return "g";
@@ -25781,6 +25793,10 @@ var $;
             const obj = new this.$.$dosha_client_found();
             return obj;
         }
+        Training_page() {
+            const obj = new this.$.$dosha_client_training();
+            return obj;
+        }
         Rating_page() {
             const obj = new this.$.$dosha_client_rating();
             return obj;
@@ -25830,6 +25846,7 @@ var $;
                 history: this.History_page(),
                 profile: this.Profile_page(),
                 found: this.Found_page(),
+                training: this.Training_page(),
                 rating: this.Rating_page(),
                 city: this.City_page(),
                 chat: this.Chat_page(),
@@ -25887,6 +25904,9 @@ var $;
     ], $dosha_client.prototype, "Found_page", null);
     __decorate([
         $mol_mem
+    ], $dosha_client.prototype, "Training_page", null);
+    __decorate([
+        $mol_mem
     ], $dosha_client.prototype, "Rating_page", null);
     __decorate([
         $mol_mem
@@ -25934,7 +25954,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("dosha/client/client.view.css", "[dosha_client] {\n\tfont-family: \"TT Commons\",Helvetica,Arial,sans-serif;\n}\n\n[mol_button] {\n\tborder-radius: 2rem;\n}\n");
+    $mol_style_attach("dosha/client/client.view.css", ":root {\n\t--mol_theme_hue: 180deg;\n\t--mol_theme_luma: -1;\n\t--mol_theme_satur: 1;\n\t--mol_theme_image: none;\n}\n\n[dosha_client] {\n\tfont-family: \"TT Commons\",Helvetica,Arial,sans-serif;\n}\n\n[mol_button] {\n\tborder-radius: 2rem;\n\ttext-transform: uppercase;\n\tfont-size: 0.75rem;\n}\n");
 })($ || ($ = {}));
 //dosha/client/-css/client.view.css.ts
 ;

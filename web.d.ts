@@ -2880,6 +2880,12 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $dosha_client_training extends $mol_page {
+        title(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_svg_group extends $mol_svg {
         dom_name(): string;
     }
@@ -6309,6 +6315,7 @@ declare namespace $ {
         History_page(): $dosha_client_history;
         Profile_page(): $dosha_client_profile;
         Found_page(): $$.$dosha_client_found;
+        Training_page(): $dosha_client_training;
         Rating_page(): $dosha_client_rating;
         City_page(): $dosha_client_city;
         Chat_page(): $mol_view;

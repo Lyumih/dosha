@@ -223,6 +223,7 @@
     "$dosha_client_history",
     "$dosha_client_profile",
     "$dosha_client_found",
+    "$dosha_client_training",
     "$dosha_client_rating",
     "$mol_plot_bar",
     "$mol_plot",
