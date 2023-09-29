@@ -1,10 +1,11 @@
 - Страница авторизации. Упрощенная - без востановления пароля и регистрации на данный момент
-$dosha_client_auth $mol_view
+$dosha_client_auth $mol_book2
 	auth? false
-	page \login
 	title \🔐 ДоШа Авторизация
-	sub /
+	pages /
 		<= Login $dosha_client_auth_login
 			login_success? <=> login? null
+			go_registration? <=> go_registration? null
 		<= Registration $dosha_client_auth_registration
-			login_success? <=> login_success? null
+			login_success? <=> login? null
+			go_login? <=> go_login? null
