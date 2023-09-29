@@ -1,7 +1,16 @@
+:root {
+	--mol_theme_hue: 180deg;
+	--mol_theme_luma: -1;
+	--mol_theme_satur: 1;
+	--mol_theme_image: none;
+}
+
 [dosha_client] {
 	font-family: "TT Commons",Helvetica,Arial,sans-serif;
 }
 
 [mol_button] {
 	border-radius: 2rem;
+	text-transform: uppercase;
+	font-size: 0.75rem;
 }

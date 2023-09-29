@@ -28,6 +28,7 @@ $dosha_client $mol_view
 				history <= History_page $dosha_client_history
 				profile <= Profile_page $dosha_client_profile
 				found <= Found_page $dosha_client_found
+				training <= Training_page $dosha_client_training
 				rating <= Rating_page $dosha_client_rating
 				city <= City_page $dosha_client_city
 				chat <= Chat_page $mol_view
