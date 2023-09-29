@@ -8,6 +8,13 @@ $mol_scroll $mol_view
 		^
 		scroll?event <=> event_scroll?event null
 
+$mol_book2 $mol_scroll
+	menu_title \
+	sub <= pages /$mol_view
+	minimal_width 0
+	Placeholder $mol_view
+	Gap* $mol_view title \
+
 $mol_page $mol_view
 	dom_name \article
 	field *
@@ -142,7 +149,22 @@ $mol_button_major $mol_button_typed
 		^
 		mol_theme \$mol_theme_accent
 
-$mol_button_minor $mol_button_typed
+$mol_link $mol_view
+	uri \
+	dom_name \a
+	attr *
+		^
+		href <= uri_toggle \
+		title <= hint_safe <= hint \
+		target <= target \_self
+		download <= file_name \
+		mol_link_current <= current false
+	sub /$mol_view_content
+		<= title
+	arg *
+	event *
+		^
+		click?event <=> click?event <=> event_click?event null
 
 $mol_row $mol_view
 
@@ -162,6 +184,7 @@ $mol_form $mol_list
 - Страница авторизации. Упрощенная - без востановления пароля и регистрации на данный момент
 $dosha_client_auth_login $mol_page
 	login_success? null
+	go_registration? null
 	title \🔐 ДоШа Войти
 	body /
 		<= Login_form $mol_form
@@ -179,12 +202,14 @@ $dosha_client_auth_login $mol_page
 				<= Login $mol_button_major
 					title \Войти
 					click? <=> login_success?
-				<= Registration $mol_button_minor
+				<= Registration $mol_link
 					title \Зарегистрироваться
+					uri \#!page=registration
 
 - Страница регистрации пользователя. Регистрация пользователя - нужна компания, должность, фио, номер телефона, email
 $dosha_client_auth_registration $mol_page
 	login_success? null
+	go_login? null
 	title \🔐 ДоШа Регистрация
 	body /
 		<= Login_form $mol_form
@@ -224,39 +249,24 @@ $dosha_client_auth_registration $mol_page
 				<= Registration $mol_button_major
 					title \Зарегистрироваться
 					click? <=> login_success?
-				<= Login $mol_button_minor
+				<= Login $mol_link
 					title \Войти
+					uri \#!page=login
 
 - Страница авторизации. Упрощенная - без востановления пароля и регистрации на данный момент
-$dosha_client_auth $mol_view
+$dosha_client_auth $mol_book2
 	auth? false
-	page \login
 	title \🔐 ДоШа Авторизация
-	sub /
+	pages /
 		<= Login $dosha_client_auth_login
 			login_success? <=> login? null
+			go_registration? <=> go_registration? null
 		<= Registration $dosha_client_auth_registration
-			login_success? <=> login_success? null
+			login_success? <=> login? null
+			go_login? <=> go_login? null
 
 $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \
-
-$mol_link $mol_view
-	uri \
-	dom_name \a
-	attr *
-		^
-		href <= uri_toggle \
-		title <= hint_safe <= hint \
-		target <= target \_self
-		download <= file_name \
-		mol_link_current <= current false
-	sub /$mol_view_content
-		<= title
-	arg *
-	event *
-		^
-		click?event <=> click?event <=> event_click?event null
 
 $mol_svg $mol_view
 	dom_name \svg
@@ -294,6 +304,8 @@ $mol_link_source $mol_link
 	sub /
 		<= Icon $mol_icon_github_circle
 
+$mol_button_minor $mol_button_typed
+
 $mol_check $mol_button_minor
 	attr *
 		^
@@ -317,13 +329,6 @@ $mol_lights_toggle $mol_check_icon
 	checked? <=> lights? false
 
 $mol_icon_logout $mol_icon path \M16,17V14H9V10H16V7L21,12L16,17M14,2C15.1,2 16,2.9 16,4V6H14V4H5V20H14V18H16V20C16,21.1 15.1,22 14,22H5C3.9,22 3,21.1 3,20V4C3,2.9 3.9,2 5,2H14Z
-
-$mol_book2 $mol_scroll
-	menu_title \
-	sub <= pages /$mol_view
-	minimal_width 0
-	Placeholder $mol_view
-	Gap* $mol_view title \
 
 $mol_pop $mol_view
 	showed? false

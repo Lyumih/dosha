@@ -2773,6 +2773,106 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_book2 extends $mol_scroll {
+        menu_title() {
+            return "";
+        }
+        sub() {
+            return this.pages();
+        }
+        minimal_width() {
+            return 0;
+        }
+        Placeholder() {
+            const obj = new this.$.$mol_view();
+            return obj;
+        }
+        Gap(id) {
+            const obj = new this.$.$mol_view();
+            obj.title = () => "";
+            return obj;
+        }
+        pages() {
+            return [];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_book2.prototype, "Placeholder", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_book2.prototype, "Gap", null);
+    $.$mol_book2 = $mol_book2;
+})($ || ($ = {}));
+//mol/book2/-view.tree/book2.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_mem_cached = $mol_wire_probe;
+})($ || ($ = {}));
+//mol/mem/cached/cached.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_book2 extends $.$mol_book2 {
+            title() {
+                return this.pages().map(page => {
+                    try {
+                        return page?.title();
+                    }
+                    catch (error) {
+                        $mol_fail_log(error);
+                    }
+                }).reverse().filter(Boolean).join(' | ');
+            }
+            menu_title() {
+                return this.pages()[0]?.title() || this.title();
+            }
+            sub() {
+                const next = [...this.pages(), this.Placeholder()];
+                const prev = $mol_mem_cached(() => this.sub()) ?? [];
+                for (let i = 1; i++;) {
+                    const p = prev[prev.length - i];
+                    const n = next[next.length - i];
+                    if (!n)
+                        break;
+                    if (p === n)
+                        continue;
+                    n.bring();
+                    break;
+                }
+                return next;
+            }
+            bring() {
+                const pages = this.pages();
+                if (pages.length)
+                    pages[pages.length - 1].bring();
+                else
+                    super.bring();
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_book2.prototype, "sub", null);
+        $$.$mol_book2 = $mol_book2;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/book2/book2.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_line); */\n\t/* transform: translateZ(0); */\n\ttransition: none;\n\toverflow: overlay;\n\tscroll-snap-type: x mandatory;\n\tpadding: 0 1px;\n\tscroll-padding: 0 1px;\n\tgap: 1px;\n}\n\n[mol_book2] > * {\n/* \tflex: none; */\n\tscroll-snap-stop: always;\n\tscroll-snap-align: end;\n\tposition: relative;\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n\tflex-shrink: 0;\n}\n\n[mol_book2] > *:not(:first-of-type):before,\n[mol_book2] > *:not(:last-of-type)::after {\n\tcontent: '';\n\tposition: absolute;\n\ttop: 1.5rem;\n\twidth: 1px;\n\theight: 1rem;\n\tbackground: var(--mol_theme_focus);\n\tborder-radius: var(--mol_gap_round);\n\topacity: .5;\n}\n[mol_book2] > *:not(:first-of-type):before {\n\tleft: -1px;\n}\n[mol_book2] > *:not(:last-of-type)::after {\n\tright: -1px;\n}\n\n:where([mol_book2]) > * {\n\tbackground-color: var(--mol_theme_card);\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_back); */\n}\n\n[mol_book2] > [mol_book2] {\n\tdisplay: contents;\n}\n\n[mol_book2] > *:first-child {\n\tscroll-snap-align: start;\n}\n\n[mol_book2] > [mol_view] {\n\ttransform: none; /* prevent content clipping */\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\tbackground: none;\n}\n\n[mol_book2_gap] {\n\tbackground: none;\n\tflex-grow: 1;\n\tscroll-snap-align: none;\n\tmargin-right: -1px;\n\tbox-shadow: none;\n}\n\n[mol_book2_gap]::before,\n[mol_book2_gap]::after {\n\tdisplay: none;\n}\n");
+})($ || ($ = {}));
+//mol/book2/-css/book2.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_page extends $mol_view {
         dom_name() {
             return "article";
@@ -3478,13 +3578,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_mem_cached = $mol_wire_probe;
-})($ || ($ = {}));
-//mol/mem/cached/cached.ts
-;
-"use strict";
-var $;
-(function ($) {
     var $$;
     (function ($$) {
         class $mol_list extends $.$mol_list {
@@ -3992,659 +4085,70 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_button_minor extends $mol_button_typed {
-    }
-    $.$mol_button_minor = $mol_button_minor;
-})($ || ($ = {}));
-//mol/button/minor/-view.tree/minor.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/minor/minor.view.css", "[mol_button_minor] {\n\tcolor: var(--mol_theme_control);\n}\n\n[mol_button_minor][disabled] {\n\tcolor: var(--mol_theme_shade);\n}\n");
-})($ || ($ = {}));
-//mol/button/minor/-css/minor.view.css.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_row extends $mol_view {
-    }
-    $.$mol_row = $mol_row;
-})($ || ($ = {}));
-//mol/row/-view.tree/row.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: var(--mol_gap_block);\n\tgap: var(--mol_gap_block);\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmax-width: 100%;\n}\n");
-})($ || ($ = {}));
-//mol/row/-css/row.view.css.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_form extends $mol_list {
-        submit_allowed() {
-            return true;
+    class $mol_link extends $mol_view {
+        uri() {
+            return "";
         }
-        submit_blocked() {
-            return false;
+        dom_name() {
+            return "a";
+        }
+        attr() {
+            return {
+                ...super.attr(),
+                href: this.uri_toggle(),
+                title: this.hint_safe(),
+                target: this.target(),
+                download: this.file_name(),
+                mol_link_current: this.current()
+            };
+        }
+        sub() {
+            return [
+                this.title()
+            ];
+        }
+        arg() {
+            return {};
         }
         event() {
             return {
                 ...super.event(),
-                keydown: (event) => this.keydown(event)
+                click: (event) => this.click(event)
             };
         }
-        submit(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        rows() {
-            return [
-                this.Body(),
-                this.Foot()
-            ];
-        }
-        keydown(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        form_fields() {
-            return [];
-        }
-        body() {
-            return this.form_fields();
-        }
-        Body() {
-            const obj = new this.$.$mol_list();
-            obj.sub = () => this.body();
-            return obj;
-        }
-        buttons() {
-            return [];
-        }
-        foot() {
-            return this.buttons();
-        }
-        Foot() {
-            const obj = new this.$.$mol_row();
-            obj.sub = () => this.foot();
-            return obj;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_form.prototype, "submit", null);
-    __decorate([
-        $mol_mem
-    ], $mol_form.prototype, "keydown", null);
-    __decorate([
-        $mol_mem
-    ], $mol_form.prototype, "Body", null);
-    __decorate([
-        $mol_mem
-    ], $mol_form.prototype, "Foot", null);
-    $.$mol_form = $mol_form;
-})($ || ($ = {}));
-//mol/form/-view.tree/form.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_form extends $.$mol_form {
-            form_fields() {
-                return [...this.view_find(view => view instanceof $mol_form_field)]
-                    .map(path => path[path.length - 1]);
-            }
-            submit_allowed() {
-                return this.form_fields().every(field => !field.bid());
-            }
-            submit_blocked() {
-                return !this.submit_allowed();
-            }
-            keydown(next) {
-                if (next.ctrlKey && next.keyCode === $mol_keyboard_code.enter && !this.submit_blocked())
-                    this.submit(event);
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_form.prototype, "form_fields", null);
-        __decorate([
-            $mol_mem
-        ], $mol_form.prototype, "submit_allowed", null);
-        $$.$mol_form = $mol_form;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//mol/form/form.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/form/form.view.css", "[mol_form] {\r\n\tgap: var(--mol_gap_block);\r\n}\r\n\r\n[mol_form_body] {\r\n\tgap: var(--mol_gap_block);\r\n}");
-})($ || ($ = {}));
-//mol/form/-css/form.view.css.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $dosha_client_auth_login extends $mol_page {
-        login_success(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
-        title() {
-            return "🔐 ДоШа Войти";
-        }
-        body() {
-            return [
-                this.Login_form()
-            ];
-        }
-        login(next) {
-            if (next !== undefined)
-                return next;
+        uri_toggle() {
             return "";
         }
-        Login_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.login(next);
-            return obj;
-        }
-        Login_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Логин";
-            obj.Content = () => this.Login_control();
-            return obj;
-        }
-        password(next) {
-            if (next !== undefined)
-                return next;
+        hint() {
             return "";
         }
-        Password_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.password(next);
-            obj.type = () => "password";
-            return obj;
+        hint_safe() {
+            return this.hint();
         }
-        Password_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Пароль";
-            obj.Content = () => this.Password_control();
-            return obj;
+        target() {
+            return "_self";
         }
-        Login() {
-            const obj = new this.$.$mol_button_major();
-            obj.title = () => "Войти";
-            obj.click = (next) => this.login_success(next);
-            return obj;
-        }
-        Registration() {
-            const obj = new this.$.$mol_button_minor();
-            obj.title = () => "Зарегистрироваться";
-            return obj;
-        }
-        Login_form() {
-            const obj = new this.$.$mol_form();
-            obj.form_fields = () => [
-                this.Login_field(),
-                this.Password_field()
-            ];
-            obj.buttons = () => [
-                this.Login(),
-                this.Registration()
-            ];
-            return obj;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_login.prototype, "login_success", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_login.prototype, "login", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_login.prototype, "Login_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_login.prototype, "Login_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_login.prototype, "password", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_login.prototype, "Password_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_login.prototype, "Password_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_login.prototype, "Login", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_login.prototype, "Registration", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_login.prototype, "Login_form", null);
-    $.$dosha_client_auth_login = $dosha_client_auth_login;
-})($ || ($ = {}));
-//dosha/client/auth/login/-view.tree/login.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $dosha_client_auth_registration extends $mol_page {
-        login_success(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
-        title() {
-            return "🔐 ДоШа Регистрация";
-        }
-        body() {
-            return [
-                this.Login_form()
-            ];
-        }
-        login(next) {
-            if (next !== undefined)
-                return next;
+        file_name() {
             return "";
         }
-        Login_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.login(next);
-            return obj;
-        }
-        Login_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Логин";
-            obj.Content = () => this.Login_control();
-            return obj;
-        }
-        password(next) {
-            if (next !== undefined)
-                return next;
-            return "";
-        }
-        Password_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.password(next);
-            obj.type = () => "password";
-            return obj;
-        }
-        Password_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Пароль";
-            obj.Content = () => this.Password_control();
-            return obj;
-        }
-        company(next) {
-            if (next !== undefined)
-                return next;
-            return "";
-        }
-        Company_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.company(next);
-            return obj;
-        }
-        Company_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Компания";
-            obj.Content = () => this.Company_control();
-            return obj;
-        }
-        department(next) {
-            if (next !== undefined)
-                return next;
-            return "";
-        }
-        Department_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.department(next);
-            return obj;
-        }
-        Department_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Отдел";
-            obj.Content = () => this.Department_control();
-            return obj;
-        }
-        fio(next) {
-            if (next !== undefined)
-                return next;
-            return "";
-        }
-        Fio_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.fio(next);
-            return obj;
-        }
-        Fio_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "ФИО";
-            obj.Content = () => this.Fio_control();
-            return obj;
-        }
-        phone(next) {
-            if (next !== undefined)
-                return next;
-            return "";
-        }
-        Phone_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.phone(next);
-            obj.type = () => "phone";
-            return obj;
-        }
-        Phone_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Номер телефона";
-            obj.Content = () => this.Phone_control();
-            return obj;
-        }
-        email(next) {
-            if (next !== undefined)
-                return next;
-            return "";
-        }
-        Email_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.email(next);
-            obj.type = () => "email";
-            return obj;
-        }
-        Email_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Email";
-            obj.Content = () => this.Email_control();
-            return obj;
-        }
-        Registration() {
-            const obj = new this.$.$mol_button_major();
-            obj.title = () => "Зарегистрироваться";
-            obj.click = (next) => this.login_success(next);
-            return obj;
-        }
-        Login() {
-            const obj = new this.$.$mol_button_minor();
-            obj.title = () => "Войти";
-            return obj;
-        }
-        Login_form() {
-            const obj = new this.$.$mol_form();
-            obj.form_fields = () => [
-                this.Login_field(),
-                this.Password_field(),
-                this.Company_field(),
-                this.Department_field(),
-                this.Fio_field(),
-                this.Phone_field(),
-                this.Email_field()
-            ];
-            obj.buttons = () => [
-                this.Registration(),
-                this.Login()
-            ];
-            return obj;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "login_success", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "login", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Login_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Login_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "password", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Password_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Password_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "company", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Company_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Company_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "department", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Department_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Department_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "fio", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Fio_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Fio_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "phone", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Phone_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Phone_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "email", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Email_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Email_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Registration", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Login", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Login_form", null);
-    $.$dosha_client_auth_registration = $dosha_client_auth_registration;
-})($ || ($ = {}));
-//dosha/client/auth/registration/-view.tree/registration.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $dosha_client_auth extends $mol_view {
-        auth(next) {
-            if (next !== undefined)
-                return next;
+        current() {
             return false;
         }
-        page() {
-            return "login";
-        }
-        title() {
-            return "🔐 ДоШа Авторизация";
-        }
-        sub() {
-            return [
-                this.Login(),
-                this.Registration()
-            ];
-        }
-        login(next) {
-            if (next !== undefined)
-                return next;
+        event_click(event) {
+            if (event !== undefined)
+                return event;
             return null;
         }
-        Login() {
-            const obj = new this.$.$dosha_client_auth_login();
-            obj.login_success = (next) => this.login(next);
-            return obj;
-        }
-        login_success(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
-        Registration() {
-            const obj = new this.$.$dosha_client_auth_registration();
-            obj.login_success = (next) => this.login_success(next);
-            return obj;
+        click(event) {
+            return this.event_click(event);
         }
     }
     __decorate([
         $mol_mem
-    ], $dosha_client_auth.prototype, "auth", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth.prototype, "login", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth.prototype, "Login", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth.prototype, "login_success", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth.prototype, "Registration", null);
-    $.$dosha_client_auth = $dosha_client_auth;
+    ], $mol_link.prototype, "event_click", null);
+    $.$mol_link = $mol_link;
 })($ || ($ = {}));
-//dosha/client/auth/-view.tree/auth.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_state_local extends $mol_object {
-        static 'native()';
-        static native() {
-            if (this['native()'])
-                return this['native()'];
-            check: try {
-                const native = $mol_dom_context.localStorage;
-                if (!native)
-                    break check;
-                native.setItem('', '');
-                native.removeItem('');
-                return this['native()'] = native;
-            }
-            catch (error) {
-                console.warn(error);
-            }
-            return this['native()'] = {
-                getItem(key) {
-                    return this[':' + key];
-                },
-                setItem(key, value) {
-                    this[':' + key] = value;
-                },
-                removeItem(key) {
-                    this[':' + key] = void 0;
-                }
-            };
-        }
-        static changes(next) { return next; }
-        static value(key, next) {
-            this.changes();
-            if (next === void 0)
-                return JSON.parse(this.native().getItem(key) || 'null');
-            if (next === null)
-                this.native().removeItem(key);
-            else
-                this.native().setItem(key, JSON.stringify(next));
-            return next;
-        }
-        prefix() { return ''; }
-        value(key, next) {
-            return $mol_state_local.value(this.prefix() + '.' + key, next);
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_state_local, "changes", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_local, "value", null);
-    $.$mol_state_local = $mol_state_local;
-})($ || ($ = {}));
-//mol/state/local/local.ts
-;
-"use strict";
-var $;
-(function ($) {
-    self.addEventListener('storage', event => $.$mol_state_local.changes(event));
-})($ || ($ = {}));
-//mol/state/local/local.web.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $dosha_client_auth extends $.$dosha_client_auth {
-            logout() {
-                this.auth(false);
-            }
-            login() {
-                console.log('login');
-                this.auth(true);
-            }
-            auth(next) {
-                return this.$.$mol_state_local.value('auth', next) ?? false;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $dosha_client_auth.prototype, "auth", null);
-        $$.$dosha_client_auth = $dosha_client_auth;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//dosha/client/auth/auth.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_theme_auto extends $mol_plugin {
-        attr() {
-            return {
-                mol_theme: this.theme()
-            };
-        }
-        theme() {
-            return "";
-        }
-    }
-    $.$mol_theme_auto = $mol_theme_auto;
-})($ || ($ = {}));
-//mol/theme/auto/-view.tree/auto.view.tree.ts
+//mol/link/-view.tree/link.view.tree.ts
 ;
 "use strict";
 //mol/state/arg/arg.ts
@@ -4791,119 +4295,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function parse(theme) {
-        if (theme === 'true')
-            return true;
-        if (theme === 'false')
-            return false;
-        return null;
-    }
-    function $mol_lights(next) {
-        const arg = parse(this.$mol_state_arg.value('mol_lights'));
-        const base = false;
-        if (next === undefined) {
-            return arg ?? this.$mol_state_local.value('$mol_lights') ?? base;
-        }
-        else {
-            if (arg === null) {
-                this.$mol_state_local.value('$mol_lights', next === base ? null : next);
-            }
-            else {
-                this.$mol_state_arg.value('mol_lights', String(next));
-            }
-            return next;
-        }
-    }
-    $.$mol_lights = $mol_lights;
-})($ || ($ = {}));
-//mol/lights/lights.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_theme_auto extends $.$mol_theme_auto {
-            theme() {
-                return this.$.$mol_lights() ? '$mol_theme_light' : '$mol_theme_dark';
-            }
-        }
-        $$.$mol_theme_auto = $mol_theme_auto;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//mol/theme/auto/auto.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_link extends $mol_view {
-        uri() {
-            return "";
-        }
-        dom_name() {
-            return "a";
-        }
-        attr() {
-            return {
-                ...super.attr(),
-                href: this.uri_toggle(),
-                title: this.hint_safe(),
-                target: this.target(),
-                download: this.file_name(),
-                mol_link_current: this.current()
-            };
-        }
-        sub() {
-            return [
-                this.title()
-            ];
-        }
-        arg() {
-            return {};
-        }
-        event() {
-            return {
-                ...super.event(),
-                click: (event) => this.click(event)
-            };
-        }
-        uri_toggle() {
-            return "";
-        }
-        hint() {
-            return "";
-        }
-        hint_safe() {
-            return this.hint();
-        }
-        target() {
-            return "_self";
-        }
-        file_name() {
-            return "";
-        }
-        current() {
-            return false;
-        }
-        event_click(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        click(event) {
-            return this.event_click(event);
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_link.prototype, "event_click", null);
-    $.$mol_link = $mol_link;
-})($ || ($ = {}));
-//mol/link/-view.tree/link.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
     var $$;
     (function ($$) {
         class $mol_link extends $.$mol_link {
@@ -5028,6 +4419,722 @@ var $;
     });
 })($ || ($ = {}));
 //mol/link/link.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_row extends $mol_view {
+    }
+    $.$mol_row = $mol_row;
+})($ || ($ = {}));
+//mol/row/-view.tree/row.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: var(--mol_gap_block);\n\tgap: var(--mol_gap_block);\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmax-width: 100%;\n}\n");
+})($ || ($ = {}));
+//mol/row/-css/row.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_form extends $mol_list {
+        submit_allowed() {
+            return true;
+        }
+        submit_blocked() {
+            return false;
+        }
+        event() {
+            return {
+                ...super.event(),
+                keydown: (event) => this.keydown(event)
+            };
+        }
+        submit(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        rows() {
+            return [
+                this.Body(),
+                this.Foot()
+            ];
+        }
+        keydown(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        form_fields() {
+            return [];
+        }
+        body() {
+            return this.form_fields();
+        }
+        Body() {
+            const obj = new this.$.$mol_list();
+            obj.sub = () => this.body();
+            return obj;
+        }
+        buttons() {
+            return [];
+        }
+        foot() {
+            return this.buttons();
+        }
+        Foot() {
+            const obj = new this.$.$mol_row();
+            obj.sub = () => this.foot();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_form.prototype, "submit", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form.prototype, "keydown", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form.prototype, "Body", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form.prototype, "Foot", null);
+    $.$mol_form = $mol_form;
+})($ || ($ = {}));
+//mol/form/-view.tree/form.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_form extends $.$mol_form {
+            form_fields() {
+                return [...this.view_find(view => view instanceof $mol_form_field)]
+                    .map(path => path[path.length - 1]);
+            }
+            submit_allowed() {
+                return this.form_fields().every(field => !field.bid());
+            }
+            submit_blocked() {
+                return !this.submit_allowed();
+            }
+            keydown(next) {
+                if (next.ctrlKey && next.keyCode === $mol_keyboard_code.enter && !this.submit_blocked())
+                    this.submit(event);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_form.prototype, "form_fields", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form.prototype, "submit_allowed", null);
+        $$.$mol_form = $mol_form;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/form/form.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/form/form.view.css", "[mol_form] {\r\n\tgap: var(--mol_gap_block);\r\n}\r\n\r\n[mol_form_body] {\r\n\tgap: var(--mol_gap_block);\r\n}");
+})($ || ($ = {}));
+//mol/form/-css/form.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $dosha_client_auth_login extends $mol_page {
+        login_success(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        go_registration(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        title() {
+            return "🔐 ДоШа Войти";
+        }
+        body() {
+            return [
+                this.Login_form()
+            ];
+        }
+        login(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Login_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.login(next);
+            return obj;
+        }
+        Login_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Логин";
+            obj.Content = () => this.Login_control();
+            return obj;
+        }
+        password(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Password_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.password(next);
+            obj.type = () => "password";
+            return obj;
+        }
+        Password_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Пароль";
+            obj.Content = () => this.Password_control();
+            return obj;
+        }
+        Login() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Войти";
+            obj.click = (next) => this.login_success(next);
+            return obj;
+        }
+        Registration() {
+            const obj = new this.$.$mol_link();
+            obj.title = () => "Зарегистрироваться";
+            obj.uri = () => "#!page=registration";
+            return obj;
+        }
+        Login_form() {
+            const obj = new this.$.$mol_form();
+            obj.form_fields = () => [
+                this.Login_field(),
+                this.Password_field()
+            ];
+            obj.buttons = () => [
+                this.Login(),
+                this.Registration()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "login_success", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "go_registration", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "login", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Login_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Login_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "password", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Password_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Password_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Login", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Registration", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Login_form", null);
+    $.$dosha_client_auth_login = $dosha_client_auth_login;
+})($ || ($ = {}));
+//dosha/client/auth/login/-view.tree/login.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $dosha_client_auth_registration extends $mol_page {
+        login_success(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        go_login(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        title() {
+            return "🔐 ДоШа Регистрация";
+        }
+        body() {
+            return [
+                this.Login_form()
+            ];
+        }
+        login(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Login_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.login(next);
+            return obj;
+        }
+        Login_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Логин";
+            obj.Content = () => this.Login_control();
+            return obj;
+        }
+        password(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Password_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.password(next);
+            obj.type = () => "password";
+            return obj;
+        }
+        Password_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Пароль";
+            obj.Content = () => this.Password_control();
+            return obj;
+        }
+        company(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Company_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.company(next);
+            return obj;
+        }
+        Company_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Компания";
+            obj.Content = () => this.Company_control();
+            return obj;
+        }
+        department(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Department_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.department(next);
+            return obj;
+        }
+        Department_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Отдел";
+            obj.Content = () => this.Department_control();
+            return obj;
+        }
+        fio(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Fio_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.fio(next);
+            return obj;
+        }
+        Fio_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "ФИО";
+            obj.Content = () => this.Fio_control();
+            return obj;
+        }
+        phone(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Phone_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.phone(next);
+            obj.type = () => "phone";
+            return obj;
+        }
+        Phone_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Номер телефона";
+            obj.Content = () => this.Phone_control();
+            return obj;
+        }
+        email(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Email_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.email(next);
+            obj.type = () => "email";
+            return obj;
+        }
+        Email_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Email";
+            obj.Content = () => this.Email_control();
+            return obj;
+        }
+        Registration() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Зарегистрироваться";
+            obj.click = (next) => this.login_success(next);
+            return obj;
+        }
+        Login() {
+            const obj = new this.$.$mol_link();
+            obj.title = () => "Войти";
+            obj.uri = () => "#!page=login";
+            return obj;
+        }
+        Login_form() {
+            const obj = new this.$.$mol_form();
+            obj.form_fields = () => [
+                this.Login_field(),
+                this.Password_field(),
+                this.Company_field(),
+                this.Department_field(),
+                this.Fio_field(),
+                this.Phone_field(),
+                this.Email_field()
+            ];
+            obj.buttons = () => [
+                this.Registration(),
+                this.Login()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "login_success", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "go_login", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "login", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Login_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Login_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "password", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Password_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Password_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "company", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Company_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Company_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "department", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Department_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Department_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "fio", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Fio_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Fio_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "phone", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Phone_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Phone_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "email", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Email_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Email_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Registration", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Login", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Login_form", null);
+    $.$dosha_client_auth_registration = $dosha_client_auth_registration;
+})($ || ($ = {}));
+//dosha/client/auth/registration/-view.tree/registration.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $dosha_client_auth extends $mol_book2 {
+        auth(next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        title() {
+            return "🔐 ДоШа Авторизация";
+        }
+        pages() {
+            return [
+                this.Login(),
+                this.Registration()
+            ];
+        }
+        login(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        go_registration(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Login() {
+            const obj = new this.$.$dosha_client_auth_login();
+            obj.login_success = (next) => this.login(next);
+            obj.go_registration = (next) => this.go_registration(next);
+            return obj;
+        }
+        go_login(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Registration() {
+            const obj = new this.$.$dosha_client_auth_registration();
+            obj.login_success = (next) => this.login(next);
+            obj.go_login = (next) => this.go_login(next);
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth.prototype, "auth", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth.prototype, "login", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth.prototype, "go_registration", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth.prototype, "Login", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth.prototype, "go_login", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth.prototype, "Registration", null);
+    $.$dosha_client_auth = $dosha_client_auth;
+})($ || ($ = {}));
+//dosha/client/auth/-view.tree/auth.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_state_local extends $mol_object {
+        static 'native()';
+        static native() {
+            if (this['native()'])
+                return this['native()'];
+            check: try {
+                const native = $mol_dom_context.localStorage;
+                if (!native)
+                    break check;
+                native.setItem('', '');
+                native.removeItem('');
+                return this['native()'] = native;
+            }
+            catch (error) {
+                console.warn(error);
+            }
+            return this['native()'] = {
+                getItem(key) {
+                    return this[':' + key];
+                },
+                setItem(key, value) {
+                    this[':' + key] = value;
+                },
+                removeItem(key) {
+                    this[':' + key] = void 0;
+                }
+            };
+        }
+        static changes(next) { return next; }
+        static value(key, next) {
+            this.changes();
+            if (next === void 0)
+                return JSON.parse(this.native().getItem(key) || 'null');
+            if (next === null)
+                this.native().removeItem(key);
+            else
+                this.native().setItem(key, JSON.stringify(next));
+            return next;
+        }
+        prefix() { return ''; }
+        value(key, next) {
+            return $mol_state_local.value(this.prefix() + '.' + key, next);
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_state_local, "changes", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_local, "value", null);
+    $.$mol_state_local = $mol_state_local;
+})($ || ($ = {}));
+//mol/state/local/local.ts
+;
+"use strict";
+var $;
+(function ($) {
+    self.addEventListener('storage', event => $.$mol_state_local.changes(event));
+})($ || ($ = {}));
+//mol/state/local/local.web.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $dosha_client_auth extends $.$dosha_client_auth {
+            logout() {
+                $mol_state_arg.value('page', "login");
+                this.auth(false);
+            }
+            login() {
+                $mol_state_arg.value('page', null);
+                this.auth(true);
+            }
+            pages() {
+                const page = $mol_state_arg.value('page');
+                return page === 'registration' ? [this.Registration()] : [this.Login()];
+            }
+            auth(next) {
+                return this.$.$mol_state_local.value('auth', next) ?? false;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $dosha_client_auth.prototype, "auth", null);
+        $$.$dosha_client_auth = $dosha_client_auth;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//dosha/client/auth/auth.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_theme_auto extends $mol_plugin {
+        attr() {
+            return {
+                mol_theme: this.theme()
+            };
+        }
+        theme() {
+            return "";
+        }
+    }
+    $.$mol_theme_auto = $mol_theme_auto;
+})($ || ($ = {}));
+//mol/theme/auto/-view.tree/auto.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function parse(theme) {
+        if (theme === 'true')
+            return true;
+        if (theme === 'false')
+            return false;
+        return null;
+    }
+    function $mol_lights(next) {
+        const arg = parse(this.$mol_state_arg.value('mol_lights'));
+        const base = false;
+        if (next === undefined) {
+            return arg ?? this.$mol_state_local.value('$mol_lights') ?? base;
+        }
+        else {
+            if (arg === null) {
+                this.$mol_state_local.value('$mol_lights', next === base ? null : next);
+            }
+            else {
+                this.$mol_state_arg.value('mol_lights', String(next));
+            }
+            return next;
+        }
+    }
+    $.$mol_lights = $mol_lights;
+})($ || ($ = {}));
+//mol/lights/lights.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_theme_auto extends $.$mol_theme_auto {
+            theme() {
+                return this.$.$mol_lights() ? '$mol_theme_light' : '$mol_theme_dark';
+            }
+        }
+        $$.$mol_theme_auto = $mol_theme_auto;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/theme/auto/auto.view.ts
 ;
 "use strict";
 //mol/charset/encoding/encoding.ts
@@ -5866,6 +5973,22 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_button_minor extends $mol_button_typed {
+    }
+    $.$mol_button_minor = $mol_button_minor;
+})($ || ($ = {}));
+//mol/button/minor/-view.tree/minor.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/minor/minor.view.css", "[mol_button_minor] {\n\tcolor: var(--mol_theme_control);\n}\n\n[mol_button_minor][disabled] {\n\tcolor: var(--mol_theme_shade);\n}\n");
+})($ || ($ = {}));
+//mol/button/minor/-css/minor.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_check extends $mol_button_minor {
         attr() {
             return {
@@ -6046,99 +6169,6 @@ var $;
     $.$mol_icon_logout = $mol_icon_logout;
 })($ || ($ = {}));
 //mol/icon/logout/-view.tree/logout.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_book2 extends $mol_scroll {
-        menu_title() {
-            return "";
-        }
-        sub() {
-            return this.pages();
-        }
-        minimal_width() {
-            return 0;
-        }
-        Placeholder() {
-            const obj = new this.$.$mol_view();
-            return obj;
-        }
-        Gap(id) {
-            const obj = new this.$.$mol_view();
-            obj.title = () => "";
-            return obj;
-        }
-        pages() {
-            return [];
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_book2.prototype, "Placeholder", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_book2.prototype, "Gap", null);
-    $.$mol_book2 = $mol_book2;
-})($ || ($ = {}));
-//mol/book2/-view.tree/book2.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_book2 extends $.$mol_book2 {
-            title() {
-                return this.pages().map(page => {
-                    try {
-                        return page?.title();
-                    }
-                    catch (error) {
-                        $mol_fail_log(error);
-                    }
-                }).reverse().filter(Boolean).join(' | ');
-            }
-            menu_title() {
-                return this.pages()[0]?.title() || this.title();
-            }
-            sub() {
-                const next = [...this.pages(), this.Placeholder()];
-                const prev = $mol_mem_cached(() => this.sub()) ?? [];
-                for (let i = 1; i++;) {
-                    const p = prev[prev.length - i];
-                    const n = next[next.length - i];
-                    if (!n)
-                        break;
-                    if (p === n)
-                        continue;
-                    n.bring();
-                    break;
-                }
-                return next;
-            }
-            bring() {
-                const pages = this.pages();
-                if (pages.length)
-                    pages[pages.length - 1].bring();
-                else
-                    super.bring();
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_book2.prototype, "sub", null);
-        $$.$mol_book2 = $mol_book2;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//mol/book2/book2.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_line); */\n\t/* transform: translateZ(0); */\n\ttransition: none;\n\toverflow: overlay;\n\tscroll-snap-type: x mandatory;\n\tpadding: 0 1px;\n\tscroll-padding: 0 1px;\n\tgap: 1px;\n}\n\n[mol_book2] > * {\n/* \tflex: none; */\n\tscroll-snap-stop: always;\n\tscroll-snap-align: end;\n\tposition: relative;\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n\tflex-shrink: 0;\n}\n\n[mol_book2] > *:not(:first-of-type):before,\n[mol_book2] > *:not(:last-of-type)::after {\n\tcontent: '';\n\tposition: absolute;\n\ttop: 1.5rem;\n\twidth: 1px;\n\theight: 1rem;\n\tbackground: var(--mol_theme_focus);\n\tborder-radius: var(--mol_gap_round);\n\topacity: .5;\n}\n[mol_book2] > *:not(:first-of-type):before {\n\tleft: -1px;\n}\n[mol_book2] > *:not(:last-of-type)::after {\n\tright: -1px;\n}\n\n:where([mol_book2]) > * {\n\tbackground-color: var(--mol_theme_card);\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_back); */\n}\n\n[mol_book2] > [mol_book2] {\n\tdisplay: contents;\n}\n\n[mol_book2] > *:first-child {\n\tscroll-snap-align: start;\n}\n\n[mol_book2] > [mol_view] {\n\ttransform: none; /* prevent content clipping */\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\tbackground: none;\n}\n\n[mol_book2_gap] {\n\tbackground: none;\n\tflex-grow: 1;\n\tscroll-snap-align: none;\n\tmargin-right: -1px;\n\tbox-shadow: none;\n}\n\n[mol_book2_gap]::before,\n[mol_book2_gap]::after {\n\tdisplay: none;\n}\n");
-})($ || ($ = {}));
-//mol/book2/-css/book2.view.css.ts
 ;
 "use strict";
 var $;
