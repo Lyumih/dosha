@@ -744,8 +744,138 @@ $dosha_client_found $mol_page
 					click? <=> add_new_found? null
 
 
-$dosha_client_training $mol_page
-	title \🏋 Тренировка
+$mol_book2 $mol_scroll
+	menu_title \
+	sub <= pages /$mol_view
+	minimal_width 0
+	Placeholder $mol_view
+	Gap* $mol_view title \
+
+$mol_pop $mol_view
+	showed? false
+	align_vert \
+	align_hor \
+	prefer \vert
+	sub /
+		<= Anchor null
+	sub_visible /
+		<= Anchor
+		<= Bubble $mol_pop_bubble
+			align <= align \bottom_center
+			content <= bubble_content /$mol_view_content
+			height_max <= height_max 9999
+
+$mol_pop_bubble $mol_view
+	sub <= content /$mol_view_content
+	style *
+		^
+		maxHeight <= height_max 9999
+	attr *
+		^
+		mol_pop_align <= align \
+		tabindex 0
+
+$mol_nav $mol_plugin
+	cycle? false
+	-
+	mod_ctrl false
+	mod_shift false
+	mod_alt false
+	-
+	keys_x? /
+	keys_y? /
+	-
+	current_x? null
+	current_y? null
+	-
+	event_up?event null
+	event_down?event null
+	event_left?event null
+	event_right?event null
+	event *
+		^
+		keydown?event <=> event_key?event null
+
+$mol_search $mol_pop
+	query? \
+	suggests /string
+	plugins /$mol_plugin
+		^
+		<= Hotkey $mol_hotkey
+			key * escape? <=> clear? null
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y?component <=> nav_focused?component null
+	showed? <=> suggests_showed? false
+	align_hor \right
+	Anchor $mol_view
+		sub <= anchor_content /
+			<= Query $mol_string
+				value? <=> query? \
+				hint <= hint @ \Search...
+				submit?event <=> submit?event null
+				enabled <= enabled true
+				keyboard <= keyboard \search
+				enter <= enter \search
+				bring => bring
+			<= Clear $mol_button_minor
+				hint @ \Clear
+				click?event <=> clear?event null
+				sub /
+					<= Clear_icon $mol_icon_cross
+	bubble_content /$mol_view_content
+		<= Menu $mol_list
+			rows <= menu_items /$mol_view
+	Suggest* $mol_button_minor
+		click?event <=> suggest_select*?event null
+		sub <= suggest_content* /$mol_view_content
+			<= Suggest_label* $mol_dimmer
+				haystack <= suggest_label* \
+				needle <= query? \
+
+$mol_book2_catalog $mol_book2
+	param \
+	spread? \
+	spreads *
+	Spread* $mol_view
+	Spread_default null
+	spread_ids /string
+	menu_filter_enabled false
+	spread_ids_filtered /string
+	pages /
+		<= Menu $mol_page
+			Title => Menu_title
+			title <= menu_title \
+			Tools => Menu_tools
+			tools <= menu_tools /
+			head <= menu_head /
+				<= Menu_title
+				<= Menu_tools
+			body <= menu_body /
+				<= Menu_filter $mol_search
+					query? <=> menu_filter? \
+				<= Menu_links $mol_list
+					rows <= menu_links /
+						<= Menu_link*0 $mol_link
+							arg <= arg* *
+							sub <= menu_link_content* /
+								<= Menu_link_title* $mol_dimmer
+									needle <= menu_filter
+									haystack <= spread_title* \
+			foot <= menu_foot /
+	Spread_close $mol_link
+		arg <= spread_close_arg *
+		sub /
+			<= Spread_close_icon $mol_icon_cross
+
+$dosha_client_training $mol_book2_catalog
+	menu_title \🏋 Тренировки
+	param \training
+	spreads *
+		my <= My $mol_page
+		all <= All $mol_page
+		create <= Create $mol_page
+
 
 $mol_svg_group $mol_svg
 	dom_name \g
@@ -1217,13 +1347,6 @@ $dosha_client_city $mol_page
 	body /
 		<= City_label $mol_text text \Найдите совместные увлечения в вашем городе
 
-$mol_book2 $mol_scroll
-	menu_title \
-	sub <= pages /$mol_view
-	minimal_width 0
-	Placeholder $mol_view
-	Gap* $mol_view title \
-
 $mol_avatar $mol_icon
 	view_box \0 0 24 24
 	id \
@@ -1257,88 +1380,6 @@ $hyoo_page_side_news $mol_page
 					meta <= item* $hyoo_page_side
 					title <= item_title* \
 					Avatar null
-
-$mol_pop $mol_view
-	showed? false
-	align_vert \
-	align_hor \
-	prefer \vert
-	sub /
-		<= Anchor null
-	sub_visible /
-		<= Anchor
-		<= Bubble $mol_pop_bubble
-			align <= align \bottom_center
-			content <= bubble_content /$mol_view_content
-			height_max <= height_max 9999
-
-$mol_pop_bubble $mol_view
-	sub <= content /$mol_view_content
-	style *
-		^
-		maxHeight <= height_max 9999
-	attr *
-		^
-		mol_pop_align <= align \
-		tabindex 0
-
-$mol_nav $mol_plugin
-	cycle? false
-	-
-	mod_ctrl false
-	mod_shift false
-	mod_alt false
-	-
-	keys_x? /
-	keys_y? /
-	-
-	current_x? null
-	current_y? null
-	-
-	event_up?event null
-	event_down?event null
-	event_left?event null
-	event_right?event null
-	event *
-		^
-		keydown?event <=> event_key?event null
-
-$mol_search $mol_pop
-	query? \
-	suggests /string
-	plugins /$mol_plugin
-		^
-		<= Hotkey $mol_hotkey
-			key * escape? <=> clear? null
-		<= Nav $mol_nav
-			keys_y <= nav_components /$mol_view
-			current_y?component <=> nav_focused?component null
-	showed? <=> suggests_showed? false
-	align_hor \right
-	Anchor $mol_view
-		sub <= anchor_content /
-			<= Query $mol_string
-				value? <=> query? \
-				hint <= hint @ \Search...
-				submit?event <=> submit?event null
-				enabled <= enabled true
-				keyboard <= keyboard \search
-				enter <= enter \search
-				bring => bring
-			<= Clear $mol_button_minor
-				hint @ \Clear
-				click?event <=> clear?event null
-				sub /
-					<= Clear_icon $mol_icon_cross
-	bubble_content /$mol_view_content
-		<= Menu $mol_list
-			rows <= menu_items /$mol_view
-	Suggest* $mol_button_minor
-		click?event <=> suggest_select*?event null
-		sub <= suggest_content* /$mol_view_content
-			<= Suggest_label* $mol_dimmer
-				haystack <= suggest_label* \
-				needle <= query? \
 
 $mol_icon_magnify $mol_icon path \M9.5,3C13.09,3 16,5.91 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16C5.91,16 3,13.09 3,9.5C3,5.91 5.91,3 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z
 
@@ -2249,41 +2290,6 @@ $hyoo_page $mol_book2
 - Страница с партнёрами, абонементы, акции, интеграции
 $dosha_client_partners $mol_page
 	title \🎁 Партнёры
-
-$mol_book2_catalog $mol_book2
-	param \
-	spread? \
-	spreads *
-	Spread* $mol_view
-	Spread_default null
-	spread_ids /string
-	menu_filter_enabled false
-	spread_ids_filtered /string
-	pages /
-		<= Menu $mol_page
-			Title => Menu_title
-			title <= menu_title \
-			Tools => Menu_tools
-			tools <= menu_tools /
-			head <= menu_head /
-				<= Menu_title
-				<= Menu_tools
-			body <= menu_body /
-				<= Menu_filter $mol_search
-					query? <=> menu_filter? \
-				<= Menu_links $mol_list
-					rows <= menu_links /
-						<= Menu_link*0 $mol_link
-							arg <= arg* *
-							sub <= menu_link_content* /
-								<= Menu_link_title* $mol_dimmer
-									needle <= menu_filter
-									haystack <= spread_title* \
-			foot <= menu_foot /
-	Spread_close $mol_link
-		arg <= spread_close_arg *
-		sub /
-			<= Spread_close_icon $mol_icon_cross
 
 $dosha_company_report $mol_page
 	title \Отчёт
