@@ -4555,11 +4555,6 @@ var $;
                 return next;
             return null;
         }
-        go_registration(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
         title() {
             return "🔐 ДоШа Войти";
         }
@@ -4610,7 +4605,9 @@ var $;
         Registration() {
             const obj = new this.$.$mol_link();
             obj.title = () => "Зарегистрироваться";
-            obj.uri = () => "#!page=registration";
+            obj.arg = () => ({
+                page: "registration"
+            });
             return obj;
         }
         Login_form() {
@@ -4629,9 +4626,6 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client_auth_login.prototype, "login_success", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_login.prototype, "go_registration", null);
     __decorate([
         $mol_mem
     ], $dosha_client_auth_login.prototype, "login", null);
@@ -4668,11 +4662,6 @@ var $;
 (function ($) {
     class $dosha_client_auth_registration extends $mol_page {
         login_success(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
-        go_login(next) {
             if (next !== undefined)
                 return next;
             return null;
@@ -4809,7 +4798,9 @@ var $;
         Login() {
             const obj = new this.$.$mol_link();
             obj.title = () => "Войти";
-            obj.uri = () => "#!page=login";
+            obj.arg = () => ({
+                page: "login"
+            });
             return obj;
         }
         Login_form() {
@@ -4833,9 +4824,6 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client_auth_registration.prototype, "login_success", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "go_login", null);
     __decorate([
         $mol_mem
     ], $dosha_client_auth_registration.prototype, "login", null);
@@ -4940,26 +4928,14 @@ var $;
                 return next;
             return null;
         }
-        go_registration(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
         Login() {
             const obj = new this.$.$dosha_client_auth_login();
             obj.login_success = (next) => this.login(next);
-            obj.go_registration = (next) => this.go_registration(next);
             return obj;
-        }
-        go_login(next) {
-            if (next !== undefined)
-                return next;
-            return null;
         }
         Registration() {
             const obj = new this.$.$dosha_client_auth_registration();
             obj.login_success = (next) => this.login(next);
-            obj.go_login = (next) => this.go_login(next);
             return obj;
         }
     }
@@ -4974,13 +4950,7 @@ var $;
     ], $dosha_client_auth.prototype, "login", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_auth.prototype, "go_registration", null);
-    __decorate([
-        $mol_mem
     ], $dosha_client_auth.prototype, "Login", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth.prototype, "go_login", null);
     __decorate([
         $mol_mem
     ], $dosha_client_auth.prototype, "Registration", null);

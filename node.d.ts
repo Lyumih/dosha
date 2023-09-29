@@ -1592,7 +1592,6 @@ declare namespace $ {
 declare namespace $ {
     class $dosha_client_auth_login extends $mol_page {
         login_success(next?: any): any;
-        go_registration(next?: any): any;
         title(): string;
         body(): readonly any[];
         login(next?: any): string;
@@ -1610,7 +1609,6 @@ declare namespace $ {
 declare namespace $ {
     class $dosha_client_auth_registration extends $mol_page {
         login_success(next?: any): any;
-        go_login(next?: any): any;
         title(): string;
         body(): readonly any[];
         login(next?: any): string;
@@ -1647,9 +1645,7 @@ declare namespace $ {
         title(): string;
         pages(): readonly any[];
         login(next?: any): any;
-        go_registration(next?: any): any;
         Login(): $dosha_client_auth_login;
-        go_login(next?: any): any;
         Registration(): $dosha_client_auth_registration;
     }
 }
