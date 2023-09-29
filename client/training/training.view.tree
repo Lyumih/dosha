@@ -4,19 +4,19 @@ $dosha_client_training $mol_book2_catalog
 	param \training
 	spreads *
 		favorite <= Favorite_page $mol_page
-			title \Любимые
+			title \💖 Любимые
 			body /
 				<= Favorite_text $mol_text text \Любимые тренировки
 		all <= All_page $mol_page
-			title \Все
+			title \🌐 Все
 			body /
 				<= All_text $mol_text text \Список всех тренировок
 		constructor <= Constructor_page $mol_page
-			title \Конструктор
+			title \🧩 Конструктор
 			body /
 				<= Сonstructor_text $mol_text text \Создай свой конструктор тренировок
 		add <= Add_page $mol_page
-			title \Создать
+			title \🔧 Создать
 			body /
 				<= Add_text $mol_text
 
