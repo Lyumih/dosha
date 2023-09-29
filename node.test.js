@@ -26157,7 +26157,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("dosha/client/client.view.css", ":root {\n\t--mol_theme_hue: 180deg;\n\t--mol_theme_luma: -1;\n\t--mol_theme_satur: 1;\n\t--mol_theme_image: none;\n}\n\n[dosha_client] {\n\tfont-family: \"TT Commons\",Helvetica,Arial,sans-serif;\n}\n\n[mol_button] {\n\tborder-radius: 2rem;\n\ttext-transform: uppercase;\n\tfont-size: 0.75rem;\n\talign-items: center;\n}\n");
+    $mol_style_attach("dosha/client/client.view.css", ":root {\n\t--mol_theme_hue: 180deg;\n\t--mol_theme_luma: -1;\n\t--mol_theme_satur: 1;\n\t--mol_theme_image: none;\n}\n\n[dosha_client] {\n\tfont-family: \"TT Commons\",Helvetica,Arial,sans-serif;\n}\n\n[mol_button] {\n\tborder-radius: 2rem;\n\ttext-transform: uppercase;\n\tfont-size: 0.75rem;\n\talign-items: center;\n\tjustify-content: center;\n}\n");
 })($ || ($ = {}));
 //dosha/client/-css/client.view.css.ts
 ;
