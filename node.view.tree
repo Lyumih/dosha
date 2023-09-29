@@ -861,9 +861,12 @@ $dosha_client_coins $mol_book2_catalog
 		charity <= Charity_page $mol_page
 			title \🏥 Благотворительность
 
-- История пользователя, сколько заработал, куда и что пошло, в какие фонды
+- История пользователя, сколько заработал, куда и что пошло, в какие фонды.
+- Истории - сборник из добрых дел, благотворительности - общий по компании / отделу. Добавить фильтрации
 $dosha_client_history $mol_page
-	title \📅 История
+	title \📅 Истории
+	body /
+		<= History_text $mol_text text \Истории, которые по отделу
 
 - Страница с профилем пользователя. Личная информация, контакты, должность, изменение настроек.
 $dosha_client_profile $mol_page
@@ -935,7 +938,7 @@ $dosha_client_training $mol_book2_catalog
 		add <= Add_page $mol_page
 			title \🔧 Создать
 			body /
-				<= Add_text $mol_text
+				<= Add_text $mol_text text \Создать свою тренировку из существующих
 
 
 $mol_svg_group $mol_svg
@@ -2379,6 +2382,8 @@ $hyoo_page $mol_book2
 - Страница с партнёрами, абонементы, акции, интеграции
 $dosha_client_partners $mol_page
 	title \🎁 Партнёры
+	body /
+		<= Partners_text $mol_text text \Партнёры, акции и друзья компании
 
 $dosha_company_report $mol_page
 	title \Отчёт
@@ -2393,9 +2398,11 @@ $dosha_company $mol_book2_catalog
 	menu_title \ДоШа Компания
 	param \company
 	spreads *
-		people_page <= People_page $mol_page
+		people <= People_page $mol_page
 			title \Пользователи
-		report_page <= Report_page $dosha_company_report
+			body /
+				<= People_text $mol_text text \Пользователи компании и статистика по ним
+		report <= Report_page $dosha_company_report
 
 - Приложение ДоШа - Добрые Шаги. Главное меню и навигация
 $dosha_client $mol_view
@@ -2440,7 +2447,7 @@ $dosha_client $mol_view
 					title \📽 Презентация
 				partners <= Partners_page $dosha_client_partners
 				- Отдельное приложение ДоШа Компания
-				company_page <= Company_page $dosha_company
+				company <= Company_page $dosha_company
 					menu_title \🧮 Компания *
 
 $dosha_client_coins_links $mol_view

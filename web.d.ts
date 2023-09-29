@@ -3050,6 +3050,8 @@ declare namespace $ {
 declare namespace $ {
     class $dosha_client_history extends $mol_page {
         title(): string;
+        body(): readonly any[];
+        History_text(): $$.$mol_text;
     }
 }
 
@@ -6340,6 +6342,8 @@ declare namespace $ {
 declare namespace $ {
     class $dosha_client_partners extends $mol_page {
         title(): string;
+        body(): readonly any[];
+        Partners_text(): $$.$mol_text;
     }
 }
 
@@ -6363,6 +6367,7 @@ declare namespace $ {
         menu_title(): string;
         param(): string;
         spreads(): Record<string, any>;
+        People_text(): $$.$mol_text;
         People_page(): $mol_page;
         Report_page(): $$.$dosha_company_report;
     }

@@ -10597,9 +10597,22 @@ var $;
 (function ($) {
     class $dosha_client_history extends $mol_page {
         title() {
-            return "📅 История";
+            return "📅 Истории";
+        }
+        body() {
+            return [
+                this.History_text()
+            ];
+        }
+        History_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "Истории, которые по отделу";
+            return obj;
         }
     }
+    __decorate([
+        $mol_mem
+    ], $dosha_client_history.prototype, "History_text", null);
     $.$dosha_client_history = $dosha_client_history;
 })($ || ($ = {}));
 //dosha/client/history/-view.tree/history.view.tree.ts
@@ -10978,6 +10991,7 @@ var $;
         }
         Add_text() {
             const obj = new this.$.$mol_text();
+            obj.text = () => "Создать свою тренировку из существующих";
             return obj;
         }
         Add_page() {
@@ -25620,7 +25634,20 @@ var $;
         title() {
             return "🎁 Партнёры";
         }
+        body() {
+            return [
+                this.Partners_text()
+            ];
+        }
+        Partners_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "Партнёры, акции и друзья компании";
+            return obj;
+        }
     }
+    __decorate([
+        $mol_mem
+    ], $dosha_client_partners.prototype, "Partners_text", null);
     $.$dosha_client_partners = $dosha_client_partners;
 })($ || ($ = {}));
 //dosha/client/partners/-view.tree/partners.view.tree.ts
@@ -25688,13 +25715,21 @@ var $;
         }
         spreads() {
             return {
-                people_page: this.People_page(),
-                report_page: this.Report_page()
+                people: this.People_page(),
+                report: this.Report_page()
             };
+        }
+        People_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "Пользователи компании и статистика по ним";
+            return obj;
         }
         People_page() {
             const obj = new this.$.$mol_page();
             obj.title = () => "Пользователи";
+            obj.body = () => [
+                this.People_text()
+            ];
             return obj;
         }
         Report_page() {
@@ -25702,6 +25737,9 @@ var $;
             return obj;
         }
     }
+    __decorate([
+        $mol_mem
+    ], $dosha_company.prototype, "People_text", null);
     __decorate([
         $mol_mem
     ], $dosha_company.prototype, "People_page", null);
@@ -25860,7 +25898,7 @@ var $;
                 chat: this.Chat_page(),
                 presentation: this.Persentation_page(),
                 partners: this.Partners_page(),
-                company_page: this.Company_page()
+                company: this.Company_page()
             });
             return obj;
         }
