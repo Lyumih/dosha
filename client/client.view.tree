@@ -2,20 +2,17 @@
 $dosha_client $mol_view
 	dosha? 10000
 	auth? true
-	title \👣 ДоШа
+	title \👣 Добрый Шаг
 	sub /
 		<= Auth_page $dosha_client_auth
 			login_success? <=> login? null
 		<= Secure $mol_book2_catalog
-			menu_title \👣 ДоШа
+			menu_title \👣 Добрый Шаг
 			param \client
 			menu_filter_enabled false
 			plugins /
 				<= Theme $mol_theme_auto
 			menu_tools /
-				<= Chat $mol_chat
-					seed \dosha_chat_v1
-					pages => chat_pages
 			menu_foot /
 				<= Lights $mol_lights_toggle
 				<= GitHub $mol_link_source uri \https://github.com/Lyumih/dosha
@@ -31,9 +28,14 @@ $dosha_client $mol_view
 				training <= Training_page $dosha_client_training
 				rating <= Rating_page $dosha_client_rating
 				city <= City_page $dosha_client_city
-				chat <= Chat_page $mol_view
+				chat <= Chat_page $mol_page
 					title \🎭 Чат
-					sub <= chat_pages
+					body /
+						<= Chat $mol_chat
+							seed \dosha_chat_v1
+							pages => chat_pages
+						<= Chat_open $mol_view
+							sub <= chat_pages
 				presentation <= Persentation_page $hyoo_page
 					title \📽 Презентация
 				partners <= Partners_page $dosha_client_partners
