@@ -10544,7 +10544,7 @@ var $;
                 steps: this.Steps_page(),
                 training: this.Trainin_page(),
                 achivments: this.Achivments_page(),
-                good: this.Good_page(),
+                goods: this.Goods_page(),
                 charity: this.Charity_page()
             };
         }
@@ -10562,7 +10562,7 @@ var $;
             obj.title = () => "🏆 Достижения";
             return obj;
         }
-        Good_page() {
+        Goods_page() {
             const obj = new this.$.$mol_page();
             obj.title = () => "👑 Добрые дела";
             return obj;
@@ -10584,7 +10584,7 @@ var $;
     ], $dosha_client_coins.prototype, "Achivments_page", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_coins.prototype, "Good_page", null);
+    ], $dosha_client_coins.prototype, "Goods_page", null);
     __decorate([
         $mol_mem
     ], $dosha_client_coins.prototype, "Charity_page", null);
@@ -25765,29 +25765,8 @@ var $;
             ];
             return obj;
         }
-        Coins_steps() {
-            const obj = new this.$.$mol_button_minor();
-            obj.title = () => "12 👟";
-            return obj;
-        }
-        Coins_trainings() {
-            const obj = new this.$.$mol_button_minor();
-            obj.title = () => "5 🏋";
-            return obj;
-        }
-        Coins_achivments() {
-            const obj = new this.$.$mol_button_minor();
-            obj.title = () => "1 🏆";
-            return obj;
-        }
-        Coins_goods() {
-            const obj = new this.$.$mol_button_minor();
-            obj.title = () => "2 👑";
-            return obj;
-        }
-        Coins_charity() {
-            const obj = new this.$.$mol_button_minor();
-            obj.title = () => "30 🏥";
+        Coins_links() {
+            const obj = new this.$.$dosha_client_coins_links();
             return obj;
         }
         Coins_page() {
@@ -25868,11 +25847,7 @@ var $;
                 this.Logout()
             ];
             obj.menu_foot = () => [
-                this.Coins_steps(),
-                this.Coins_trainings(),
-                this.Coins_achivments(),
-                this.Coins_goods(),
-                this.Coins_charity()
+                this.Coins_links()
             ];
             obj.spreads = () => ({
                 coins: this.Coins_page(),
@@ -25913,19 +25888,7 @@ var $;
     ], $dosha_client.prototype, "Logout", null);
     __decorate([
         $mol_mem
-    ], $dosha_client.prototype, "Coins_steps", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client.prototype, "Coins_trainings", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client.prototype, "Coins_achivments", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client.prototype, "Coins_goods", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client.prototype, "Coins_charity", null);
+    ], $dosha_client.prototype, "Coins_links", null);
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Coins_page", null);
@@ -25969,6 +25932,78 @@ var $;
         $mol_mem
     ], $dosha_client.prototype, "Secure", null);
     $.$dosha_client = $dosha_client;
+    class $dosha_client_coins_links extends $mol_view {
+        sub() {
+            return [
+                this.Coins_steps(),
+                this.Coins_training(),
+                this.Coins_achivments(),
+                this.Coins_goods(),
+                this.Coins_charity()
+            ];
+        }
+        Coins_steps() {
+            const obj = new this.$.$mol_link();
+            obj.title = () => "12 👟";
+            obj.arg = () => ({
+                client: "coins",
+                coins: "steps"
+            });
+            return obj;
+        }
+        Coins_training() {
+            const obj = new this.$.$mol_link();
+            obj.title = () => "5 🏋";
+            obj.arg = () => ({
+                client: "coins",
+                coins: "training"
+            });
+            return obj;
+        }
+        Coins_achivments() {
+            const obj = new this.$.$mol_link();
+            obj.title = () => "1 🏆";
+            obj.arg = () => ({
+                client: "coins",
+                coins: "achivments"
+            });
+            return obj;
+        }
+        Coins_goods() {
+            const obj = new this.$.$mol_link();
+            obj.title = () => "2 👑";
+            obj.arg = () => ({
+                client: "coins",
+                coins: "goods"
+            });
+            return obj;
+        }
+        Coins_charity() {
+            const obj = new this.$.$mol_link();
+            obj.title = () => "30 🏥";
+            obj.arg = () => ({
+                client: "coins",
+                coins: "charity"
+            });
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins_links.prototype, "Coins_steps", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins_links.prototype, "Coins_training", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins_links.prototype, "Coins_achivments", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins_links.prototype, "Coins_goods", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins_links.prototype, "Coins_charity", null);
+    $.$dosha_client_coins_links = $dosha_client_coins_links;
 })($ || ($ = {}));
 //dosha/client/-view.tree/client.view.tree.ts
 ;
@@ -25990,7 +26025,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("dosha/client/client.view.css", ":root {\n\t--mol_theme_hue: 180deg;\n\t--mol_theme_luma: -1;\n\t--mol_theme_satur: 1;\n\t--mol_theme_image: none;\n}\n\n[dosha_client] {\n\tfont-family: \"TT Commons\",Helvetica,Arial,sans-serif;\n}\n\n[mol_button] {\n\tborder-radius: 2rem;\n\ttext-transform: uppercase;\n\tfont-size: 0.75rem;\n\talign-items: center;\n\tjustify-content: center;\n}\n");
+    $mol_style_attach("dosha/client/client.view.css", ":root {\n\t--mol_theme_hue: 180deg;\n\t--mol_theme_luma: -1;\n\t--mol_theme_satur: 1;\n\t--mol_theme_image: none;\n}\n\n[dosha_client] {\n\tfont-family: \"TT Commons\",Helvetica,Arial,sans-serif;\n}\n\n[mol_button] {\n\tborder-radius: 2rem;\n\ttext-transform: uppercase;\n\t/* font-size: 0.75rem; */\n\talign-items: center;\n\tjustify-content: center;\n}\n");
 })($ || ($ = {}));
 //dosha/client/-css/client.view.css.ts
 

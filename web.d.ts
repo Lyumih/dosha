@@ -3042,7 +3042,7 @@ declare namespace $ {
         Steps_page(): $$.$dosha_client_steps;
         Trainin_page(): $mol_page;
         Achivments_page(): $mol_page;
-        Good_page(): $mol_page;
+        Goods_page(): $mol_page;
         Charity_page(): $mol_page;
     }
 }
@@ -6381,11 +6381,7 @@ declare namespace $ {
         Lights(): $$.$mol_lights_toggle;
         Logout_icon(): $mol_icon_logout;
         Logout(): $mol_button_minor;
-        Coins_steps(): $mol_button_minor;
-        Coins_trainings(): $mol_button_minor;
-        Coins_achivments(): $mol_button_minor;
-        Coins_goods(): $mol_button_minor;
-        Coins_charity(): $mol_button_minor;
+        Coins_links(): $dosha_client_coins_links;
         Coins_page(): $dosha_client_coins;
         History_page(): $dosha_client_history;
         Profile_page(): $dosha_client_profile;
@@ -6401,6 +6397,14 @@ declare namespace $ {
         Partners_page(): $dosha_client_partners;
         Company_page(): $dosha_company;
         Secure(): $$.$mol_book2_catalog;
+    }
+    class $dosha_client_coins_links extends $mol_view {
+        sub(): readonly any[];
+        Coins_steps(): $$.$mol_link;
+        Coins_training(): $$.$mol_link;
+        Coins_achivments(): $$.$mol_link;
+        Coins_goods(): $$.$mol_link;
+        Coins_charity(): $$.$mol_link;
     }
 }
 
