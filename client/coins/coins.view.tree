@@ -1,0 +1,13 @@
+$dosha_client_coins $mol_book2_catalog
+	menu_title \🪙 Монеты
+	param \coins
+	spreads *
+		steps <= Steps_page $dosha_client_steps
+		training <= Trainin_page $mol_page
+			title \🏋 Тренировка
+		achivments <= Achivments_page $mol_page
+			title \🏆 Достижения
+		good <= Good_page $mol_page
+			title \👑 Добрые дела
+		charity <= Charity_page $mol_page
+			title \🏥 Благотворительность

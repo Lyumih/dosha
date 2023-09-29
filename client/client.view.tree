@@ -13,15 +13,19 @@ $dosha_client $mol_view
 			plugins /
 				<= Theme $mol_theme_auto
 			menu_tools /
-			menu_foot /
 				<= Lights $mol_lights_toggle
 				<= GitHub $mol_link_source uri \https://github.com/Lyumih/dosha
 				<= Logout $mol_button_minor
 					click? <=> logout? null
 					sub / <= Logout_icon $mol_icon_logout
+			menu_foot /
+				<= Coins_steps $mol_button_minor title \12 👟
+				<= Coins_trainings $mol_button_minor title \5 🏋
+				<= Coins_achivments $mol_button_minor title \1 🏆
+				<= Coins_goods $mol_button_minor title \2 👑
+				<= Coins_charity $mol_button_minor title \30 🏥
 			spreads *
-				steps <= Steps_page $dosha_client_steps
-					dosha_value? <=> dosha?
+				coins <= Coins_page $dosha_client_coins
 				history <= History_page $dosha_client_history
 				profile <= Profile_page $dosha_client_profile
 				found <= Found_page $dosha_client_found
