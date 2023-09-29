@@ -17,7 +17,7 @@ $dosha_client $mol_view
 				<= GitHub $mol_link_source uri \https://github.com/Lyumih/dosha
 				<= Lights $mol_lights_toggle
 				<= Logout $mol_button_minor
-					click? <=> logout?
+					click? <= logout
 					sub / <= Logout_icon $mol_icon_logout
 			menu_foot /
 				<= Coins_steps $mol_button_minor title \12 👟

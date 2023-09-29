@@ -1,12 +1,14 @@
 namespace $.$$ {
 	export class $dosha_client_auth extends $.$dosha_client_auth {
 		logout() {
-			$mol_state_arg.value('page', "login")
+			$mol_state_arg.go({
+				page: 'login'
+			})
 			this.auth( false )
 		}
 
 		login() {
-			$mol_state_arg.value('page', null)
+			$mol_state_arg.go({})
 			this.auth( true )
 		}
 
