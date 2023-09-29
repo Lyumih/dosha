@@ -4,13 +4,13 @@ namespace $.$$ {
 			return this.auth() ? [ this.Secure() ] : [ this.Auth_page() ]
 		}
 
-		logout() {
-			this.auth( false )
-		}
+		// logout() {
+		// 	this.auth( false )
+		// }
 
-		@$mol_mem
-		auth( next?: boolean ) {
-			return this.$.$mol_state_local.value( 'auth', next ) ?? false
-		}
+		// @$mol_mem
+		// auth( next?: boolean ) {
+		// 	return this.$.$mol_state_local.value( 'auth', next ) ?? false
+		// }
 	}
 }
