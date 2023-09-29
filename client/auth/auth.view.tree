@@ -6,7 +6,5 @@ $dosha_client_auth $mol_book2
 	pages /
 		<= Login $dosha_client_auth_login
 			login_success? <=> login? null
-			go_registration? <=> go_registration? null
 		<= Registration $dosha_client_auth_registration
 			login_success? <=> login? null
-			go_login? <=> go_login? null
