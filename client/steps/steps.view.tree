@@ -10,3 +10,4 @@ $dosha_client_steps $mol_page
 		<= Add_dosha_save $mol_button_major
 			title \Добавить шаги за сегодня
 			click? <= add_today_steps? null
+		<= Steps_history $mol_text text \История шагов (список)

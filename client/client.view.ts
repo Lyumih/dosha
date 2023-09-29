@@ -1,15 +1,19 @@
 namespace $.$$ {
 	export class $dosha_client extends $.$dosha_client {
-		sub():any {
-			return this.auth() ? [this.Secure()] : [this.Auth_page()]
+		sub(): any {
+			return this.auth() ? [ this.Secure() ] : [ this.Auth_page() ]
 		}
 
-		logout( next?: boolean ) {
-			this.auth(false)
+		logout() {
+			this.auth( false )
+		}
+		login() {
+			this.auth( true )
 		}
 
-		login(next?: boolean) {
-			this.auth(true)
+		@$mol_mem
+		auth( next?: boolean ) {
+			return this.$.$mol_state_local.value( 'auth', next ) ?? false
 		}
 	}
 }

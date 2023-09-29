@@ -1,7 +1,7 @@
 - Приложение ДоШа - Добрые Шаги. Главное меню и навигация
 $dosha_client $mol_view
 	dosha? 10000
-	auth? true
+	auth? false
 	title \👣 Добрый Шаг
 	sub /
 		<= Auth_page $dosha_client_auth
@@ -13,8 +13,8 @@ $dosha_client $mol_view
 			plugins /
 				<= Theme $mol_theme_auto
 			menu_tools /
-				<= Lights $mol_lights_toggle
 				<= GitHub $mol_link_source uri \https://github.com/Lyumih/dosha
+				<= Lights $mol_lights_toggle
 				<= Logout $mol_button_minor
 					click? <=> logout? null
 					sub / <= Logout_icon $mol_icon_logout
