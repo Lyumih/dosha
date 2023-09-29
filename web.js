@@ -4921,6 +4921,11 @@ var $;
                 return next;
             return false;
         }
+        logout(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
         title() {
             return "🔐 ДоШа Авторизация";
         }
@@ -4961,6 +4966,9 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client_auth.prototype, "auth", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth.prototype, "logout", null);
     __decorate([
         $mol_mem
     ], $dosha_client_auth.prototype, "login", null);
@@ -5051,11 +5059,13 @@ var $;
     (function ($$) {
         class $dosha_client_auth extends $.$dosha_client_auth {
             logout() {
-                $mol_state_arg.value('page', "login");
+                $mol_state_arg.go({
+                    page: 'login'
+                });
                 this.auth(false);
             }
             login() {
-                $mol_state_arg.value('page', null);
+                $mol_state_arg.go({});
                 this.auth(true);
             }
             pages() {
@@ -25741,11 +25751,6 @@ var $;
                 return next;
             return 10000;
         }
-        auth(next) {
-            if (next !== undefined)
-                return next;
-            return false;
-        }
         title() {
             return "👣 Добрый Шаг";
         }
@@ -25754,6 +25759,12 @@ var $;
                 this.Auth_page(),
                 this.Secure()
             ];
+        }
+        auth() {
+            return this.Auth_page().auth();
+        }
+        logout() {
+            return this.Auth_page().logout();
         }
         Auth_page() {
             const obj = new this.$.$dosha_client_auth();
@@ -25772,18 +25783,13 @@ var $;
             const obj = new this.$.$mol_lights_toggle();
             return obj;
         }
-        logout(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
         Logout_icon() {
             const obj = new this.$.$mol_icon_logout();
             return obj;
         }
         Logout() {
             const obj = new this.$.$mol_button_minor();
-            obj.click = (next) => this.logout(next);
+            obj.click = (next) => this.logout();
             obj.sub = () => [
                 this.Logout_icon()
             ];
@@ -25919,9 +25925,6 @@ var $;
     ], $dosha_client.prototype, "dosha", null);
     __decorate([
         $mol_mem
-    ], $dosha_client.prototype, "auth", null);
-    __decorate([
-        $mol_mem
     ], $dosha_client.prototype, "Auth_page", null);
     __decorate([
         $mol_mem
@@ -25932,9 +25935,6 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Lights", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client.prototype, "logout", null);
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Logout_icon", null);
@@ -26011,16 +26011,7 @@ var $;
             sub() {
                 return this.auth() ? [this.Secure()] : [this.Auth_page()];
             }
-            logout() {
-                this.auth(false);
-            }
-            auth(next) {
-                return this.$.$mol_state_local.value('auth', next) ?? false;
-            }
         }
-        __decorate([
-            $mol_mem
-        ], $dosha_client.prototype, "auth", null);
         $$.$dosha_client = $dosha_client;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

@@ -1643,6 +1643,7 @@ declare namespace $ {
 declare namespace $ {
     class $dosha_client_auth extends $mol_book2 {
         auth(next?: any): boolean;
+        logout(next?: any): any;
         title(): string;
         pages(): readonly any[];
         login(next?: any): any;
@@ -6482,14 +6483,14 @@ declare namespace $ {
 declare namespace $ {
     class $dosha_client extends $mol_view {
         dosha(next?: any): number;
-        auth(next?: any): boolean;
         title(): string;
         sub(): readonly any[];
+        auth(): boolean;
+        logout(): void;
         Auth_page(): $$.$dosha_client_auth;
         Theme(): $$.$mol_theme_auto;
         GitHub(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
-        logout(next?: any): any;
         Logout_icon(): $mol_icon_logout;
         Logout(): $mol_button_minor;
         Coins_steps(): $mol_button_minor;
@@ -6518,8 +6519,6 @@ declare namespace $ {
 declare namespace $.$$ {
     class $dosha_client extends $.$dosha_client {
         sub(): any;
-        logout(): void;
-        auth(next?: boolean): boolean;
     }
 }
 
