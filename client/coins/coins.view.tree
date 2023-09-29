@@ -7,7 +7,7 @@ $dosha_client_coins $mol_book2_catalog
 			title \🏋 Тренировка
 		achivments <= Achivments_page $mol_page
 			title \🏆 Достижения
-		good <= Good_page $mol_page
+		goods <= Goods_page $mol_page
 			title \👑 Добрые дела
 		charity <= Charity_page $mol_page
 			title \🏥 Благотворительность

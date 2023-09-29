@@ -20,11 +20,7 @@ $dosha_client $mol_view
 					click? <= logout
 					sub / <= Logout_icon $mol_icon_logout
 			menu_foot /
-				<= Coins_steps $mol_button_minor title \12 👟
-				<= Coins_trainings $mol_button_minor title \5 🏋
-				<= Coins_achivments $mol_button_minor title \1 🏆
-				<= Coins_goods $mol_button_minor title \2 👑
-				<= Coins_charity $mol_button_minor title \30 🏥
+				<= Coins_links $dosha_client_coins_links
 			spreads *
 				coins <= Coins_page $dosha_client_coins
 				history <= History_page $dosha_client_history
@@ -47,3 +43,31 @@ $dosha_client $mol_view
 				- Отдельное приложение ДоШа Компания
 				company_page <= Company_page $dosha_company
 					menu_title \🧮 Компания *
+
+$dosha_client_coins_links $mol_view
+	sub /
+		<= Coins_steps $mol_link
+			title \12 👟
+			arg *
+				client \coins
+				coins \steps
+		<= Coins_training $mol_link
+			title \5 🏋
+			arg *
+				client \coins
+				coins \training
+		<= Coins_achivments $mol_link
+			title \1 🏆
+			arg *
+				client \coins
+				coins \achivments
+		<= Coins_goods $mol_link
+			title \2 👑
+			arg *
+				client \coins
+				coins \goods
+		<= Coins_charity $mol_link
+			title \30 🏥
+			arg *
+				client \coins
+				coins \charity
