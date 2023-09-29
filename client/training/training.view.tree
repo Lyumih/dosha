@@ -18,5 +18,5 @@ $dosha_client_training $mol_book2_catalog
 		add <= Add_page $mol_page
 			title \🔧 Создать
 			body /
-				<= Add_text $mol_text
+				<= Add_text $mol_text text \Создать свою тренировку из существующих
 

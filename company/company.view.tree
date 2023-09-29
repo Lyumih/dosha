@@ -3,6 +3,8 @@ $dosha_company $mol_book2_catalog
 	menu_title \ДоШа Компания
 	param \company
 	spreads *
-		people_page <= People_page $mol_page
+		people <= People_page $mol_page
 			title \Пользователи
-		report_page <= Report_page $dosha_company_report
+			body /
+				<= People_text $mol_text text \Пользователи компании и статистика по ним
+		report <= Report_page $dosha_company_report

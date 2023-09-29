@@ -41,7 +41,7 @@ $dosha_client $mol_view
 					title \📽 Презентация
 				partners <= Partners_page $dosha_client_partners
 				- Отдельное приложение ДоШа Компания
-				company_page <= Company_page $dosha_company
+				company <= Company_page $dosha_company
 					menu_title \🧮 Компания *
 
 $dosha_client_coins_links $mol_view
