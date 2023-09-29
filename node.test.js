@@ -11560,7 +11560,7 @@ var $;
         }
         Favorite_page() {
             const obj = new this.$.$mol_page();
-            obj.title = () => "Любимые";
+            obj.title = () => "💖 Любимые";
             obj.body = () => [
                 this.Favorite_text()
             ];
@@ -11573,7 +11573,7 @@ var $;
         }
         All_page() {
             const obj = new this.$.$mol_page();
-            obj.title = () => "Все";
+            obj.title = () => "🌐 Все";
             obj.body = () => [
                 this.All_text()
             ];
@@ -11586,7 +11586,7 @@ var $;
         }
         Constructor_page() {
             const obj = new this.$.$mol_page();
-            obj.title = () => "Конструктор";
+            obj.title = () => "🧩 Конструктор";
             obj.body = () => [
                 this.Сonstructor_text()
             ];
@@ -11598,7 +11598,7 @@ var $;
         }
         Add_page() {
             const obj = new this.$.$mol_page();
-            obj.title = () => "Создать";
+            obj.title = () => "🔧 Создать";
             obj.body = () => [
                 this.Add_text()
             ];
