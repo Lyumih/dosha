@@ -1322,6 +1322,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_button_minor extends $mol_button_typed {
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_row extends $mol_view {
     }
 }
@@ -1359,7 +1367,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $dosha_client_auth extends $mol_page {
+    class $dosha_client_auth_login extends $mol_page {
         login_success(next?: any): any;
         title(): string;
         body(): readonly any[];
@@ -1369,8 +1377,52 @@ declare namespace $ {
         password(next?: any): string;
         Password_control(): $$.$mol_string;
         Password_field(): $$.$mol_form_field;
-        Sign_in(): $mol_button_major;
+        Login(): $mol_button_major;
+        Registration(): $mol_button_minor;
         Login_form(): $$.$mol_form;
+    }
+}
+
+declare namespace $ {
+    class $dosha_client_auth_registration extends $mol_page {
+        login_success(next?: any): any;
+        title(): string;
+        body(): readonly any[];
+        login(next?: any): string;
+        Login_control(): $$.$mol_string;
+        Login_field(): $$.$mol_form_field;
+        password(next?: any): string;
+        Password_control(): $$.$mol_string;
+        Password_field(): $$.$mol_form_field;
+        company(next?: any): string;
+        Company_control(): $$.$mol_string;
+        Company_field(): $$.$mol_form_field;
+        department(next?: any): string;
+        Department_control(): $$.$mol_string;
+        Department_field(): $$.$mol_form_field;
+        fio(next?: any): string;
+        Fio_control(): $$.$mol_string;
+        Fio_field(): $$.$mol_form_field;
+        phone(next?: any): string;
+        Phone_control(): $$.$mol_string;
+        Phone_field(): $$.$mol_form_field;
+        email(next?: any): string;
+        Email_control(): $$.$mol_string;
+        Email_field(): $$.$mol_form_field;
+        Registration(): $mol_button_major;
+        Login(): $mol_button_minor;
+        Login_form(): $$.$mol_form;
+    }
+}
+
+declare namespace $ {
+    class $dosha_client_auth extends $mol_view {
+        login_success(next?: any): any;
+        page(): string;
+        title(): string;
+        sub(): readonly any[];
+        Login(): $dosha_client_auth_login;
+        Registration(): $dosha_client_auth_registration;
     }
 }
 
@@ -1451,41 +1503,36 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_button_minor extends $mol_button_typed {
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    class $mol_check extends $mol_button_minor {
+    class $mol_link extends $mol_view {
+        uri(): string;
+        dom_name(): string;
         attr(): Record<string, any>;
         sub(): readonly $mol_view_content[];
-        checked(next?: any): boolean;
-        aria_checked(): string;
-        aria_role(): string;
-        Icon(): any;
-        title(): string;
-        Title(): $mol_view;
-        label(): readonly any[];
+        arg(): Record<string, any>;
+        event(): Record<string, any>;
+        uri_toggle(): string;
+        hint(): string;
+        hint_safe(): string;
+        target(): string;
+        file_name(): string;
+        current(): boolean;
+        event_click(event?: any): any;
+        click(event?: any): any;
     }
-}
-
-declare namespace $ {
 }
 
 declare namespace $.$$ {
-    class $mol_check extends $.$mol_check {
-        click(next?: Event): void;
-        sub(): readonly $mol_view_content[];
-        label(): readonly any[];
-        aria_checked(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_check_icon extends $mol_check {
+    class $mol_link extends $.$mol_link {
+        uri_toggle(): string;
+        uri(): string;
+        uri_off(): string;
+        uri_native(): URL;
+        current(): boolean;
+        file_name(): string;
+        minimal_height(): number;
+        external(): boolean;
+        target(): '_self' | '_blank' | '_top' | '_parent' | string;
+        hint_safe(): string;
     }
 }
 
@@ -1697,6 +1744,54 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_github_circle extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_link_source extends $mol_link {
+        hint(): string;
+        sub(): readonly any[];
+        Icon(): $mol_icon_github_circle;
+    }
+}
+
+declare namespace $ {
+    class $mol_check extends $mol_button_minor {
+        attr(): Record<string, any>;
+        sub(): readonly $mol_view_content[];
+        checked(next?: any): boolean;
+        aria_checked(): string;
+        aria_role(): string;
+        Icon(): any;
+        title(): string;
+        Title(): $mol_view;
+        label(): readonly any[];
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_check extends $.$mol_check {
+        click(next?: Event): void;
+        sub(): readonly $mol_view_content[];
+        label(): readonly any[];
+        aria_checked(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_check_icon extends $mol_check {
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_icon_brightness_6 extends $mol_icon {
         path(): string;
     }
@@ -1715,57 +1810,6 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_lights_toggle extends $.$mol_lights_toggle {
         lights(next?: boolean): boolean;
-    }
-}
-
-declare namespace $ {
-    class $mol_link extends $mol_view {
-        uri(): string;
-        dom_name(): string;
-        attr(): Record<string, any>;
-        sub(): readonly $mol_view_content[];
-        arg(): Record<string, any>;
-        event(): Record<string, any>;
-        uri_toggle(): string;
-        hint(): string;
-        hint_safe(): string;
-        target(): string;
-        file_name(): string;
-        current(): boolean;
-        event_click(event?: any): any;
-        click(event?: any): any;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_link extends $.$mol_link {
-        uri_toggle(): string;
-        uri(): string;
-        uri_off(): string;
-        uri_native(): URL;
-        current(): boolean;
-        file_name(): string;
-        minimal_height(): number;
-        external(): boolean;
-        target(): '_self' | '_blank' | '_top' | '_parent' | string;
-        hint_safe(): string;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    class $mol_icon_github_circle extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_link_source extends $mol_link {
-        hint(): string;
-        sub(): readonly any[];
-        Icon(): $mol_icon_github_circle;
     }
 }
 
@@ -2974,6 +3018,7 @@ declare namespace $ {
         Add_dosha(): $$.$mol_number;
         add_today_steps(next?: any): any;
         Add_dosha_save(): $mol_button_major;
+        Steps_history(): $$.$mol_text;
     }
 }
 
@@ -6327,8 +6372,8 @@ declare namespace $ {
         login(next?: any): any;
         Auth_page(): $$.$dosha_client_auth;
         Theme(): $$.$mol_theme_auto;
-        Lights(): $$.$mol_lights_toggle;
         GitHub(): $mol_link_source;
+        Lights(): $$.$mol_lights_toggle;
         logout(next?: any): any;
         Logout_icon(): $mol_icon_logout;
         Logout(): $mol_button_minor;
@@ -6358,8 +6403,9 @@ declare namespace $ {
 declare namespace $.$$ {
     class $dosha_client extends $.$dosha_client {
         sub(): any;
-        logout(next?: boolean): void;
-        login(next?: boolean): void;
+        logout(): void;
+        login(): void;
+        auth(next?: boolean): boolean;
     }
 }
 

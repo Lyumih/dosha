@@ -142,6 +142,8 @@ $mol_button_major $mol_button_typed
 		^
 		mol_theme \$mol_theme_accent
 
+$mol_button_minor $mol_button_typed
+
 $mol_row $mol_view
 
 $mol_form $mol_list
@@ -158,9 +160,9 @@ $mol_form $mol_list
 			sub <= foot <= buttons /$mol_view
 
 - Страница авторизации. Упрощенная - без востановления пароля и регистрации на данный момент
-$dosha_client_auth $mol_page
+$dosha_client_auth_login $mol_page
 	login_success? null
-	title \🔐 ДоШа
+	title \🔐 ДоШа Войти
 	body /
 		<= Login_form $mol_form
 			form_fields /
@@ -174,29 +176,87 @@ $dosha_client_auth $mol_page
 						value? <=> password? \
 						type \password
 			buttons /
-				<= Sign_in $mol_button_major
+				<= Login $mol_button_major
 					title \Войти
 					click? <=> login_success?
+				<= Registration $mol_button_minor
+					title \Зарегистрироваться
+
+- Страница регистрации пользователя. Регистрация пользователя - нужна компания, должность, фио, номер телефона, email
+$dosha_client_auth_registration $mol_page
+	login_success? null
+	title \🔐 ДоШа Регистрация
+	body /
+		<= Login_form $mol_form
+			form_fields /
+				<= Login_field $mol_form_field
+					name \Логин
+					Content <= Login_control $mol_string
+						value? <=> login? \
+				<= Password_field $mol_form_field
+					name \Пароль
+					Content <= Password_control $mol_string
+						value? <=> password? \
+						type \password
+				<= Company_field $mol_form_field
+					name \Компания
+					Content <= Company_control $mol_string
+						value? <=> company? \
+				<= Department_field $mol_form_field
+					name \Отдел
+					Content <= Department_control $mol_string
+						value? <=> department? \
+				<= Fio_field $mol_form_field
+					name \ФИО
+					Content <= Fio_control $mol_string
+						value? <=> fio? \
+				<= Phone_field $mol_form_field
+					name \Номер телефона
+					Content <= Phone_control $mol_string
+						value? <=> phone? \
+						type \phone
+				<= Email_field $mol_form_field
+					name \Email
+					Content <= Email_control $mol_string
+						value? <=> email? \
+						type \email
+			buttons /
+				<= Registration $mol_button_major
+					title \Зарегистрироваться
+					click? <=> login_success?
+				<= Login $mol_button_minor
+					title \Войти
+
+- Страница авторизации. Упрощенная - без востановления пароля и регистрации на данный момент
+$dosha_client_auth $mol_view
+	login_success? null
+	page \login
+	title \🔐 ДоШа Авторизация
+	sub /
+		<= Login $dosha_client_auth_login
+			login_success? <=> login_success?
+		<= Registration $dosha_client_auth_registration
+			login_success? <=> login_success?
 
 $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \
 
-$mol_button_minor $mol_button_typed
-
-$mol_check $mol_button_minor
+$mol_link $mol_view
+	uri \
+	dom_name \a
 	attr *
 		^
-		mol_check_checked <= checked? false
-		aria-checked <= aria_checked \false
-		role <= aria_role \checkbox
+		href <= uri_toggle \
+		title <= hint_safe <= hint \
+		target <= target \_self
+		download <= file_name \
+		mol_link_current <= current false
 	sub /$mol_view_content
-		<= Icon null
-		<= label /
-			<= Title $mol_view
-				sub /
-					<= title \
-
-$mol_check_icon $mol_check
+		<= title
+	arg *
+	event *
+		^
+		click?event <=> click?event <=> event_click?event null
 
 $mol_svg $mol_view
 	dom_name \svg
@@ -227,36 +287,34 @@ $mol_icon $mol_svg_root
 		<= Path $mol_svg_path
 			geometry <= path \
 
-$mol_icon_brightness_6 $mol_icon path \M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z
-
-$mol_lights_toggle $mol_check_icon
-	Icon <= Lights_icon $mol_icon_brightness_6
-	hint @ \Toggle lights
-	checked? <=> lights? false
-
-$mol_link $mol_view
-	uri \
-	dom_name \a
-	attr *
-		^
-		href <= uri_toggle \
-		title <= hint_safe <= hint \
-		target <= target \_self
-		download <= file_name \
-		mol_link_current <= current false
-	sub /$mol_view_content
-		<= title
-	arg *
-	event *
-		^
-		click?event <=> click?event <=> event_click?event null
-
 $mol_icon_github_circle $mol_icon path \M12,2C6.48,2 2,6.48 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12C22,6.48 17.52,2 12,2Z
 
 $mol_link_source $mol_link
 	hint @ \Source code
 	sub /
 		<= Icon $mol_icon_github_circle
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked? false
+		aria-checked <= aria_checked \false
+		role <= aria_role \checkbox
+	sub /$mol_view_content
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_check_icon $mol_check
+
+$mol_icon_brightness_6 $mol_icon path \M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z
+
+$mol_lights_toggle $mol_check_icon
+	Icon <= Lights_icon $mol_icon_brightness_6
+	hint @ \Toggle lights
+	checked? <=> lights? false
 
 $mol_icon_logout $mol_icon path \M16,17V14H9V10H16V7L21,12L16,17M14,2C15.1,2 16,2.9 16,4V6H14V4H5V20H14V18H16V20C16,21.1 15.1,22 14,22H5C3.9,22 3,21.1 3,20V4C3,2.9 3.9,2 5,2H14Z
 
@@ -785,6 +843,7 @@ $dosha_client_steps $mol_page
 		<= Add_dosha_save $mol_button_major
 			title \Добавить шаги за сегодня
 			click? <= add_today_steps? null
+		<= Steps_history $mol_text text \История шагов (список)
 
 $dosha_client_coins $mol_book2_catalog
 	menu_title \🪙 Монеты
@@ -2339,7 +2398,7 @@ $dosha_company $mol_book2_catalog
 - Приложение ДоШа - Добрые Шаги. Главное меню и навигация
 $dosha_client $mol_view
 	dosha? 10000
-	auth? true
+	auth? false
 	title \👣 Добрый Шаг
 	sub /
 		<= Auth_page $dosha_client_auth
@@ -2351,8 +2410,8 @@ $dosha_client $mol_view
 			plugins /
 				<= Theme $mol_theme_auto
 			menu_tools /
-				<= Lights $mol_lights_toggle
 				<= GitHub $mol_link_source uri \https://github.com/Lyumih/dosha
+				<= Lights $mol_lights_toggle
 				<= Logout $mol_button_minor
 					click? <=> logout? null
 					sub / <= Logout_icon $mol_icon_logout

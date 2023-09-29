@@ -3992,6 +3992,22 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_button_minor extends $mol_button_typed {
+    }
+    $.$mol_button_minor = $mol_button_minor;
+})($ || ($ = {}));
+//mol/button/minor/-view.tree/minor.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/minor/minor.view.css", "[mol_button_minor] {\n\tcolor: var(--mol_theme_control);\n}\n\n[mol_button_minor][disabled] {\n\tcolor: var(--mol_theme_shade);\n}\n");
+})($ || ($ = {}));
+//mol/button/minor/-css/minor.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_row extends $mol_view {
     }
     $.$mol_row = $mol_row;
@@ -4118,14 +4134,14 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $dosha_client_auth extends $mol_page {
+    class $dosha_client_auth_login extends $mol_page {
         login_success(next) {
             if (next !== undefined)
                 return next;
             return null;
         }
         title() {
-            return "🔐 ДоШа";
+            return "🔐 ДоШа Войти";
         }
         body() {
             return [
@@ -4165,10 +4181,15 @@ var $;
             obj.Content = () => this.Password_control();
             return obj;
         }
-        Sign_in() {
+        Login() {
             const obj = new this.$.$mol_button_major();
             obj.title = () => "Войти";
             obj.click = (next) => this.login_success(next);
+            return obj;
+        }
+        Registration() {
+            const obj = new this.$.$mol_button_minor();
+            obj.title = () => "Зарегистрироваться";
             return obj;
         }
         Login_form() {
@@ -4178,8 +4199,315 @@ var $;
                 this.Password_field()
             ];
             obj.buttons = () => [
-                this.Sign_in()
+                this.Login(),
+                this.Registration()
             ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "login_success", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "login", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Login_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Login_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "password", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Password_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Password_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Login", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Registration", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Login_form", null);
+    $.$dosha_client_auth_login = $dosha_client_auth_login;
+})($ || ($ = {}));
+//dosha/client/auth/login/-view.tree/login.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $dosha_client_auth_registration extends $mol_page {
+        login_success(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        title() {
+            return "🔐 ДоШа Регистрация";
+        }
+        body() {
+            return [
+                this.Login_form()
+            ];
+        }
+        login(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Login_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.login(next);
+            return obj;
+        }
+        Login_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Логин";
+            obj.Content = () => this.Login_control();
+            return obj;
+        }
+        password(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Password_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.password(next);
+            obj.type = () => "password";
+            return obj;
+        }
+        Password_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Пароль";
+            obj.Content = () => this.Password_control();
+            return obj;
+        }
+        company(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Company_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.company(next);
+            return obj;
+        }
+        Company_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Компания";
+            obj.Content = () => this.Company_control();
+            return obj;
+        }
+        department(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Department_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.department(next);
+            return obj;
+        }
+        Department_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Отдел";
+            obj.Content = () => this.Department_control();
+            return obj;
+        }
+        fio(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Fio_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.fio(next);
+            return obj;
+        }
+        Fio_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "ФИО";
+            obj.Content = () => this.Fio_control();
+            return obj;
+        }
+        phone(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Phone_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.phone(next);
+            obj.type = () => "phone";
+            return obj;
+        }
+        Phone_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Номер телефона";
+            obj.Content = () => this.Phone_control();
+            return obj;
+        }
+        email(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Email_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.email(next);
+            obj.type = () => "email";
+            return obj;
+        }
+        Email_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Email";
+            obj.Content = () => this.Email_control();
+            return obj;
+        }
+        Registration() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Зарегистрироваться";
+            obj.click = (next) => this.login_success(next);
+            return obj;
+        }
+        Login() {
+            const obj = new this.$.$mol_button_minor();
+            obj.title = () => "Войти";
+            return obj;
+        }
+        Login_form() {
+            const obj = new this.$.$mol_form();
+            obj.form_fields = () => [
+                this.Login_field(),
+                this.Password_field(),
+                this.Company_field(),
+                this.Department_field(),
+                this.Fio_field(),
+                this.Phone_field(),
+                this.Email_field()
+            ];
+            obj.buttons = () => [
+                this.Registration(),
+                this.Login()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "login_success", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "login", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Login_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Login_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "password", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Password_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Password_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "company", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Company_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Company_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "department", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Department_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Department_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "fio", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Fio_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Fio_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "phone", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Phone_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Phone_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "email", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Email_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Email_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Registration", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Login", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Login_form", null);
+    $.$dosha_client_auth_registration = $dosha_client_auth_registration;
+})($ || ($ = {}));
+//dosha/client/auth/registration/-view.tree/registration.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $dosha_client_auth extends $mol_view {
+        login_success(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        page() {
+            return "login";
+        }
+        title() {
+            return "🔐 ДоШа Авторизация";
+        }
+        sub() {
+            return [
+                this.Login(),
+                this.Registration()
+            ];
+        }
+        Login() {
+            const obj = new this.$.$dosha_client_auth_login();
+            obj.login_success = (next) => this.login_success(next);
+            return obj;
+        }
+        Registration() {
+            const obj = new this.$.$dosha_client_auth_registration();
+            obj.login_success = (next) => this.login_success(next);
             return obj;
         }
     }
@@ -4188,28 +4516,10 @@ var $;
     ], $dosha_client_auth.prototype, "login_success", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_auth.prototype, "login", null);
+    ], $dosha_client_auth.prototype, "Login", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_auth.prototype, "Login_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth.prototype, "Login_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth.prototype, "password", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth.prototype, "Password_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth.prototype, "Password_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth.prototype, "Sign_in", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth.prototype, "Login_form", null);
+    ], $dosha_client_auth.prototype, "Registration", null);
     $.$dosha_client_auth = $dosha_client_auth;
 })($ || ($ = {}));
 //dosha/client/auth/-view.tree/auth.view.tree.ts
@@ -4497,130 +4807,198 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_button_minor extends $mol_button_typed {
-    }
-    $.$mol_button_minor = $mol_button_minor;
-})($ || ($ = {}));
-//mol/button/minor/-view.tree/minor.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/minor/minor.view.css", "[mol_button_minor] {\n\tcolor: var(--mol_theme_control);\n}\n\n[mol_button_minor][disabled] {\n\tcolor: var(--mol_theme_shade);\n}\n");
-})($ || ($ = {}));
-//mol/button/minor/-css/minor.view.css.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_check extends $mol_button_minor {
+    class $mol_link extends $mol_view {
+        uri() {
+            return "";
+        }
+        dom_name() {
+            return "a";
+        }
         attr() {
             return {
                 ...super.attr(),
-                mol_check_checked: this.checked(),
-                "aria-checked": this.aria_checked(),
-                role: this.aria_role()
+                href: this.uri_toggle(),
+                title: this.hint_safe(),
+                target: this.target(),
+                download: this.file_name(),
+                mol_link_current: this.current()
             };
         }
         sub() {
             return [
-                this.Icon(),
-                this.label()
-            ];
-        }
-        checked(next) {
-            if (next !== undefined)
-                return next;
-            return false;
-        }
-        aria_checked() {
-            return "false";
-        }
-        aria_role() {
-            return "checkbox";
-        }
-        Icon() {
-            return null;
-        }
-        title() {
-            return "";
-        }
-        Title() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => [
                 this.title()
             ];
-            return obj;
         }
-        label() {
-            return [
-                this.Title()
-            ];
+        arg() {
+            return {};
+        }
+        event() {
+            return {
+                ...super.event(),
+                click: (event) => this.click(event)
+            };
+        }
+        uri_toggle() {
+            return "";
+        }
+        hint() {
+            return "";
+        }
+        hint_safe() {
+            return this.hint();
+        }
+        target() {
+            return "_self";
+        }
+        file_name() {
+            return "";
+        }
+        current() {
+            return false;
+        }
+        event_click(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        click(event) {
+            return this.event_click(event);
         }
     }
     __decorate([
         $mol_mem
-    ], $mol_check.prototype, "checked", null);
-    __decorate([
-        $mol_mem
-    ], $mol_check.prototype, "Title", null);
-    $.$mol_check = $mol_check;
+    ], $mol_link.prototype, "event_click", null);
+    $.$mol_link = $mol_link;
 })($ || ($ = {}));
-//mol/check/-view.tree/check.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/check/check.css", "[mol_check] {\n\tflex: 0 0 auto;\n\tjustify-content: flex-start;\n\talign-content: center;\n\talign-items: flex-start;\n\tborder: none;\n\tfont-weight: inherit;\n\tbox-shadow: none;\n\ttext-align: left;\n\tdisplay: inline-flex;\n\tflex-wrap: nowrap;\n}\n\n[mol_check_title] {\n\tflex-shrink: 1;\n}\n");
-})($ || ($ = {}));
-//mol/check/-css/check.css.ts
+//mol/link/-view.tree/link.view.tree.ts
 ;
 "use strict";
 var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $mol_check extends $.$mol_check {
-            click(next) {
-                if (next?.defaultPrevented)
-                    return;
-                this.checked(!this.checked());
-                if (next)
-                    next.preventDefault();
+        class $mol_link extends $.$mol_link {
+            uri_toggle() {
+                return this.current() ? this.uri_off() : this.uri();
             }
-            sub() {
-                return [
-                    ...$mol_maybe(this.Icon()),
-                    ...this.label(),
-                ];
+            uri() {
+                return new this.$.$mol_state_arg(this.state_key()).link(this.arg());
             }
-            label() {
-                return this.title() ? super.label() : [];
+            uri_off() {
+                const arg2 = {};
+                for (let i in this.arg())
+                    arg2[i] = null;
+                return new this.$.$mol_state_arg(this.state_key()).link(arg2);
             }
-            aria_checked() {
-                return String(this.checked());
+            uri_native() {
+                const base = this.$.$mol_state_arg.href();
+                return new URL(this.uri(), base);
+            }
+            current() {
+                const base = this.$.$mol_state_arg.href_normal();
+                const target = this.uri_native().toString();
+                if (base === target)
+                    return true;
+                const args = this.arg();
+                const keys = Object.keys(args).filter(key => args[key] != null);
+                if (keys.length === 0)
+                    return false;
+                for (const key of keys) {
+                    if (this.$.$mol_state_arg.value(key) != args[key])
+                        return false;
+                }
+                return true;
+            }
+            file_name() {
+                return null;
+            }
+            minimal_height() {
+                return Math.max(super.minimal_height(), 24);
+            }
+            external() {
+                return this.uri_native().origin !== $mol_dom_context.location.origin;
+            }
+            target() {
+                return this.external() ? '_blank' : '_self';
+            }
+            hint_safe() {
+                try {
+                    return this.hint();
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                    return '';
+                }
             }
         }
-        $$.$mol_check = $mol_check;
+        __decorate([
+            $mol_mem
+        ], $mol_link.prototype, "uri_toggle", null);
+        __decorate([
+            $mol_mem
+        ], $mol_link.prototype, "uri", null);
+        __decorate([
+            $mol_mem
+        ], $mol_link.prototype, "uri_off", null);
+        __decorate([
+            $mol_mem
+        ], $mol_link.prototype, "uri_native", null);
+        __decorate([
+            $mol_mem
+        ], $mol_link.prototype, "current", null);
+        $$.$mol_link = $mol_link;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-//mol/check/check.view.ts
+//mol/link/link.view.ts
 ;
 "use strict";
 var $;
 (function ($) {
-    class $mol_check_icon extends $mol_check {
-    }
-    $.$mol_check_icon = $mol_check_icon;
+    const { rem } = $mol_style_unit;
+    $mol_style_define($mol_link, {
+        textDecoration: 'none',
+        color: $mol_theme.control,
+        stroke: 'currentcolor',
+        cursor: 'pointer',
+        padding: $mol_gap.text,
+        boxSizing: 'border-box',
+        position: 'relative',
+        minWidth: rem(2.5),
+        gap: $mol_gap.space,
+        border: {
+            radius: $mol_gap.round,
+        },
+        ':hover': {
+            background: {
+                color: $mol_theme.hover,
+            },
+        },
+        ':focus': {
+            outline: 'none',
+            background: {
+                color: $mol_theme.hover,
+            },
+        },
+        ':focus-within': {
+            outline: 'none',
+            background: {
+                color: $mol_theme.hover,
+            }
+        },
+        ':active': {
+            color: $mol_theme.focus,
+        },
+        '@': {
+            mol_link_current: {
+                'true': {
+                    color: $mol_theme.current,
+                    textShadow: '0 0',
+                }
+            }
+        },
+    });
 })($ || ($ = {}));
-//mol/check/icon/-view.tree/icon.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/check/icon/icon.view.css", "[mol_check_icon]:where([mol_check_checked]) {\n\tcolor: var(--mol_theme_current);\n}\n");
-})($ || ($ = {}));
-//mol/check/icon/-css/icon.view.css.ts
+//mol/link/link.view.css.ts
 ;
 "use strict";
 //mol/charset/encoding/encoding.ts
@@ -5423,6 +5801,154 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_github_circle extends $mol_icon {
+        path() {
+            return "M12,2C6.48,2 2,6.48 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12C22,6.48 17.52,2 12,2Z";
+        }
+    }
+    $.$mol_icon_github_circle = $mol_icon_github_circle;
+})($ || ($ = {}));
+//mol/icon/github/circle/-view.tree/circle.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_link_source extends $mol_link {
+        hint() {
+            return this.$.$mol_locale.text('$mol_link_source_hint');
+        }
+        sub() {
+            return [
+                this.Icon()
+            ];
+        }
+        Icon() {
+            const obj = new this.$.$mol_icon_github_circle();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_link_source.prototype, "Icon", null);
+    $.$mol_link_source = $mol_link_source;
+})($ || ($ = {}));
+//mol/link/source/-view.tree/source.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_check extends $mol_button_minor {
+        attr() {
+            return {
+                ...super.attr(),
+                mol_check_checked: this.checked(),
+                "aria-checked": this.aria_checked(),
+                role: this.aria_role()
+            };
+        }
+        sub() {
+            return [
+                this.Icon(),
+                this.label()
+            ];
+        }
+        checked(next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        aria_checked() {
+            return "false";
+        }
+        aria_role() {
+            return "checkbox";
+        }
+        Icon() {
+            return null;
+        }
+        title() {
+            return "";
+        }
+        Title() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.title()
+            ];
+            return obj;
+        }
+        label() {
+            return [
+                this.Title()
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_check.prototype, "checked", null);
+    __decorate([
+        $mol_mem
+    ], $mol_check.prototype, "Title", null);
+    $.$mol_check = $mol_check;
+})($ || ($ = {}));
+//mol/check/-view.tree/check.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/check/check.css", "[mol_check] {\n\tflex: 0 0 auto;\n\tjustify-content: flex-start;\n\talign-content: center;\n\talign-items: flex-start;\n\tborder: none;\n\tfont-weight: inherit;\n\tbox-shadow: none;\n\ttext-align: left;\n\tdisplay: inline-flex;\n\tflex-wrap: nowrap;\n}\n\n[mol_check_title] {\n\tflex-shrink: 1;\n}\n");
+})($ || ($ = {}));
+//mol/check/-css/check.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_check extends $.$mol_check {
+            click(next) {
+                if (next?.defaultPrevented)
+                    return;
+                this.checked(!this.checked());
+                if (next)
+                    next.preventDefault();
+            }
+            sub() {
+                return [
+                    ...$mol_maybe(this.Icon()),
+                    ...this.label(),
+                ];
+            }
+            label() {
+                return this.title() ? super.label() : [];
+            }
+            aria_checked() {
+                return String(this.checked());
+            }
+        }
+        $$.$mol_check = $mol_check;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/check/check.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_check_icon extends $mol_check {
+    }
+    $.$mol_check_icon = $mol_check_icon;
+})($ || ($ = {}));
+//mol/check/icon/-view.tree/icon.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/check/icon/icon.view.css", "[mol_check_icon]:where([mol_check_checked]) {\n\tcolor: var(--mol_theme_current);\n}\n");
+})($ || ($ = {}));
+//mol/check/icon/-css/icon.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_icon_brightness_6 extends $mol_icon {
         path() {
             return "M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z";
@@ -5479,238 +6005,6 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/lights/toggle/toggle.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_link extends $mol_view {
-        uri() {
-            return "";
-        }
-        dom_name() {
-            return "a";
-        }
-        attr() {
-            return {
-                ...super.attr(),
-                href: this.uri_toggle(),
-                title: this.hint_safe(),
-                target: this.target(),
-                download: this.file_name(),
-                mol_link_current: this.current()
-            };
-        }
-        sub() {
-            return [
-                this.title()
-            ];
-        }
-        arg() {
-            return {};
-        }
-        event() {
-            return {
-                ...super.event(),
-                click: (event) => this.click(event)
-            };
-        }
-        uri_toggle() {
-            return "";
-        }
-        hint() {
-            return "";
-        }
-        hint_safe() {
-            return this.hint();
-        }
-        target() {
-            return "_self";
-        }
-        file_name() {
-            return "";
-        }
-        current() {
-            return false;
-        }
-        event_click(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        click(event) {
-            return this.event_click(event);
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_link.prototype, "event_click", null);
-    $.$mol_link = $mol_link;
-})($ || ($ = {}));
-//mol/link/-view.tree/link.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_link extends $.$mol_link {
-            uri_toggle() {
-                return this.current() ? this.uri_off() : this.uri();
-            }
-            uri() {
-                return new this.$.$mol_state_arg(this.state_key()).link(this.arg());
-            }
-            uri_off() {
-                const arg2 = {};
-                for (let i in this.arg())
-                    arg2[i] = null;
-                return new this.$.$mol_state_arg(this.state_key()).link(arg2);
-            }
-            uri_native() {
-                const base = this.$.$mol_state_arg.href();
-                return new URL(this.uri(), base);
-            }
-            current() {
-                const base = this.$.$mol_state_arg.href_normal();
-                const target = this.uri_native().toString();
-                if (base === target)
-                    return true;
-                const args = this.arg();
-                const keys = Object.keys(args).filter(key => args[key] != null);
-                if (keys.length === 0)
-                    return false;
-                for (const key of keys) {
-                    if (this.$.$mol_state_arg.value(key) != args[key])
-                        return false;
-                }
-                return true;
-            }
-            file_name() {
-                return null;
-            }
-            minimal_height() {
-                return Math.max(super.minimal_height(), 24);
-            }
-            external() {
-                return this.uri_native().origin !== $mol_dom_context.location.origin;
-            }
-            target() {
-                return this.external() ? '_blank' : '_self';
-            }
-            hint_safe() {
-                try {
-                    return this.hint();
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                    return '';
-                }
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_link.prototype, "uri_toggle", null);
-        __decorate([
-            $mol_mem
-        ], $mol_link.prototype, "uri", null);
-        __decorate([
-            $mol_mem
-        ], $mol_link.prototype, "uri_off", null);
-        __decorate([
-            $mol_mem
-        ], $mol_link.prototype, "uri_native", null);
-        __decorate([
-            $mol_mem
-        ], $mol_link.prototype, "current", null);
-        $$.$mol_link = $mol_link;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//mol/link/link.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const { rem } = $mol_style_unit;
-    $mol_style_define($mol_link, {
-        textDecoration: 'none',
-        color: $mol_theme.control,
-        stroke: 'currentcolor',
-        cursor: 'pointer',
-        padding: $mol_gap.text,
-        boxSizing: 'border-box',
-        position: 'relative',
-        minWidth: rem(2.5),
-        gap: $mol_gap.space,
-        border: {
-            radius: $mol_gap.round,
-        },
-        ':hover': {
-            background: {
-                color: $mol_theme.hover,
-            },
-        },
-        ':focus': {
-            outline: 'none',
-            background: {
-                color: $mol_theme.hover,
-            },
-        },
-        ':focus-within': {
-            outline: 'none',
-            background: {
-                color: $mol_theme.hover,
-            }
-        },
-        ':active': {
-            color: $mol_theme.focus,
-        },
-        '@': {
-            mol_link_current: {
-                'true': {
-                    color: $mol_theme.current,
-                    textShadow: '0 0',
-                }
-            }
-        },
-    });
-})($ || ($ = {}));
-//mol/link/link.view.css.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_github_circle extends $mol_icon {
-        path() {
-            return "M12,2C6.48,2 2,6.48 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12C22,6.48 17.52,2 12,2Z";
-        }
-    }
-    $.$mol_icon_github_circle = $mol_icon_github_circle;
-})($ || ($ = {}));
-//mol/icon/github/circle/-view.tree/circle.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_link_source extends $mol_link {
-        hint() {
-            return this.$.$mol_locale.text('$mol_link_source_hint');
-        }
-        sub() {
-            return [
-                this.Icon()
-            ];
-        }
-        Icon() {
-            const obj = new this.$.$mol_icon_github_circle();
-            return obj;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_link_source.prototype, "Icon", null);
-    $.$mol_link_source = $mol_link_source;
-})($ || ($ = {}));
-//mol/link/source/-view.tree/source.view.tree.ts
 ;
 "use strict";
 var $;
@@ -10112,7 +10406,8 @@ var $;
             return [
                 this.All_dosha(),
                 this.Add_dosha(),
-                this.Add_dosha_save()
+                this.Add_dosha_save(),
+                this.Steps_history()
             ];
         }
         all_dosha_label() {
@@ -10145,6 +10440,11 @@ var $;
             obj.click = (next) => this.add_today_steps();
             return obj;
         }
+        Steps_history() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "История шагов (список)";
+            return obj;
+        }
     }
     __decorate([
         $mol_mem
@@ -10164,6 +10464,9 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client_steps.prototype, "Add_dosha_save", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_steps.prototype, "Steps_history", null);
     $.$dosha_client_steps = $dosha_client_steps;
 })($ || ($ = {}));
 //dosha/client/steps/-view.tree/steps.view.tree.ts
@@ -25382,7 +25685,7 @@ var $;
         auth(next) {
             if (next !== undefined)
                 return next;
-            return true;
+            return false;
         }
         title() {
             return "👣 Добрый Шаг";
@@ -25407,13 +25710,13 @@ var $;
             const obj = new this.$.$mol_theme_auto();
             return obj;
         }
-        Lights() {
-            const obj = new this.$.$mol_lights_toggle();
-            return obj;
-        }
         GitHub() {
             const obj = new this.$.$mol_link_source();
             obj.uri = () => "https://github.com/Lyumih/dosha";
+            return obj;
+        }
+        Lights() {
+            const obj = new this.$.$mol_lights_toggle();
             return obj;
         }
         logout(next) {
@@ -25531,8 +25834,8 @@ var $;
                 this.Theme()
             ];
             obj.menu_tools = () => [
-                this.Lights(),
                 this.GitHub(),
+                this.Lights(),
                 this.Logout()
             ];
             obj.menu_foot = () => [
@@ -25575,10 +25878,10 @@ var $;
     ], $dosha_client.prototype, "Theme", null);
     __decorate([
         $mol_mem
-    ], $dosha_client.prototype, "Lights", null);
+    ], $dosha_client.prototype, "GitHub", null);
     __decorate([
         $mol_mem
-    ], $dosha_client.prototype, "GitHub", null);
+    ], $dosha_client.prototype, "Lights", null);
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "logout", null);
@@ -25658,13 +25961,19 @@ var $;
             sub() {
                 return this.auth() ? [this.Secure()] : [this.Auth_page()];
             }
-            logout(next) {
+            logout() {
                 this.auth(false);
             }
-            login(next) {
+            login() {
                 this.auth(true);
             }
+            auth(next) {
+                return this.$.$mol_state_local.value('auth', next) ?? false;
+            }
         }
+        __decorate([
+            $mol_mem
+        ], $dosha_client.prototype, "auth", null);
         $$.$dosha_client = $dosha_client;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
