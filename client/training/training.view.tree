@@ -1,8 +1,22 @@
+- Меню выбора тренировок - пользователь сможет выбрать имеющиеся тренировки, создать из конструктора блоки своих тренировок, или добавить свои
 $dosha_client_training $mol_book2_catalog
 	menu_title \🏋 Тренировки
 	param \training
 	spreads *
-		my <= My $mol_page
-		all <= All $mol_page
-		create <= Create $mol_page
+		favorite <= Favorite_page $mol_page
+			title \Любимые
+			body /
+				<= Favorite_text $mol_text text \Любимые тренировки
+		all <= All_page $mol_page
+			title \Все
+			body /
+				<= All_text $mol_text text \Список всех тренировок
+		constructor <= Constructor_page $mol_page
+			title \Конструктор
+			body /
+				<= Сonstructor_text $mol_text text \Создай свой конструктор тренировок
+		add <= Add_page $mol_page
+			title \Создать
+			body /
+				<= Add_text $mol_text
 
