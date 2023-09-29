@@ -1559,17 +1559,37 @@ declare namespace $ {
 
 declare namespace $ {
     class $dosha_client_auth extends $mol_view {
-        login_success(next?: any): any;
+        auth(next?: any): boolean;
         page(): string;
         title(): string;
         sub(): readonly any[];
+        login(next?: any): any;
         Login(): $dosha_client_auth_login;
+        login_success(next?: any): any;
         Registration(): $dosha_client_auth_registration;
+    }
+}
+
+declare namespace $ {
+    class $mol_state_local<Value> extends $mol_object {
+        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
+        static native(): Storage | {
+            getItem(key: string): any;
+            setItem(key: string, value: string): void;
+            removeItem(key: string): void;
+        };
+        static changes(next?: StorageEvent): StorageEvent | undefined;
+        static value<Value>(key: string, next?: Value | null): Value | null;
+        prefix(): string;
+        value(key: string, next?: Value): Value | null;
     }
 }
 
 declare namespace $.$$ {
     class $dosha_client_auth extends $.$dosha_client_auth {
+        logout(): void;
+        login(): void;
+        auth(next?: boolean): boolean;
     }
 }
 
@@ -1606,21 +1626,6 @@ declare namespace $ {
         value(key: string, next?: string): string | null;
         sub(postfix: string): $mol_state_arg;
         link(next: Record<string, string | null>): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_state_local<Value> extends $mol_object {
-        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
-        static native(): Storage | {
-            getItem(key: string): any;
-            setItem(key: string, value: string): void;
-            removeItem(key: string): void;
-        };
-        static changes(next?: StorageEvent): StorageEvent | undefined;
-        static value<Value>(key: string, next?: Value | null): Value | null;
-        prefix(): string;
-        value(key: string, next?: Value): Value | null;
     }
 }
 
@@ -6477,7 +6482,6 @@ declare namespace $ {
         auth(next?: any): boolean;
         title(): string;
         sub(): readonly any[];
-        login(next?: any): any;
         Auth_page(): $$.$dosha_client_auth;
         Theme(): $$.$mol_theme_auto;
         GitHub(): $mol_link_source;
@@ -6512,7 +6516,6 @@ declare namespace $.$$ {
     class $dosha_client extends $.$dosha_client {
         sub(): any;
         logout(): void;
-        login(): void;
         auth(next?: boolean): boolean;
     }
 }

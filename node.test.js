@@ -5035,10 +5035,10 @@ var $;
 var $;
 (function ($) {
     class $dosha_client_auth extends $mol_view {
-        login_success(next) {
+        auth(next) {
             if (next !== undefined)
                 return next;
-            return null;
+            return false;
         }
         page() {
             return "login";
@@ -5052,10 +5052,20 @@ var $;
                 this.Registration()
             ];
         }
+        login(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
         Login() {
             const obj = new this.$.$dosha_client_auth_login();
-            obj.login_success = (next) => this.login_success(next);
+            obj.login_success = (next) => this.login(next);
             return obj;
+        }
+        login_success(next) {
+            if (next !== undefined)
+                return next;
+            return null;
         }
         Registration() {
             const obj = new this.$.$dosha_client_auth_registration();
@@ -5065,10 +5075,16 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $dosha_client_auth.prototype, "login_success", null);
+    ], $dosha_client_auth.prototype, "auth", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth.prototype, "login", null);
     __decorate([
         $mol_mem
     ], $dosha_client_auth.prototype, "Login", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth.prototype, "login_success", null);
     __decorate([
         $mol_mem
     ], $dosha_client_auth.prototype, "Registration", null);
@@ -5079,10 +5095,80 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_state_local extends $mol_object {
+        static 'native()';
+        static native() {
+            if (this['native()'])
+                return this['native()'];
+            check: try {
+                const native = $mol_dom_context.localStorage;
+                if (!native)
+                    break check;
+                native.setItem('', '');
+                native.removeItem('');
+                return this['native()'] = native;
+            }
+            catch (error) {
+                console.warn(error);
+            }
+            return this['native()'] = {
+                getItem(key) {
+                    return this[':' + key];
+                },
+                setItem(key, value) {
+                    this[':' + key] = value;
+                },
+                removeItem(key) {
+                    this[':' + key] = void 0;
+                }
+            };
+        }
+        static changes(next) { return next; }
+        static value(key, next) {
+            this.changes();
+            if (next === void 0)
+                return JSON.parse(this.native().getItem(key) || 'null');
+            if (next === null)
+                this.native().removeItem(key);
+            else
+                this.native().setItem(key, JSON.stringify(next));
+            return next;
+        }
+        prefix() { return ''; }
+        value(key, next) {
+            return $mol_state_local.value(this.prefix() + '.' + key, next);
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_state_local, "changes", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_local, "value", null);
+    $.$mol_state_local = $mol_state_local;
+})($ || ($ = {}));
+//mol/state/local/local.ts
+;
+"use strict";
+var $;
+(function ($) {
     var $$;
     (function ($$) {
         class $dosha_client_auth extends $.$dosha_client_auth {
+            logout() {
+                this.auth(false);
+            }
+            login() {
+                console.log('login');
+                this.auth(true);
+            }
+            auth(next) {
+                return this.$.$mol_state_local.value('auth', next) ?? false;
+            }
         }
+        __decorate([
+            $mol_mem
+        ], $dosha_client_auth.prototype, "auth", null);
         $$.$dosha_client_auth = $dosha_client_auth;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -5208,63 +5294,6 @@ var $;
     $.$mol_state_arg = $mol_state_arg;
 })($ || ($ = {}));
 //mol/state/arg/arg.node.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_state_local extends $mol_object {
-        static 'native()';
-        static native() {
-            if (this['native()'])
-                return this['native()'];
-            check: try {
-                const native = $mol_dom_context.localStorage;
-                if (!native)
-                    break check;
-                native.setItem('', '');
-                native.removeItem('');
-                return this['native()'] = native;
-            }
-            catch (error) {
-                console.warn(error);
-            }
-            return this['native()'] = {
-                getItem(key) {
-                    return this[':' + key];
-                },
-                setItem(key, value) {
-                    this[':' + key] = value;
-                },
-                removeItem(key) {
-                    this[':' + key] = void 0;
-                }
-            };
-        }
-        static changes(next) { return next; }
-        static value(key, next) {
-            this.changes();
-            if (next === void 0)
-                return JSON.parse(this.native().getItem(key) || 'null');
-            if (next === null)
-                this.native().removeItem(key);
-            else
-                this.native().setItem(key, JSON.stringify(next));
-            return next;
-        }
-        prefix() { return ''; }
-        value(key, next) {
-            return $mol_state_local.value(this.prefix() + '.' + key, next);
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_state_local, "changes", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_local, "value", null);
-    $.$mol_state_local = $mol_state_local;
-})($ || ($ = {}));
-//mol/state/local/local.ts
 ;
 "use strict";
 var $;
@@ -26180,14 +26209,8 @@ var $;
                 this.Secure()
             ];
         }
-        login(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
         Auth_page() {
             const obj = new this.$.$dosha_client_auth();
-            obj.login_success = (next) => this.login(next);
             return obj;
         }
         Theme() {
@@ -26353,9 +26376,6 @@ var $;
     ], $dosha_client.prototype, "auth", null);
     __decorate([
         $mol_mem
-    ], $dosha_client.prototype, "login", null);
-    __decorate([
-        $mol_mem
     ], $dosha_client.prototype, "Auth_page", null);
     __decorate([
         $mol_mem
@@ -26447,9 +26467,6 @@ var $;
             }
             logout() {
                 this.auth(false);
-            }
-            login() {
-                this.auth(true);
             }
             auth(next) {
                 return this.$.$mol_state_local.value('auth', next) ?? false;
