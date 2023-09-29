@@ -25933,6 +25933,13 @@ var $;
 ;
 "use strict";
 var $;
+(function ($) {
+    $mol_style_attach("dosha/client/client.view.css", "[dosha_client] {\n\tfont-family: \"TT Commons\",Helvetica,Arial,sans-serif;\n}\n\n[mol_button] {\n\tborder-radius: 2rem;\n}\n");
+})($ || ($ = {}));
+//dosha/client/-css/client.view.css.ts
+;
+"use strict";
+var $;
 (function ($_1) {
     function $mol_test(set) {
         for (let name in set) {
