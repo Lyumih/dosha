@@ -15,8 +15,7 @@ namespace $.$$ {
 		/** Делаем запрос при старте компонента и сразу же наполняем его данными */
 		@$mol_mem
 		founds(): typeof FoundationModel.Value {
-			const url = 'http://localhost:1337/api/foundations'
-			const request = $mol_fetch.json( url ) as typeof FoundationModel.Value
+			const request = $dosha_fetch.json( 'foundations' ) as typeof FoundationModel.Value
 			console.log( request, [ ...Object.values( request ) ] )
 			return request ?? {}
 		}
