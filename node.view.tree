@@ -885,7 +885,8 @@ $dosha_client_profile $mol_page
 						type \email
 			buttons /
 				<= Profile_form_save $mol_button_major
-					title \Сохранить
+					title \Обновить
+					click? <=> update_profile? null
 
 - Страница с фондами. Выбрать фонд, предложить новый, сколько уже было перевено средств в фонды и какие
 $dosha_client_found $mol_page

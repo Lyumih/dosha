@@ -5206,9 +5206,13 @@ var $;
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             };
+            const token_header = {
+                Authorization: 'Bearer ' + this.$.$dosha_client_auth_login.get_jwt()
+            };
             const initWithHeaders = {
                 ...init,
                 headers: {
+                    ...token_header,
                     ...headers,
                     ...init?.headers
                 }
@@ -5277,10 +5281,16 @@ var $;
             static get_user() {
                 return this.$.$mol_state_local.value('user');
             }
+            static get_jwt() {
+                return this.$.$mol_state_local.value('jwt') ?? '';
+            }
         }
         __decorate([
             $mol_mem
         ], $dosha_client_auth_login, "get_user", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_auth_login, "get_jwt", null);
         $$.$dosha_client_auth_login = $dosha_client_auth_login;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -10997,9 +11007,15 @@ var $;
             obj.Content = () => this.Email();
             return obj;
         }
+        update_profile(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
         Profile_form_save() {
             const obj = new this.$.$mol_button_major();
-            obj.title = () => "Сохранить";
+            obj.title = () => "Обновить";
+            obj.click = (next) => this.update_profile(next);
             return obj;
         }
         Profile_form() {
@@ -11034,6 +11050,9 @@ var $;
     ], $dosha_client_profile.prototype, "Email_field", null);
     __decorate([
         $mol_mem
+    ], $dosha_client_profile.prototype, "update_profile", null);
+    __decorate([
+        $mol_mem
     ], $dosha_client_profile.prototype, "Profile_form_save", null);
     __decorate([
         $mol_mem
@@ -11054,7 +11073,15 @@ var $;
             email(next) {
                 return next ?? $dosha_client_auth_login.get_user().email;
             }
-            update_profile(next) {
+            update_profile() {
+                let result = $dosha_fetch.json('users/' + $dosha_client_auth_login.get_user().id, {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        username: this.username(),
+                        email: this.email(),
+                    })
+                });
+                $mol_state_local.value('user', result);
             }
         }
         __decorate([

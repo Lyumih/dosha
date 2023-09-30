@@ -1769,6 +1769,7 @@ declare namespace $.$$ {
         fetch_auth(): unknown;
         login_demo(next?: any): void;
         static get_user(): typeof $dosha_client_auth_login_user_model.Value;
+        static get_jwt(): string;
     }
 }
 
@@ -3285,6 +3286,7 @@ declare namespace $ {
         email(next?: any): string;
         Email(): $$.$mol_string;
         Email_field(): $$.$mol_form_field;
+        update_profile(next?: any): any;
         Profile_form_save(): $mol_button_major;
         Profile_form(): $$.$mol_form_draft;
     }
@@ -3294,7 +3296,7 @@ declare namespace $.$$ {
     class $dosha_client_profile extends $.$dosha_client_profile {
         username(next?: string): string;
         email(next?: string): string;
-        update_profile(next?: any): void;
+        update_profile(): void;
     }
 }
 
