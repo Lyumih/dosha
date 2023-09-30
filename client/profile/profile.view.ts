@@ -10,5 +10,9 @@ namespace $.$$ {
 		email( next?: string ): string {
 			return next ?? $dosha_client_auth_login.get_user().email
 		}
+
+		update_profile( next?: any ) {
+			
+		}
 	}
 }

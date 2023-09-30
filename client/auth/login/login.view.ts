@@ -49,8 +49,8 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		static get_user(): typeof $dosha_client_user_model.Value {
-			return this.$.$mol_state_local.value( 'user' ) as typeof $dosha_client_user_model.Value
+		static get_user(): typeof $dosha_client_auth_login_user_model.Value {
+			return this.$.$mol_state_local.value( 'user' ) as typeof $dosha_client_auth_login_user_model.Value
 		}
 		
 	}
