@@ -8751,7 +8751,7 @@ var $;
         }
         Login_text() {
             const obj = new this.$.$mol_text();
-            obj.text = () => "# Войти";
+            obj.text = () => "# Сотрудник";
             return obj;
         }
         email(next) {
@@ -9164,7 +9164,7 @@ var $;
         }
         Registration_text() {
             const obj = new this.$.$mol_text();
-            obj.text = () => "# Регистрация";
+            obj.text = () => "# Сотрудник";
             return obj;
         }
         username(next) {
