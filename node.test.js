@@ -5733,7 +5733,9 @@ var $;
         static json(url, init) {
             const userId = this.$.$dosha_client_auth_login.get_user().id;
             const response = super.json(`${url}?populate=*`, init);
+            console.log(response);
             response.data = response.data.filter(item => item.attributes.user_id?.data?.id === userId);
+            console.log(2, response);
             return response;
         }
     }
@@ -11676,36 +11678,29 @@ var $;
     var $$;
     (function ($$) {
         class $dosha_client_coins_links extends $.$dosha_client_coins_links {
-            fetch_coins() {
-                const result = this.$.$dosha_fetch_user.json('coins');
-                return this.coins_result(result.data[0].attributes);
-            }
-            fetch_test() {
-                this.fetch_coins();
-            }
             coins_result(next) {
-                return next ?? {};
+                return next ?? null;
             }
             steps() {
-                this.fetch_test();
-                return this.coins_result().steps || 0 + ' 👟';
+                if (this.coins_result()?.steps === undefined) {
+                    const result = this.$.$dosha_fetch_user.json('coins')?.data[0]?.attributes;
+                    this.coins_result(result ?? { steps: 0 });
+                }
+                return this.coins_result()?.steps || 0 + ' 👟';
             }
             training() {
-                return this.coins_result().training || 0 + ' 🏋';
+                return this.coins_result()?.training || 0 + ' 🏋';
             }
             achievements() {
-                return this.coins_result().achievements || 0 + ' 🏆';
+                return this.coins_result()?.achievements || 0 + ' 🏆';
             }
             goods() {
-                return this.coins_result().goods || 0 + ' 👑';
+                return this.coins_result()?.goods || 0 + ' 👑';
             }
             charity() {
-                return this.coins_result().charity || 0 + ' 🏥';
+                return this.coins_result()?.charity || 0 + ' 🏥';
             }
         }
-        __decorate([
-            $mol_mem
-        ], $dosha_client_coins_links.prototype, "fetch_coins", null);
         __decorate([
             $mol_mem
         ], $dosha_client_coins_links.prototype, "coins_result", null);

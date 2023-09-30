@@ -3295,8 +3295,6 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $dosha_client_coins_links extends $.$dosha_client_coins_links {
-        fetch_coins(): any;
-        fetch_test(): void;
         coins_result(next?: any): any;
         steps(): any;
         training(): any;
