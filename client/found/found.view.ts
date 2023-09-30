@@ -1,42 +1,54 @@
 namespace $.$$ {
+
+	const FoundationModel = $mol_data_record({
+		data: $mol_data_array($mol_data_record({
+			id: $mol_data_number,
+			attributes: $mol_data_record({
+				title: $mol_data_string,
+				uri: $mol_data_string,
+				active: $mol_data_boolean,
+			})
+		}))
+	})
+
 	export class $dosha_client_found extends $.$dosha_client_found {
 
 		/** Делаем запрос при старте компонента и сразу же наполняем его данными */
 		@$mol_mem
-		founds() {
+		founds(): typeof FoundationModel.Value {
 			const url = 'http://localhost:1337/api/foundations'
-			const request = $mol_fetch.json( url ) as any | null
-			console.log( request, [...Object.values(request)] )
-			return request.data ?? []
+			const request = $mol_fetch.json( url ) as typeof FoundationModel.Value
+			console.log( request, [ ...Object.values( request ) ] )
+			return request ?? {}
 		}
 
 		/** Так работаем со списком - мапим наши данные на Компоненты! */
 		active_founds(): readonly any[] {
-			console.log( 'active_founds', this.founds())
-			return this.founds().filter( ( f: any ) => f.attributes.active ).map( ( found: any ) => this.Found_active( found.id ) ) || []
+			console.log( 'active_founds', this.founds() )
+			return this.founds() ? this.founds().data.filter( ( data ) => data.attributes.active ).map( ( data ) => this.Found_active( data.id ) ) : []
 		}
 
 		new_founds(): readonly any[] {
-			return this.founds().filter( ( f: any ) => f.attributes.active !== true ).map( ( found: any ) => this.Found_new( found.id ) ) || []
+			return this.founds().data.filter( ( found ) => found.attributes.active !== true ).map( ( found ) => this.Found_new( found.id ) ) || []
 		}
 
-		get_found(id: string) {
-			return this.founds().find( ( found: any ) => found.id === id )
+		get_found( id: string ) {
+			return this.founds().data.find( ( found: any ) => found.id === id )?.attributes
 		}
 
 		// Это нужно для view.tree - получаем наше поле объекта из массива
-		found_active_title( id: any ): string {
-			return this.get_found(id)?.attributes.title || ''
+		found_active_title( id: string ): string {
+			return this.get_found( id )?.title || ''
 		}
-		found_active_uri( id: any ): string {
-			return this.get_found(id)?.attributes.uri || ''
+		found_active_uri( id: string ): string {
+			return this.get_found( id )?.uri || ''
 		}
 
-		found_new_title( id: any ): string {
-			return this.get_found(id)?.attributes.title || ''
+		found_new_title( id: string ): string {
+			return this.get_found( id )?.title || ''
 		}
-		found_new_uri( id: any ): string {
-			return this.get_found(id)?.attributes.uri || ''
+		found_new_uri( id: string ): string {
+			return this.get_found( id )?.uri || ''
 		}
 
 		add_new_found( next?: any ) {
