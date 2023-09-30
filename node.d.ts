@@ -3228,19 +3228,190 @@ declare namespace $ {
     }
 }
 
+declare namespace $ {
+    type $mol_data_value<Input = any, Output = any> = (val: Input) => Output;
+}
+
+declare namespace $ {
+    type $mol_type_partial_undefined<Val> = $mol_type_merge<$mol_type_override<Partial<Val>, Pick<Val, {
+        [Field in keyof Val]: undefined extends Val[Field] ? never : Field;
+    }[keyof Val]>>>;
+}
+
+declare namespace $ {
+    function $mol_data_setup<Value extends $mol_data_value, Config = never>(value: Value, config: Config): Value & {
+        config: Config;
+        Value: ReturnType<Value>;
+    };
+}
+
+declare namespace $ {
+    function $mol_data_record<Sub extends Record<string, $mol_data_value>>(sub: Sub): ((val: $mol_type_merge<$mol_type_override<Partial<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }>, Pick<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }, { [Field in keyof { [key in keyof Sub]: Parameters<Sub[key]>[0]; }]: undefined extends { [key in keyof Sub]: Parameters<Sub[key]>[0]; }[Field] ? never : Field; }[keyof Sub]>>>) => Readonly<$mol_type_merge<$mol_type_override<Partial<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }>, Pick<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }, { [Field_1 in keyof { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }]: undefined extends { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }[Field_1] ? never : Field_1; }[keyof Sub]>>>>) & {
+        config: Sub;
+        Value: Readonly<$mol_type_merge<$mol_type_override<Partial<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }>, Pick<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }, { [Field_1 in keyof { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }]: undefined extends { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }[Field_1] ? never : Field_1; }[keyof Sub]>>>>;
+    };
+}
+
+declare namespace $ {
+    function $mol_diff_path<Item>(...paths: Item[][]): {
+        prefix: Item[];
+        suffix: Item[][];
+    };
+}
+
+declare namespace $ {
+    class $mol_error_mix extends Error {
+        errors: Error[];
+        constructor(message: string, ...errors: Error[]);
+        toJSON(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_data_error extends $mol_error_mix {
+    }
+}
+
+declare namespace $ {
+    function $mol_data_array<Sub extends $mol_data_value>(sub: Sub): ((val: readonly Parameters<Sub>[0][]) => readonly ReturnType<Sub>[]) & {
+        config: Sub;
+        Value: readonly ReturnType<Sub>[];
+    };
+}
+
+declare namespace $ {
+    let $mol_data_number: (val: number) => number;
+}
+
+declare namespace $ {
+    let $mol_data_string: (val: string) => string;
+}
+
+declare namespace $ {
+    let $mol_data_boolean: (val: boolean) => boolean;
+}
+
 declare namespace $.$$ {
-    class $dosha_client_found extends $.$dosha_client_found {
-        founds(): any;
+    const FoundationModel: ((val: {
+        data: readonly {
+            id: number;
+            attributes: {
+                title: string;
+                uri: string;
+                active: boolean;
+            };
+        }[];
+    }) => Readonly<{
+        data: readonly Readonly<{
+            id: number;
+            attributes: Readonly<{
+                title: string;
+                uri: string;
+                active: boolean;
+            }>;
+        }>[];
+    }>) & {
+        config: {
+            data: ((val: readonly {
+                id: number;
+                attributes: {
+                    title: string;
+                    uri: string;
+                    active: boolean;
+                };
+            }[]) => readonly Readonly<{
+                id: number;
+                attributes: Readonly<{
+                    title: string;
+                    uri: string;
+                    active: boolean;
+                }>;
+            }>[]) & {
+                config: ((val: {
+                    id: number;
+                    attributes: {
+                        title: string;
+                        uri: string;
+                        active: boolean;
+                    };
+                }) => Readonly<{
+                    id: number;
+                    attributes: Readonly<{
+                        title: string;
+                        uri: string;
+                        active: boolean;
+                    }>;
+                }>) & {
+                    config: {
+                        id: (val: number) => number;
+                        attributes: ((val: {
+                            title: string;
+                            uri: string;
+                            active: boolean;
+                        }) => Readonly<{
+                            title: string;
+                            uri: string;
+                            active: boolean;
+                        }>) & {
+                            config: {
+                                title: (val: string) => string;
+                                uri: (val: string) => string;
+                                active: (val: boolean) => boolean;
+                            };
+                            Value: Readonly<{
+                                title: string;
+                                uri: string;
+                                active: boolean;
+                            }>;
+                        };
+                    };
+                    Value: Readonly<{
+                        id: number;
+                        attributes: Readonly<{
+                            title: string;
+                            uri: string;
+                            active: boolean;
+                        }>;
+                    }>;
+                };
+                Value: readonly Readonly<{
+                    id: number;
+                    attributes: Readonly<{
+                        title: string;
+                        uri: string;
+                        active: boolean;
+                    }>;
+                }>[];
+            };
+        };
+        Value: Readonly<{
+            data: readonly Readonly<{
+                id: number;
+                attributes: Readonly<{
+                    title: string;
+                    uri: string;
+                    active: boolean;
+                }>;
+            }>[];
+        }>;
+    };
+    export class $dosha_client_found extends $.$dosha_client_found {
+        founds(): typeof FoundationModel.Value;
         active_founds(): readonly any[];
         new_founds(): readonly any[];
-        get_found(id: string): any;
-        found_active_title(id: any): string;
-        found_active_uri(id: any): string;
-        found_new_title(id: any): string;
-        found_new_uri(id: any): string;
+        get_found(id: string): Readonly<{
+            title: string;
+            uri: string;
+            active: boolean;
+        }> | undefined;
+        found_active_title(id: string): string;
+        found_active_uri(id: string): string;
+        found_new_title(id: string): string;
+        found_new_uri(id: string): string;
         add_new_found(next?: any): void;
         add_new_found_fetch(title: string, uri: string): void;
     }
+    export {};
 }
 
 declare namespace $ {
@@ -4054,37 +4225,6 @@ declare namespace $ {
         lo: number;
         hi: number;
     }): $mol_int62_pair;
-}
-
-declare namespace $ {
-    type $mol_data_value<Input = any, Output = any> = (val: Input) => Output;
-}
-
-declare namespace $ {
-    function $mol_data_setup<Value extends $mol_data_value, Config = never>(value: Value, config: Config): Value & {
-        config: Config;
-        Value: ReturnType<Value>;
-    };
-}
-
-declare namespace $ {
-    function $mol_diff_path<Item>(...paths: Item[][]): {
-        prefix: Item[];
-        suffix: Item[][];
-    };
-}
-
-declare namespace $ {
-    class $mol_error_mix extends Error {
-        errors: Error[];
-        constructor(message: string, ...errors: Error[]);
-        toJSON(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_data_error extends $mol_error_mix {
-    }
 }
 
 declare namespace $ {
