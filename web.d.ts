@@ -1516,49 +1516,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_wire_sync<Host extends object>(obj: Host): (Host extends (...args: infer Args) => infer Res ? Res extends Promise<infer Res2> ? (...args: Args) => Res2 : Host : {}) & { [key in keyof Host]: Host[key] extends (...args: infer Args_1) => Promise<infer Res_1> ? (...args: Args_1) => Res_1 : Host[key]; };
-}
-
-declare namespace $ {
-    function $mol_dom_parse(text: string, type?: DOMParserSupportedType): Document;
-}
-
-declare var $node: any;
-
-declare namespace $ {
-    class $mol_fetch_response extends $mol_object2 {
-        readonly native: Response;
-        constructor(native: Response);
-        status(): "unknown" | "inform" | "success" | "redirect" | "wrong" | "failed";
-        code(): number;
-        message(): string;
-        headers(): Headers;
-        mime(): string | null;
-        stream(): ReadableStream<Uint8Array> | null;
-        text(): string;
-        json(): unknown;
-        buffer(): ArrayBuffer;
-        xml(): Document;
-        xhtml(): Document;
-        html(): Document;
-    }
-    class $mol_fetch extends $mol_object2 {
-        static request(input: RequestInfo, init?: RequestInit): Promise<Response> & {
-            destructor: () => void;
-        };
-        static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
-        static success(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
-        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array> | null;
-        static text(input: RequestInfo, init?: RequestInit): string;
-        static json(input: RequestInfo, init?: RequestInit): unknown;
-        static buffer(input: RequestInfo, init?: RequestInit): ArrayBuffer;
-        static xml(input: RequestInfo, init?: RequestInit): Document;
-        static xhtml(input: RequestInfo, init?: RequestInit): Document;
-        static html(input: RequestInfo, init?: RequestInit): Document;
-    }
-}
-
-declare namespace $ {
     class $mol_state_local<Value> extends $mol_object {
         static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
         static native(): Storage | {
@@ -1610,6 +1567,8 @@ declare namespace $ {
     function $mol_charset_decode(buffer: BufferSource, encoding?: $mol_charset_encoding): string;
 }
 
+declare var $node: any;
+
 declare namespace $ {
     function $mol_charset_encode(value: string): Uint8Array;
 }
@@ -1650,6 +1609,47 @@ declare namespace $ {
         abstract append(next: Uint8Array | string): void;
         find(include?: RegExp, exclude?: RegExp): $mol_file[];
         size(): number;
+    }
+}
+
+declare namespace $ {
+    function $mol_wire_sync<Host extends object>(obj: Host): (Host extends (...args: infer Args) => infer Res ? Res extends Promise<infer Res2> ? (...args: Args) => Res2 : Host : {}) & { [key in keyof Host]: Host[key] extends (...args: infer Args_1) => Promise<infer Res_1> ? (...args: Args_1) => Res_1 : Host[key]; };
+}
+
+declare namespace $ {
+    function $mol_dom_parse(text: string, type?: DOMParserSupportedType): Document;
+}
+
+declare namespace $ {
+    class $mol_fetch_response extends $mol_object2 {
+        readonly native: Response;
+        constructor(native: Response);
+        status(): "success" | "unknown" | "inform" | "redirect" | "wrong" | "failed";
+        code(): number;
+        message(): string;
+        headers(): Headers;
+        mime(): string | null;
+        stream(): ReadableStream<Uint8Array> | null;
+        text(): string;
+        json(): unknown;
+        buffer(): ArrayBuffer;
+        xml(): Document;
+        xhtml(): Document;
+        html(): Document;
+    }
+    class $mol_fetch extends $mol_object2 {
+        static request(input: RequestInfo, init?: RequestInit): Promise<Response> & {
+            destructor: () => void;
+        };
+        static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static success(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array> | null;
+        static text(input: RequestInfo, init?: RequestInit): string;
+        static json(input: RequestInfo, init?: RequestInit): unknown;
+        static buffer(input: RequestInfo, init?: RequestInit): ArrayBuffer;
+        static xml(input: RequestInfo, init?: RequestInit): Document;
+        static xhtml(input: RequestInfo, init?: RequestInit): Document;
+        static html(input: RequestInfo, init?: RequestInit): Document;
     }
 }
 
@@ -3143,6 +3143,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    let $mol_data_string: (val: string) => string;
+}
+
+declare namespace $ {
+    let $mol_data_boolean: (val: boolean) => boolean;
+}
+
+declare namespace $ {
     function $mol_data_array<Sub extends $mol_data_value>(sub: Sub): ((val: readonly Parameters<Sub>[0][]) => readonly ReturnType<Sub>[]) & {
         config: Sub;
         Value: readonly ReturnType<Sub>[];
@@ -3154,11 +3162,179 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_data_string: (val: string) => string;
-}
-
-declare namespace $ {
-    let $mol_data_boolean: (val: boolean) => boolean;
+    let $dosha_strapi: (attr: any) => ((val: {
+        data: readonly {
+            id: number;
+            attributes: {
+                [x: string]: unknown;
+                [x: number]: unknown;
+                [x: symbol]: unknown;
+            };
+        }[];
+        meta: {
+            pagination: {
+                page: number;
+                pageSize: number;
+                pageCount: number;
+                total: number;
+            };
+        };
+    }) => Readonly<{
+        data: readonly Readonly<{
+            id: number;
+            attributes: {
+                [x: string]: any;
+                [x: number]: any;
+                [x: symbol]: any;
+            };
+        }>[];
+        meta: Readonly<{
+            pagination: Readonly<{
+                page: number;
+                pageSize: number;
+                pageCount: number;
+                total: number;
+            }>;
+        }>;
+    }>) & {
+        config: {
+            data: ((val: readonly {
+                id: number;
+                attributes: {
+                    [x: string]: unknown;
+                    [x: number]: unknown;
+                    [x: symbol]: unknown;
+                };
+            }[]) => readonly Readonly<{
+                id: number;
+                attributes: {
+                    [x: string]: any;
+                    [x: number]: any;
+                    [x: symbol]: any;
+                };
+            }>[]) & {
+                config: ((val: {
+                    id: number;
+                    attributes: {
+                        [x: string]: unknown;
+                        [x: number]: unknown;
+                        [x: symbol]: unknown;
+                    };
+                }) => Readonly<{
+                    id: number;
+                    attributes: {
+                        [x: string]: any;
+                        [x: number]: any;
+                        [x: symbol]: any;
+                    };
+                }>) & {
+                    config: {
+                        id: (val: number) => number;
+                        attributes: ((val: {
+                            [x: string]: unknown;
+                            [x: number]: unknown;
+                            [x: symbol]: unknown;
+                        }) => Readonly<{
+                            [x: string]: any;
+                            [x: number]: any;
+                            [x: symbol]: any;
+                        }>) & {
+                            config: any;
+                            Value: Readonly<{
+                                [x: string]: any;
+                                [x: number]: any;
+                                [x: symbol]: any;
+                            }>;
+                        };
+                    };
+                    Value: Readonly<{
+                        id: number;
+                        attributes: {
+                            [x: string]: any;
+                            [x: number]: any;
+                            [x: symbol]: any;
+                        };
+                    }>;
+                };
+                Value: readonly Readonly<{
+                    id: number;
+                    attributes: {
+                        [x: string]: any;
+                        [x: number]: any;
+                        [x: symbol]: any;
+                    };
+                }>[];
+            };
+            meta: ((val: {
+                pagination: {
+                    page: number;
+                    pageSize: number;
+                    pageCount: number;
+                    total: number;
+                };
+            }) => Readonly<{
+                pagination: Readonly<{
+                    page: number;
+                    pageSize: number;
+                    pageCount: number;
+                    total: number;
+                }>;
+            }>) & {
+                config: {
+                    pagination: ((val: {
+                        page: number;
+                        pageSize: number;
+                        pageCount: number;
+                        total: number;
+                    }) => Readonly<{
+                        page: number;
+                        pageSize: number;
+                        pageCount: number;
+                        total: number;
+                    }>) & {
+                        config: {
+                            page: (val: number) => number;
+                            pageSize: (val: number) => number;
+                            pageCount: (val: number) => number;
+                            total: (val: number) => number;
+                        };
+                        Value: Readonly<{
+                            page: number;
+                            pageSize: number;
+                            pageCount: number;
+                            total: number;
+                        }>;
+                    };
+                };
+                Value: Readonly<{
+                    pagination: Readonly<{
+                        page: number;
+                        pageSize: number;
+                        pageCount: number;
+                        total: number;
+                    }>;
+                }>;
+            };
+        };
+        Value: Readonly<{
+            data: readonly Readonly<{
+                id: number;
+                attributes: {
+                    [x: string]: any;
+                    [x: number]: any;
+                    [x: symbol]: any;
+                };
+            }>[];
+            meta: Readonly<{
+                pagination: Readonly<{
+                    page: number;
+                    pageSize: number;
+                    pageCount: number;
+                    total: number;
+                }>;
+            }>;
+        }>;
+    };
 }
 
 declare namespace $.$$ {
@@ -3166,114 +3342,184 @@ declare namespace $.$$ {
         data: readonly {
             id: number;
             attributes: {
-                title: string;
-                uri: string;
-                active: boolean;
+                [x: string]: unknown;
+                [x: number]: unknown;
+                [x: symbol]: unknown;
             };
         }[];
+        meta: {
+            pagination: {
+                page: number;
+                pageSize: number;
+                pageCount: number;
+                total: number;
+            };
+        };
     }) => Readonly<{
         data: readonly Readonly<{
             id: number;
-            attributes: Readonly<{
-                title: string;
-                uri: string;
-                active: boolean;
-            }>;
+            attributes: {
+                [x: string]: any;
+                [x: number]: any;
+                [x: symbol]: any;
+            };
         }>[];
+        meta: Readonly<{
+            pagination: Readonly<{
+                page: number;
+                pageSize: number;
+                pageCount: number;
+                total: number;
+            }>;
+        }>;
     }>) & {
         config: {
             data: ((val: readonly {
                 id: number;
                 attributes: {
-                    title: string;
-                    uri: string;
-                    active: boolean;
+                    [x: string]: unknown;
+                    [x: number]: unknown;
+                    [x: symbol]: unknown;
                 };
             }[]) => readonly Readonly<{
                 id: number;
-                attributes: Readonly<{
-                    title: string;
-                    uri: string;
-                    active: boolean;
-                }>;
+                attributes: {
+                    [x: string]: any;
+                    [x: number]: any;
+                    [x: symbol]: any;
+                };
             }>[]) & {
                 config: ((val: {
                     id: number;
                     attributes: {
-                        title: string;
-                        uri: string;
-                        active: boolean;
+                        [x: string]: unknown;
+                        [x: number]: unknown;
+                        [x: symbol]: unknown;
                     };
                 }) => Readonly<{
                     id: number;
-                    attributes: Readonly<{
-                        title: string;
-                        uri: string;
-                        active: boolean;
-                    }>;
+                    attributes: {
+                        [x: string]: any;
+                        [x: number]: any;
+                        [x: symbol]: any;
+                    };
                 }>) & {
                     config: {
                         id: (val: number) => number;
                         attributes: ((val: {
-                            title: string;
-                            uri: string;
-                            active: boolean;
+                            [x: string]: unknown;
+                            [x: number]: unknown;
+                            [x: symbol]: unknown;
                         }) => Readonly<{
-                            title: string;
-                            uri: string;
-                            active: boolean;
+                            [x: string]: any;
+                            [x: number]: any;
+                            [x: symbol]: any;
                         }>) & {
-                            config: {
-                                title: (val: string) => string;
-                                uri: (val: string) => string;
-                                active: (val: boolean) => boolean;
-                            };
+                            config: any;
                             Value: Readonly<{
-                                title: string;
-                                uri: string;
-                                active: boolean;
+                                [x: string]: any;
+                                [x: number]: any;
+                                [x: symbol]: any;
                             }>;
                         };
                     };
                     Value: Readonly<{
                         id: number;
-                        attributes: Readonly<{
-                            title: string;
-                            uri: string;
-                            active: boolean;
-                        }>;
+                        attributes: {
+                            [x: string]: any;
+                            [x: number]: any;
+                            [x: symbol]: any;
+                        };
                     }>;
                 };
                 Value: readonly Readonly<{
                     id: number;
-                    attributes: Readonly<{
-                        title: string;
-                        uri: string;
-                        active: boolean;
-                    }>;
+                    attributes: {
+                        [x: string]: any;
+                        [x: number]: any;
+                        [x: symbol]: any;
+                    };
                 }>[];
+            };
+            meta: ((val: {
+                pagination: {
+                    page: number;
+                    pageSize: number;
+                    pageCount: number;
+                    total: number;
+                };
+            }) => Readonly<{
+                pagination: Readonly<{
+                    page: number;
+                    pageSize: number;
+                    pageCount: number;
+                    total: number;
+                }>;
+            }>) & {
+                config: {
+                    pagination: ((val: {
+                        page: number;
+                        pageSize: number;
+                        pageCount: number;
+                        total: number;
+                    }) => Readonly<{
+                        page: number;
+                        pageSize: number;
+                        pageCount: number;
+                        total: number;
+                    }>) & {
+                        config: {
+                            page: (val: number) => number;
+                            pageSize: (val: number) => number;
+                            pageCount: (val: number) => number;
+                            total: (val: number) => number;
+                        };
+                        Value: Readonly<{
+                            page: number;
+                            pageSize: number;
+                            pageCount: number;
+                            total: number;
+                        }>;
+                    };
+                };
+                Value: Readonly<{
+                    pagination: Readonly<{
+                        page: number;
+                        pageSize: number;
+                        pageCount: number;
+                        total: number;
+                    }>;
+                }>;
             };
         };
         Value: Readonly<{
             data: readonly Readonly<{
                 id: number;
-                attributes: Readonly<{
-                    title: string;
-                    uri: string;
-                    active: boolean;
-                }>;
+                attributes: {
+                    [x: string]: any;
+                    [x: number]: any;
+                    [x: symbol]: any;
+                };
             }>[];
+            meta: Readonly<{
+                pagination: Readonly<{
+                    page: number;
+                    pageSize: number;
+                    pageCount: number;
+                    total: number;
+                }>;
+            }>;
         }>;
     };
     export class $dosha_client_found extends $.$dosha_client_found {
         founds(): typeof FoundationModel.Value;
         active_founds(): readonly any[];
         new_founds(): readonly any[];
-        get_found(id: string): Readonly<{
-            title: string;
-            uri: string;
-            active: boolean;
-        }> | undefined;
+        get_found(id: string): {
+            [x: string]: any;
+            [x: number]: any;
+            [x: symbol]: any;
+        } | undefined;
         found_active_title(id: string): string;
         found_active_uri(id: string): string;
         found_new_title(id: string): string;
