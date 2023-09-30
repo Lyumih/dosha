@@ -31,7 +31,7 @@ namespace $.$$ {
 
 
 		fetch_auth() {
-			const auth_result = $dosha_fetch.json('auth/local', {
+			const auth_result = $dosha_fetch.json('auth/local?populate=*', {
 				method: 'POST',
 				body: JSON.stringify({
 					identifier: this.email(),
