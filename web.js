@@ -4854,6 +4854,148 @@ var $;
 //dosha/client/auth/login/-view.tree/login.view.tree.ts
 ;
 "use strict";
+//mol/data/value/value.ts
+;
+"use strict";
+//mol/type/equals/equals.ts
+;
+"use strict";
+//mol/type/merge/merge.ts
+;
+"use strict";
+//mol/type/partial/undefined/undefined.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_setup(value, config) {
+        return Object.assign(value, {
+            config,
+            Value: null
+        });
+    }
+    $.$mol_data_setup = $mol_data_setup;
+})($ || ($ = {}));
+//mol/data/setup/setup.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_record(sub) {
+        return $mol_data_setup((val) => {
+            let res = {};
+            for (const field in sub) {
+                try {
+                    res[field] =
+                        sub[field](val[field]);
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        return $mol_fail_hidden(error);
+                    error.message = `[${JSON.stringify(field)}] ${error.message}`;
+                    return $mol_fail(error);
+                }
+            }
+            return res;
+        }, sub);
+    }
+    $.$mol_data_record = $mol_data_record;
+})($ || ($ = {}));
+//mol/data/record/record.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_diff_path(...paths) {
+        const limit = Math.min(...paths.map(path => path.length));
+        lookup: for (var i = 0; i < limit; ++i) {
+            const first = paths[0][i];
+            for (let j = 1; j < paths.length; ++j) {
+                if (paths[j][i] !== first)
+                    break lookup;
+            }
+        }
+        return {
+            prefix: paths[0].slice(0, i),
+            suffix: paths.map(path => path.slice(i)),
+        };
+    }
+    $.$mol_diff_path = $mol_diff_path;
+})($ || ($ = {}));
+//mol/diff/path/path.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_error_mix extends Error {
+        errors;
+        constructor(message, ...errors) {
+            super(message);
+            this.errors = errors;
+            if (errors.length) {
+                const stacks = [...errors.map(error => error.stack), this.stack];
+                const diff = $mol_diff_path(...stacks.map(stack => {
+                    if (!stack)
+                        return [];
+                    return stack.split('\n').reverse();
+                }));
+                const head = diff.prefix.reverse().join('\n');
+                const tails = diff.suffix.map(path => path.reverse().map(line => line.replace(/^(?!\s+at)/, '\tat (.) ')).join('\n')).join('\n\tat (.) -----\n');
+                this.stack = `Error: ${this.constructor.name}\n\tat (.) /"""\\\n${tails}\n\tat (.) \\___/\n${head}`;
+                this.message += errors.map(error => '\n' + error.message).join('');
+            }
+        }
+        toJSON() {
+            return this.message;
+        }
+    }
+    $.$mol_error_mix = $mol_error_mix;
+})($ || ($ = {}));
+//mol/error/mix/mix.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_error extends $mol_error_mix {
+    }
+    $.$mol_data_error = $mol_data_error;
+})($ || ($ = {}));
+//mol/data/error/error.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_data_number = (val) => {
+        if (typeof val === 'number')
+            return val;
+        return $mol_fail(new $mol_data_error(`${val} is not a number`));
+    };
+})($ || ($ = {}));
+//mol/data/number/number.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_data_string = (val) => {
+        if (typeof val === 'string')
+            return val;
+        return $mol_fail(new $mol_data_error(`${val} is not a string`));
+    };
+})($ || ($ = {}));
+//mol/data/string/string.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_data_boolean = (val) => {
+        if (typeof val === 'boolean')
+            return val;
+        return $mol_fail(new $mol_data_error(`${val} is not a boolean`));
+    };
+})($ || ($ = {}));
+//mol/data/boolean/boolean.ts
+;
+"use strict";
 var $;
 (function ($) {
     function $mol_wire_sync(obj) {
@@ -5089,13 +5231,30 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $.$dosha_client_auth_login_user_model = $mol_data_record({
+        id: $mol_data_number,
+        email: $mol_data_string,
+        username: $mol_data_string,
+        provider: $mol_data_string,
+        createAt: $mol_data_string,
+        updatedAt: $mol_data_string,
+        blocked: $mol_data_boolean,
+        confirmed: $mol_data_boolean,
+    });
+    $.$dosha_client_auth_login_jwt_model = $mol_data_record({
+        jwt: $mol_data_string,
+        user: $.$dosha_client_auth_login_user_model,
+    });
+})($ || ($ = {}));
+(function ($) {
     var $$;
     (function ($$) {
         class $dosha_client_auth_login extends $.$dosha_client_auth_login {
             login_submit(next) {
                 console.log('login_submit', next);
                 const result = this.fetch_auth();
-                this.$.$mol_state_local.value('user', result);
+                this.$.$mol_state_local.value('user', result.user);
+                this.$.$mol_state_local.value('jwt', result.jwt);
                 console.log(result);
                 $mol_state_arg.go({});
             }
@@ -5115,7 +5274,13 @@ var $;
                 this.password('123456');
                 this.login_submit();
             }
+            static get_user() {
+                return this.$.$mol_state_local.value('user');
+            }
         }
+        __decorate([
+            $mol_mem
+        ], $dosha_client_auth_login, "get_user", null);
         $$.$dosha_client_auth_login = $dosha_client_auth_login;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -5386,7 +5551,8 @@ var $;
                         password: this.password(),
                     })
                 });
-                this.$.$mol_state_local.value('user', result);
+                this.$.$mol_state_local.value('user', result.user);
+                this.$.$mol_state_local.value('jwt', result.jwt);
                 $mol_state_arg.go({});
                 console.log(result);
             }
@@ -6851,12 +7017,6 @@ var $;
     $.$mol_dimmer = $mol_dimmer;
 })($ || ($ = {}));
 //mol/dimmer/-view.tree/dimmer.view.tree.ts
-;
-"use strict";
-//mol/type/equals/equals.ts
-;
-"use strict";
-//mol/type/merge/merge.ts
 ;
 "use strict";
 //mol/type/intersect/intersect.ts
@@ -10804,20 +10964,37 @@ var $;
                 this.Profile_form()
             ];
         }
-        full_name(next) {
+        username(next) {
             if (next !== undefined)
                 return next;
-            return "Иванов Михаил Павлович";
+            return "";
         }
-        Full_name() {
+        Username() {
             const obj = new this.$.$mol_string();
-            obj.value = (next) => this.full_name(next);
+            obj.value = (next) => this.username(next);
             return obj;
         }
-        Full_name_field() {
+        Username_field() {
             const obj = new this.$.$mol_form_field();
-            obj.name = () => "ФИО";
-            obj.Content = () => this.Full_name();
+            obj.name = () => "Логин";
+            obj.Content = () => this.Username();
+            return obj;
+        }
+        email(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Email() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.email(next);
+            obj.type = () => "email";
+            return obj;
+        }
+        Email_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Email";
+            obj.Content = () => this.Email();
             return obj;
         }
         Profile_form_save() {
@@ -10826,9 +11003,10 @@ var $;
             return obj;
         }
         Profile_form() {
-            const obj = new this.$.$mol_form();
+            const obj = new this.$.$mol_form_draft();
             obj.form_fields = () => [
-                this.Full_name_field()
+                this.Username_field(),
+                this.Email_field()
             ];
             obj.buttons = () => [
                 this.Profile_form_save()
@@ -10838,13 +11016,22 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $dosha_client_profile.prototype, "full_name", null);
+    ], $dosha_client_profile.prototype, "username", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_profile.prototype, "Full_name", null);
+    ], $dosha_client_profile.prototype, "Username", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_profile.prototype, "Full_name_field", null);
+    ], $dosha_client_profile.prototype, "Username_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "email", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Email", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Email_field", null);
     __decorate([
         $mol_mem
     ], $dosha_client_profile.prototype, "Profile_form_save", null);
@@ -10854,6 +11041,32 @@ var $;
     $.$dosha_client_profile = $dosha_client_profile;
 })($ || ($ = {}));
 //dosha/client/profile/-view.tree/profile.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $dosha_client_profile extends $.$dosha_client_profile {
+            username(next) {
+                return next ?? $dosha_client_auth_login.get_user().username;
+            }
+            email(next) {
+                return next ?? $dosha_client_auth_login.get_user().email;
+            }
+            update_profile(next) {
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $dosha_client_profile.prototype, "username", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_profile.prototype, "email", null);
+        $$.$dosha_client_profile = $dosha_client_profile;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//dosha/client/profile/profile.view.ts
 ;
 "use strict";
 var $;
@@ -11051,131 +11264,6 @@ var $;
 //dosha/client/found/-view.tree/found.view.tree.ts
 ;
 "use strict";
-//mol/data/value/value.ts
-;
-"use strict";
-//mol/type/partial/undefined/undefined.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_data_setup(value, config) {
-        return Object.assign(value, {
-            config,
-            Value: null
-        });
-    }
-    $.$mol_data_setup = $mol_data_setup;
-})($ || ($ = {}));
-//mol/data/setup/setup.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_data_record(sub) {
-        return $mol_data_setup((val) => {
-            let res = {};
-            for (const field in sub) {
-                try {
-                    res[field] =
-                        sub[field](val[field]);
-                }
-                catch (error) {
-                    if (error instanceof Promise)
-                        return $mol_fail_hidden(error);
-                    error.message = `[${JSON.stringify(field)}] ${error.message}`;
-                    return $mol_fail(error);
-                }
-            }
-            return res;
-        }, sub);
-    }
-    $.$mol_data_record = $mol_data_record;
-})($ || ($ = {}));
-//mol/data/record/record.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_diff_path(...paths) {
-        const limit = Math.min(...paths.map(path => path.length));
-        lookup: for (var i = 0; i < limit; ++i) {
-            const first = paths[0][i];
-            for (let j = 1; j < paths.length; ++j) {
-                if (paths[j][i] !== first)
-                    break lookup;
-            }
-        }
-        return {
-            prefix: paths[0].slice(0, i),
-            suffix: paths.map(path => path.slice(i)),
-        };
-    }
-    $.$mol_diff_path = $mol_diff_path;
-})($ || ($ = {}));
-//mol/diff/path/path.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_error_mix extends Error {
-        errors;
-        constructor(message, ...errors) {
-            super(message);
-            this.errors = errors;
-            if (errors.length) {
-                const stacks = [...errors.map(error => error.stack), this.stack];
-                const diff = $mol_diff_path(...stacks.map(stack => {
-                    if (!stack)
-                        return [];
-                    return stack.split('\n').reverse();
-                }));
-                const head = diff.prefix.reverse().join('\n');
-                const tails = diff.suffix.map(path => path.reverse().map(line => line.replace(/^(?!\s+at)/, '\tat (.) ')).join('\n')).join('\n\tat (.) -----\n');
-                this.stack = `Error: ${this.constructor.name}\n\tat (.) /"""\\\n${tails}\n\tat (.) \\___/\n${head}`;
-                this.message += errors.map(error => '\n' + error.message).join('');
-            }
-        }
-        toJSON() {
-            return this.message;
-        }
-    }
-    $.$mol_error_mix = $mol_error_mix;
-})($ || ($ = {}));
-//mol/error/mix/mix.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_data_error extends $mol_error_mix {
-    }
-    $.$mol_data_error = $mol_data_error;
-})($ || ($ = {}));
-//mol/data/error/error.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_data_string = (val) => {
-        if (typeof val === 'string')
-            return val;
-        return $mol_fail(new $mol_data_error(`${val} is not a string`));
-    };
-})($ || ($ = {}));
-//mol/data/string/string.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_data_boolean = (val) => {
-        if (typeof val === 'boolean')
-            return val;
-        return $mol_fail(new $mol_data_error(`${val} is not a boolean`));
-    };
-})($ || ($ = {}));
-//mol/data/boolean/boolean.ts
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_data_array(sub) {
@@ -11198,17 +11286,6 @@ var $;
     $.$mol_data_array = $mol_data_array;
 })($ || ($ = {}));
 //mol/data/array/array.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_data_number = (val) => {
-        if (typeof val === 'number')
-            return val;
-        return $mol_fail(new $mol_data_error(`${val} is not a number`));
-    };
-})($ || ($ = {}));
-//mol/data/number/number.ts
 ;
 "use strict";
 var $;
@@ -26345,11 +26422,11 @@ var $;
         class $dosha_client extends $.$dosha_client {
             sub() {
                 const user = this.$.$mol_state_local.value('user');
-                console.log(user);
                 return user ? [this.Secure()] : [this.Auth_page()];
             }
             logout(next) {
                 this.$.$mol_state_local.value('user', null);
+                this.$.$mol_state_local.value('jwt', null);
             }
         }
         $$.$dosha_client = $dosha_client;

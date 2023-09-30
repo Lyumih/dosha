@@ -1522,6 +1522,75 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    type $mol_data_value<Input = any, Output = any> = (val: Input) => Output;
+}
+
+declare namespace $ {
+    type $mol_type_equals<A, B> = (<X>() => X extends A ? 1 : 2) extends (<X>() => X extends B ? 1 : 2) ? unknown : never;
+}
+
+declare namespace $ {
+    type $mol_type_merge<Intersection> = Intersection extends (...a: any[]) => any ? Intersection : Intersection extends new (...a: any[]) => any ? Intersection : Intersection extends object ? $mol_type_merge_object<Intersection> extends Intersection ? unknown extends $mol_type_equals<$mol_type_merge_object<Intersection>, Intersection> ? Intersection : {
+        [Key in keyof Intersection]: $mol_type_merge<Intersection[Key]>;
+    } : Intersection : Intersection;
+    type $mol_type_merge_object<Intersection> = {
+        [Key in keyof Intersection]: Intersection[Key];
+    };
+}
+
+declare namespace $ {
+    type $mol_type_partial_undefined<Val> = $mol_type_merge<$mol_type_override<Partial<Val>, Pick<Val, {
+        [Field in keyof Val]: undefined extends Val[Field] ? never : Field;
+    }[keyof Val]>>>;
+}
+
+declare namespace $ {
+    function $mol_data_setup<Value extends $mol_data_value, Config = never>(value: Value, config: Config): Value & {
+        config: Config;
+        Value: ReturnType<Value>;
+    };
+}
+
+declare namespace $ {
+    function $mol_data_record<Sub extends Record<string, $mol_data_value>>(sub: Sub): ((val: $mol_type_merge<$mol_type_override<Partial<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }>, Pick<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }, { [Field in keyof { [key in keyof Sub]: Parameters<Sub[key]>[0]; }]: undefined extends { [key in keyof Sub]: Parameters<Sub[key]>[0]; }[Field] ? never : Field; }[keyof Sub]>>>) => Readonly<$mol_type_merge<$mol_type_override<Partial<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }>, Pick<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }, { [Field_1 in keyof { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }]: undefined extends { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }[Field_1] ? never : Field_1; }[keyof Sub]>>>>) & {
+        config: Sub;
+        Value: Readonly<$mol_type_merge<$mol_type_override<Partial<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }>, Pick<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }, { [Field_1 in keyof { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }]: undefined extends { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }[Field_1] ? never : Field_1; }[keyof Sub]>>>>;
+    };
+}
+
+declare namespace $ {
+    function $mol_diff_path<Item>(...paths: Item[][]): {
+        prefix: Item[];
+        suffix: Item[][];
+    };
+}
+
+declare namespace $ {
+    class $mol_error_mix extends Error {
+        errors: Error[];
+        constructor(message: string, ...errors: Error[]);
+        toJSON(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_data_error extends $mol_error_mix {
+    }
+}
+
+declare namespace $ {
+    let $mol_data_number: (val: number) => number;
+}
+
+declare namespace $ {
+    let $mol_data_string: (val: string) => string;
+}
+
+declare namespace $ {
+    let $mol_data_boolean: (val: boolean) => boolean;
+}
+
+declare namespace $ {
     function $mol_wire_sync<Host extends object>(obj: Host): (Host extends (...args: infer Args) => infer Res ? Res extends Promise<infer Res2> ? (...args: Args) => Res2 : Host : {}) & { [key in keyof Host]: Host[key] extends (...args: infer Args_1) => Promise<infer Res_1> ? (...args: Args_1) => Res_1 : Host[key]; };
 }
 
@@ -1570,11 +1639,136 @@ declare namespace $ {
     }
 }
 
+declare namespace $ {
+    let $dosha_client_auth_login_user_model: ((val: {
+        id: number;
+        email: string;
+        username: string;
+        provider: string;
+        createAt: string;
+        updatedAt: string;
+        blocked: boolean;
+        confirmed: boolean;
+    }) => Readonly<{
+        id: number;
+        email: string;
+        username: string;
+        provider: string;
+        createAt: string;
+        updatedAt: string;
+        blocked: boolean;
+        confirmed: boolean;
+    }>) & {
+        config: {
+            id: (val: number) => number;
+            email: (val: string) => string;
+            username: (val: string) => string;
+            provider: (val: string) => string;
+            createAt: (val: string) => string;
+            updatedAt: (val: string) => string;
+            blocked: (val: boolean) => boolean;
+            confirmed: (val: boolean) => boolean;
+        };
+        Value: Readonly<{
+            id: number;
+            email: string;
+            username: string;
+            provider: string;
+            createAt: string;
+            updatedAt: string;
+            blocked: boolean;
+            confirmed: boolean;
+        }>;
+    };
+    let $dosha_client_auth_login_jwt_model: ((val: {
+        jwt: string;
+        user: {
+            id: number;
+            email: string;
+            username: string;
+            provider: string;
+            createAt: string;
+            updatedAt: string;
+            blocked: boolean;
+            confirmed: boolean;
+        };
+    }) => Readonly<{
+        jwt: string;
+        user: Readonly<{
+            id: number;
+            email: string;
+            username: string;
+            provider: string;
+            createAt: string;
+            updatedAt: string;
+            blocked: boolean;
+            confirmed: boolean;
+        }>;
+    }>) & {
+        config: {
+            jwt: (val: string) => string;
+            user: ((val: {
+                id: number;
+                email: string;
+                username: string;
+                provider: string;
+                createAt: string;
+                updatedAt: string;
+                blocked: boolean;
+                confirmed: boolean;
+            }) => Readonly<{
+                id: number;
+                email: string;
+                username: string;
+                provider: string;
+                createAt: string;
+                updatedAt: string;
+                blocked: boolean;
+                confirmed: boolean;
+            }>) & {
+                config: {
+                    id: (val: number) => number;
+                    email: (val: string) => string;
+                    username: (val: string) => string;
+                    provider: (val: string) => string;
+                    createAt: (val: string) => string;
+                    updatedAt: (val: string) => string;
+                    blocked: (val: boolean) => boolean;
+                    confirmed: (val: boolean) => boolean;
+                };
+                Value: Readonly<{
+                    id: number;
+                    email: string;
+                    username: string;
+                    provider: string;
+                    createAt: string;
+                    updatedAt: string;
+                    blocked: boolean;
+                    confirmed: boolean;
+                }>;
+            };
+        };
+        Value: Readonly<{
+            jwt: string;
+            user: Readonly<{
+                id: number;
+                email: string;
+                username: string;
+                provider: string;
+                createAt: string;
+                updatedAt: string;
+                blocked: boolean;
+                confirmed: boolean;
+            }>;
+        }>;
+    };
+}
 declare namespace $.$$ {
     class $dosha_client_auth_login extends $.$dosha_client_auth_login {
         login_submit(next?: any): void;
         fetch_auth(): unknown;
         login_demo(next?: any): void;
+        static get_user(): typeof $dosha_client_auth_login_user_model.Value;
     }
 }
 
@@ -2008,19 +2202,6 @@ declare namespace $ {
         parts(): readonly $mol_view_content[];
         string(id: any): string;
     }
-}
-
-declare namespace $ {
-    type $mol_type_equals<A, B> = (<X>() => X extends A ? 1 : 2) extends (<X>() => X extends B ? 1 : 2) ? unknown : never;
-}
-
-declare namespace $ {
-    type $mol_type_merge<Intersection> = Intersection extends (...a: any[]) => any ? Intersection : Intersection extends new (...a: any[]) => any ? Intersection : Intersection extends object ? $mol_type_merge_object<Intersection> extends Intersection ? unknown extends $mol_type_equals<$mol_type_merge_object<Intersection>, Intersection> ? Intersection : {
-        [Key in keyof Intersection]: $mol_type_merge<Intersection[Key]>;
-    } : Intersection : Intersection;
-    type $mol_type_merge_object<Intersection> = {
-        [Key in keyof Intersection]: Intersection[Key];
-    };
 }
 
 declare namespace $ {
@@ -3098,11 +3279,22 @@ declare namespace $ {
     class $dosha_client_profile extends $mol_page {
         title(): string;
         body(): readonly any[];
-        full_name(next?: any): string;
-        Full_name(): $$.$mol_string;
-        Full_name_field(): $$.$mol_form_field;
+        username(next?: any): string;
+        Username(): $$.$mol_string;
+        Username_field(): $$.$mol_form_field;
+        email(next?: any): string;
+        Email(): $$.$mol_string;
+        Email_field(): $$.$mol_form_field;
         Profile_form_save(): $mol_button_major;
-        Profile_form(): $$.$mol_form;
+        Profile_form(): $$.$mol_form_draft;
+    }
+}
+
+declare namespace $.$$ {
+    class $dosha_client_profile extends $.$dosha_client_profile {
+        username(next?: string): string;
+        email(next?: string): string;
+        update_profile(next?: any): void;
     }
 }
 
@@ -3138,66 +3330,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    type $mol_data_value<Input = any, Output = any> = (val: Input) => Output;
-}
-
-declare namespace $ {
-    type $mol_type_partial_undefined<Val> = $mol_type_merge<$mol_type_override<Partial<Val>, Pick<Val, {
-        [Field in keyof Val]: undefined extends Val[Field] ? never : Field;
-    }[keyof Val]>>>;
-}
-
-declare namespace $ {
-    function $mol_data_setup<Value extends $mol_data_value, Config = never>(value: Value, config: Config): Value & {
-        config: Config;
-        Value: ReturnType<Value>;
-    };
-}
-
-declare namespace $ {
-    function $mol_data_record<Sub extends Record<string, $mol_data_value>>(sub: Sub): ((val: $mol_type_merge<$mol_type_override<Partial<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }>, Pick<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }, { [Field in keyof { [key in keyof Sub]: Parameters<Sub[key]>[0]; }]: undefined extends { [key in keyof Sub]: Parameters<Sub[key]>[0]; }[Field] ? never : Field; }[keyof Sub]>>>) => Readonly<$mol_type_merge<$mol_type_override<Partial<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }>, Pick<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }, { [Field_1 in keyof { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }]: undefined extends { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }[Field_1] ? never : Field_1; }[keyof Sub]>>>>) & {
-        config: Sub;
-        Value: Readonly<$mol_type_merge<$mol_type_override<Partial<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }>, Pick<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }, { [Field_1 in keyof { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }]: undefined extends { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }[Field_1] ? never : Field_1; }[keyof Sub]>>>>;
-    };
-}
-
-declare namespace $ {
-    function $mol_diff_path<Item>(...paths: Item[][]): {
-        prefix: Item[];
-        suffix: Item[][];
-    };
-}
-
-declare namespace $ {
-    class $mol_error_mix extends Error {
-        errors: Error[];
-        constructor(message: string, ...errors: Error[]);
-        toJSON(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_data_error extends $mol_error_mix {
-    }
-}
-
-declare namespace $ {
-    let $mol_data_string: (val: string) => string;
-}
-
-declare namespace $ {
-    let $mol_data_boolean: (val: boolean) => boolean;
-}
-
-declare namespace $ {
     function $mol_data_array<Sub extends $mol_data_value>(sub: Sub): ((val: readonly Parameters<Sub>[0][]) => readonly ReturnType<Sub>[]) & {
         config: Sub;
         Value: readonly ReturnType<Sub>[];
     };
-}
-
-declare namespace $ {
-    let $mol_data_number: (val: number) => number;
 }
 
 declare namespace $ {
@@ -6813,7 +6949,7 @@ declare namespace $ {
         Coins_links(): $dosha_client_coins_links;
         Coins_page(): $dosha_client_coins;
         History_page(): $dosha_client_history;
-        Profile_page(): $dosha_client_profile;
+        Profile_page(): $$.$dosha_client_profile;
         Found_page(): $$.$dosha_client_found;
         Training_page(): $dosha_client_training;
         Rating_page(): $dosha_client_rating;

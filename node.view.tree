@@ -872,12 +872,17 @@ $dosha_client_history $mol_page
 $dosha_client_profile $mol_page
 	title \🧢 Профиль
 	body /
-		<= Profile_form $mol_form
+		<= Profile_form $mol_form_draft
 			form_fields /
-				<= Full_name_field $mol_form_field
-					name \ФИО
-					Content <= Full_name $mol_string
-						value? <=> full_name? \Иванов Михаил Павлович
+				<= Username_field $mol_form_field
+					name \Логин
+					Content <= Username $mol_string
+						value? <=> username? \
+				<= Email_field $mol_form_field
+					name \Email
+					Content <= Email $mol_string
+						value? <=> email? \
+						type \email
 			buttons /
 				<= Profile_form_save $mol_button_major
 					title \Сохранить
