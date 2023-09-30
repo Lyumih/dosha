@@ -184,6 +184,8 @@ $mol_form $mol_list
 $mol_form_draft $mol_form
 	model $mol_object2
 
+$mol_button_minor $mol_button_typed
+
 - Страница авторизации. Упрощенная - без востановления пароля и регистрации на данный момент
 $dosha_client_auth_login $mol_page
 	title \🔐 Добрый Шаг Войти
@@ -206,6 +208,9 @@ $dosha_client_auth_login $mol_page
 				<= Registration $mol_link
 					title \Зарегистрироваться
 					arg * page \registration
+		<= Login_demo_user $mol_button_minor
+			title \Демо
+			click? <=> login_demo? null
 
 - Страница регистрации пользователя. Регистрация пользователя - нужна компания, должность, фио, номер телефона, email
 $dosha_client_auth_registration $mol_page
@@ -297,8 +302,6 @@ $mol_link_source $mol_link
 	hint @ \Source code
 	sub /
 		<= Icon $mol_icon_github_circle
-
-$mol_button_minor $mol_button_typed
 
 $mol_check $mol_button_minor
 	attr *

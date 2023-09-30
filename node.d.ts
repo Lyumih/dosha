@@ -1627,6 +1627,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_button_minor extends $mol_button_typed {
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $dosha_client_auth_login extends $mol_page {
         title(): string;
         body(): readonly any[];
@@ -1640,6 +1648,8 @@ declare namespace $ {
         Login(): $mol_button_major;
         Registration(): $$.$mol_link;
         Login_form(): $$.$mol_form_draft;
+        login_demo(next?: any): any;
+        Login_demo_user(): $mol_button_minor;
     }
 }
 
@@ -1694,6 +1704,7 @@ declare namespace $.$$ {
     class $dosha_client_auth_login extends $.$dosha_client_auth_login {
         login_submit(next?: any): void;
         fetch_auth(): unknown;
+        login_demo(next?: any): void;
     }
 }
 
@@ -1937,14 +1948,6 @@ declare namespace $ {
         sub(): readonly any[];
         Icon(): $mol_icon_github_circle;
     }
-}
-
-declare namespace $ {
-    class $mol_button_minor extends $mol_button_typed {
-    }
-}
-
-declare namespace $ {
 }
 
 declare namespace $ {

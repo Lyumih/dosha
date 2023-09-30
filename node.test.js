@@ -5218,13 +5218,30 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_button_minor extends $mol_button_typed {
+    }
+    $.$mol_button_minor = $mol_button_minor;
+})($ || ($ = {}));
+//mol/button/minor/-view.tree/minor.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/minor/minor.view.css", "[mol_button_minor] {\n\tcolor: var(--mol_theme_control);\n}\n\n[mol_button_minor][disabled] {\n\tcolor: var(--mol_theme_shade);\n}\n");
+})($ || ($ = {}));
+//mol/button/minor/-css/minor.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $dosha_client_auth_login extends $mol_page {
         title() {
             return "🔐 Добрый Шаг Войти";
         }
         body() {
             return [
-                this.Login_form()
+                this.Login_form(),
+                this.Login_demo_user()
             ];
         }
         email(next) {
@@ -5291,6 +5308,17 @@ var $;
             ];
             return obj;
         }
+        login_demo(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Login_demo_user() {
+            const obj = new this.$.$mol_button_minor();
+            obj.title = () => "Демо";
+            obj.click = (next) => this.login_demo(next);
+            return obj;
+        }
     }
     __decorate([
         $mol_mem
@@ -5322,6 +5350,12 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client_auth_login.prototype, "Login_form", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "login_demo", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_login.prototype, "Login_demo_user", null);
     $.$dosha_client_auth_login = $dosha_client_auth_login;
 })($ || ($ = {}));
 //dosha/client/auth/login/-view.tree/login.view.tree.ts
@@ -5575,6 +5609,11 @@ var $;
                 });
                 console.log(auth_result);
                 return auth_result;
+            }
+            login_demo(next) {
+                this.email('demo@dosha.com');
+                this.password('123456');
+                this.login_submit();
             }
         }
         $$.$dosha_client_auth_login = $dosha_client_auth_login;
@@ -6707,22 +6746,6 @@ var $;
     $.$mol_link_source = $mol_link_source;
 })($ || ($ = {}));
 //mol/link/source/-view.tree/source.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_button_minor extends $mol_button_typed {
-    }
-    $.$mol_button_minor = $mol_button_minor;
-})($ || ($ = {}));
-//mol/button/minor/-view.tree/minor.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/minor/minor.view.css", "[mol_button_minor] {\n\tcolor: var(--mol_theme_control);\n}\n\n[mol_button_minor][disabled] {\n\tcolor: var(--mol_theme_shade);\n}\n");
-})($ || ($ = {}));
-//mol/button/minor/-css/minor.view.css.ts
 ;
 "use strict";
 var $;
