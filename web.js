@@ -4713,7 +4713,7 @@ var $;
 (function ($) {
     class $dosha_client_auth_login extends $mol_page {
         title() {
-            return "🔐 ДоШа Войти";
+            return "🔐 Добрый Шаг Войти";
         }
         body() {
             return [
@@ -5085,7 +5085,7 @@ var $;
             return null;
         }
         title() {
-            return "🔐 ДоШа Регистрация";
+            return "🔐 Добрый Шаг Регистрация";
         }
         body() {
             return [
