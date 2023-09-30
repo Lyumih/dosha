@@ -1,8 +1,5 @@
 namespace $.$$ {
 	export class $dosha_client_auth_registration extends $.$dosha_client_auth_registration {
-		registration_success( next?: any ) {
-			this.fetch_registration()
-		}
 
 		fetch_registration(){
 			const result = this.$.$dosha_fetch.json('auth/local/register', {

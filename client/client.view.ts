@@ -8,6 +8,7 @@ namespace $.$$ {
 		logout( next?: any ) {
 			this.$.$mol_state_local.value( 'user', null )
 			this.$.$mol_state_local.value( 'jwt', null )
+			$mol_state_arg.go({})
 		}
 	}
 }

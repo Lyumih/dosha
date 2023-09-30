@@ -34,7 +34,6 @@ namespace $ {
 		static json( url: string, init?: RequestInit ) {
 			const userId = this.$.$dosha_client_auth_login.get_user().id;
 			const response =  super.json( `${url}?populate=*`, init )
-			console.log(response)
 			// @ts-ignore
 			response.data = response.data.filter(item => item.attributes.user_id?.data?.id === userId)
 			console.log(2, response)
