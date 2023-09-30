@@ -14,7 +14,7 @@ $dosha_client_coins_links $mol_view
 			title <= achievements \
 			arg *
 				client \coins
-				coins \achivements
+				coins \achievements
 		<= Coins_goods $mol_link
 			title <= goods \
 			arg *
