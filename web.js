@@ -4720,20 +4720,20 @@ var $;
                 this.Login_form()
             ];
         }
-        login(next) {
+        email(next) {
             if (next !== undefined)
                 return next;
             return "";
         }
-        Login_control() {
+        Email_control() {
             const obj = new this.$.$mol_string();
-            obj.value = (next) => this.login(next);
+            obj.value = (next) => this.email(next);
             return obj;
         }
-        Login_field() {
+        Email_field() {
             const obj = new this.$.$mol_form_field();
             obj.name = () => "Логин";
-            obj.Content = () => this.Login_control();
+            obj.Content = () => this.Email_control();
             return obj;
         }
         password(next) {
@@ -4775,7 +4775,7 @@ var $;
         Login_form() {
             const obj = new this.$.$mol_form_draft();
             obj.form_fields = () => [
-                this.Login_field(),
+                this.Email_field(),
                 this.Password_field()
             ];
             obj.buttons = () => [
@@ -4787,13 +4787,13 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $dosha_client_auth_login.prototype, "login", null);
+    ], $dosha_client_auth_login.prototype, "email", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_auth_login.prototype, "Login_control", null);
+    ], $dosha_client_auth_login.prototype, "Email_control", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_auth_login.prototype, "Login_field", null);
+    ], $dosha_client_auth_login.prototype, "Email_field", null);
     __decorate([
         $mol_mem
     ], $dosha_client_auth_login.prototype, "password", null);
@@ -5026,14 +5026,25 @@ var $;
             const develop_mode = $mol_state_arg.href_normal().startsWith('http://localhost');
             const prod_uri_db = 'https://2022831-koplenov.twc1.net//api/';
             const local_uri_db = 'http://localhost:1337/api/';
+            const headers = {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            };
+            const initWithHeaders = {
+                ...init,
+                headers: {
+                    ...headers,
+                    ...init?.headers
+                }
+            };
             if (develop_mode) {
-                return super.json(local_uri_db + url, init);
+                return super.json(local_uri_db + url, initWithHeaders);
             }
             try {
-                return super.json((develop_mode ? local_uri_db : prod_uri_db) + url, init);
+                return super.json((develop_mode ? local_uri_db : prod_uri_db) + url, initWithHeaders);
             }
             catch {
-                return super.json(local_uri_db + url, init);
+                return super.json(local_uri_db + url, initWithHeaders);
             }
         }
     }
@@ -5049,21 +5060,17 @@ var $;
         class $dosha_client_auth_login extends $.$dosha_client_auth_login {
             login_submit(next) {
                 console.log('login_submit', next);
-                const result = this.fetch_auth(this.login(), this.password());
+                const result = this.fetch_auth();
                 this.$.$mol_state_local.value('user', result);
                 console.log(result);
                 $mol_state_arg.go({});
             }
-            fetch_auth(identifier, password) {
+            fetch_auth() {
                 const auth_result = $dosha_fetch.json('auth/local', {
                     method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json'
-                    },
                     body: JSON.stringify({
-                        identifier,
-                        password,
+                        identifier: this.email(),
+                        password: this.password(),
                     })
                 });
                 console.log(auth_result);
@@ -5079,33 +5086,28 @@ var $;
 var $;
 (function ($) {
     class $dosha_client_auth_registration extends $mol_page {
-        login_success(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
         title() {
             return "🔐 Добрый Шаг Регистрация";
         }
         body() {
             return [
-                this.Login_form()
+                this.Registration_form()
             ];
         }
-        login(next) {
+        username(next) {
             if (next !== undefined)
                 return next;
             return "";
         }
-        Login_control() {
+        Username_control() {
             const obj = new this.$.$mol_string();
-            obj.value = (next) => this.login(next);
+            obj.value = (next) => this.username(next);
             return obj;
         }
-        Login_field() {
+        Username_field() {
             const obj = new this.$.$mol_form_field();
-            obj.name = () => "Логин";
-            obj.Content = () => this.Login_control();
+            obj.name = () => "Username";
+            obj.Content = () => this.Username_control();
             return obj;
         }
         password(next) {
@@ -5123,6 +5125,23 @@ var $;
             const obj = new this.$.$mol_form_field();
             obj.name = () => "Пароль";
             obj.Content = () => this.Password_control();
+            return obj;
+        }
+        email(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Email_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.email(next);
+            obj.type = () => "email";
+            return obj;
+        }
+        Email_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Email";
+            obj.Content = () => this.Email_control();
             return obj;
         }
         company(next) {
@@ -5190,27 +5209,15 @@ var $;
             obj.Content = () => this.Phone_control();
             return obj;
         }
-        email(next) {
+        registration_success(next) {
             if (next !== undefined)
                 return next;
-            return "";
-        }
-        Email_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.email(next);
-            obj.type = () => "email";
-            return obj;
-        }
-        Email_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Email";
-            obj.Content = () => this.Email_control();
-            return obj;
+            return null;
         }
         Registration() {
             const obj = new this.$.$mol_button_major();
             obj.title = () => "Зарегистрироваться";
-            obj.click = (next) => this.login_success(next);
+            obj.click = (next) => this.registration_success(next);
             return obj;
         }
         Login() {
@@ -5221,16 +5228,16 @@ var $;
             });
             return obj;
         }
-        Login_form() {
+        Registration_form() {
             const obj = new this.$.$mol_form();
             obj.form_fields = () => [
-                this.Login_field(),
+                this.Username_field(),
                 this.Password_field(),
+                this.Email_field(),
                 this.Company_field(),
                 this.Department_field(),
                 this.Fio_field(),
-                this.Phone_field(),
-                this.Email_field()
+                this.Phone_field()
             ];
             obj.buttons = () => [
                 this.Registration(),
@@ -5241,16 +5248,13 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $dosha_client_auth_registration.prototype, "login_success", null);
+    ], $dosha_client_auth_registration.prototype, "username", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_auth_registration.prototype, "login", null);
+    ], $dosha_client_auth_registration.prototype, "Username_control", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Login_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Login_field", null);
+    ], $dosha_client_auth_registration.prototype, "Username_field", null);
     __decorate([
         $mol_mem
     ], $dosha_client_auth_registration.prototype, "password", null);
@@ -5260,6 +5264,15 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client_auth_registration.prototype, "Password_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "email", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Email_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_auth_registration.prototype, "Email_field", null);
     __decorate([
         $mol_mem
     ], $dosha_client_auth_registration.prototype, "company", null);
@@ -5298,13 +5311,7 @@ var $;
     ], $dosha_client_auth_registration.prototype, "Phone_field", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_auth_registration.prototype, "email", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Email_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Email_field", null);
+    ], $dosha_client_auth_registration.prototype, "registration_success", null);
     __decorate([
         $mol_mem
     ], $dosha_client_auth_registration.prototype, "Registration", null);
@@ -5313,7 +5320,7 @@ var $;
     ], $dosha_client_auth_registration.prototype, "Login", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_auth_registration.prototype, "Login_form", null);
+    ], $dosha_client_auth_registration.prototype, "Registration_form", null);
     $.$dosha_client_auth_registration = $dosha_client_auth_registration;
 })($ || ($ = {}));
 //dosha/client/auth/registration/-view.tree/registration.view.tree.ts
@@ -5321,12 +5328,39 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $dosha_client_auth extends $mol_book2 {
-        logout(next) {
-            if (next !== undefined)
-                return next;
-            return null;
+    var $$;
+    (function ($$) {
+        class $dosha_client_auth_registration extends $.$dosha_client_auth_registration {
+            registration_success(next) {
+                this.fetch_registration();
+            }
+            fetch_registration() {
+                const result = this.$.$dosha_fetch.json('auth/local/register', {
+                    method: "POST",
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: this.email(),
+                        username: this.username(),
+                        password: this.password(),
+                    })
+                });
+                this.$.$mol_state_local.value('user', result);
+                $mol_state_arg.go({});
+                console.log(result);
+            }
         }
+        $$.$dosha_client_auth_registration = $dosha_client_auth_registration;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//dosha/client/auth/registration/registration.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $dosha_client_auth extends $mol_book2 {
         title() {
             return "🔐 ДоШа Авторизация";
         }
@@ -5340,26 +5374,14 @@ var $;
             const obj = new this.$.$dosha_client_auth_login();
             return obj;
         }
-        login(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
         Registration() {
             const obj = new this.$.$dosha_client_auth_registration();
-            obj.login_success = (next) => this.login(next);
             return obj;
         }
     }
     __decorate([
         $mol_mem
-    ], $dosha_client_auth.prototype, "logout", null);
-    __decorate([
-        $mol_mem
     ], $dosha_client_auth.prototype, "Login", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth.prototype, "login", null);
     __decorate([
         $mol_mem
     ], $dosha_client_auth.prototype, "Registration", null);
@@ -5373,23 +5395,11 @@ var $;
     var $$;
     (function ($$) {
         class $dosha_client_auth extends $.$dosha_client_auth {
-            logout() {
-                $mol_state_arg.go({
-                    page: 'login'
-                });
-                this.auth(false);
-            }
             pages() {
                 const page = $mol_state_arg.value('page');
                 return page === 'registration' ? [this.Registration()] : [this.Login()];
             }
-            auth(next) {
-                return this.$.$mol_state_local.value('user', next) ?? null;
-            }
         }
-        __decorate([
-            $mol_mem
-        ], $dosha_client_auth.prototype, "auth", null);
         $$.$dosha_client_auth = $dosha_client_auth;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -26025,12 +26035,6 @@ var $;
                 this.Secure()
             ];
         }
-        auth() {
-            return this.Auth_page().auth();
-        }
-        logout() {
-            return this.Auth_page().logout();
-        }
         Auth_page() {
             const obj = new this.$.$dosha_client_auth();
             return obj;
@@ -26047,6 +26051,11 @@ var $;
         Lights() {
             const obj = new this.$.$mol_lights_toggle();
             return obj;
+        }
+        logout(next) {
+            if (next !== undefined)
+                return next;
+            return null;
         }
         Logout_icon() {
             const obj = new this.$.$mol_icon_logout();
@@ -26175,6 +26184,9 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Lights", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client.prototype, "logout", null);
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Logout_icon", null);
@@ -26312,6 +26324,9 @@ var $;
                 const user = this.$.$mol_state_local.value('user');
                 console.log(user);
                 return user ? [this.Secure()] : [this.Auth_page()];
+            }
+            logout(next) {
+                this.$.$mol_state_local.value('user', null);
             }
         }
         $$.$dosha_client = $dosha_client;

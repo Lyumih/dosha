@@ -1630,9 +1630,9 @@ declare namespace $ {
     class $dosha_client_auth_login extends $mol_page {
         title(): string;
         body(): readonly any[];
-        login(next?: any): string;
-        Login_control(): $$.$mol_string;
-        Login_field(): $$.$mol_form_field;
+        email(next?: any): string;
+        Email_control(): $$.$mol_string;
+        Email_field(): $$.$mol_form_field;
         password(next?: any): string;
         Password_control(): $$.$mol_string;
         Password_field(): $$.$mol_form_field;
@@ -1693,21 +1693,23 @@ declare namespace $ {
 declare namespace $.$$ {
     class $dosha_client_auth_login extends $.$dosha_client_auth_login {
         login_submit(next?: any): void;
-        fetch_auth(identifier: string, password: string): unknown;
+        fetch_auth(): unknown;
     }
 }
 
 declare namespace $ {
     class $dosha_client_auth_registration extends $mol_page {
-        login_success(next?: any): any;
         title(): string;
         body(): readonly any[];
-        login(next?: any): string;
-        Login_control(): $$.$mol_string;
-        Login_field(): $$.$mol_form_field;
+        username(next?: any): string;
+        Username_control(): $$.$mol_string;
+        Username_field(): $$.$mol_form_field;
         password(next?: any): string;
         Password_control(): $$.$mol_string;
         Password_field(): $$.$mol_form_field;
+        email(next?: any): string;
+        Email_control(): $$.$mol_string;
+        Email_field(): $$.$mol_form_field;
         company(next?: any): string;
         Company_control(): $$.$mol_string;
         Company_field(): $$.$mol_form_field;
@@ -1720,31 +1722,32 @@ declare namespace $ {
         phone(next?: any): string;
         Phone_control(): $$.$mol_string;
         Phone_field(): $$.$mol_form_field;
-        email(next?: any): string;
-        Email_control(): $$.$mol_string;
-        Email_field(): $$.$mol_form_field;
+        registration_success(next?: any): any;
         Registration(): $mol_button_major;
         Login(): $$.$mol_link;
-        Login_form(): $$.$mol_form;
+        Registration_form(): $$.$mol_form;
+    }
+}
+
+declare namespace $.$$ {
+    class $dosha_client_auth_registration extends $.$dosha_client_auth_registration {
+        registration_success(next?: any): void;
+        fetch_registration(): void;
     }
 }
 
 declare namespace $ {
     class $dosha_client_auth extends $mol_book2 {
-        logout(next?: any): any;
         title(): string;
         pages(): readonly any[];
         Login(): $$.$dosha_client_auth_login;
-        login(next?: any): any;
-        Registration(): $dosha_client_auth_registration;
+        Registration(): $$.$dosha_client_auth_registration;
     }
 }
 
 declare namespace $.$$ {
     class $dosha_client_auth extends $.$dosha_client_auth {
-        logout(): void;
         pages(): $dosha_client_auth_registration[] | $dosha_client_auth_login[];
-        auth(next?: boolean): boolean | null;
     }
 }
 
@@ -6905,12 +6908,11 @@ declare namespace $ {
         dosha(next?: any): number;
         title(): string;
         sub(): readonly any[];
-        auth(): boolean | null;
-        logout(): void;
         Auth_page(): $$.$dosha_client_auth;
         Theme(): $$.$mol_theme_auto;
         GitHub(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
+        logout(next?: any): any;
         Logout_icon(): $mol_icon_logout;
         Logout(): $mol_button_minor;
         Coins_links(): $dosha_client_coins_links;
@@ -6943,6 +6945,7 @@ declare namespace $ {
 declare namespace $.$$ {
     class $dosha_client extends $.$dosha_client {
         sub(): any;
+        logout(next?: any): void;
     }
 }
 

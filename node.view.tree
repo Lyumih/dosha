@@ -190,10 +190,10 @@ $dosha_client_auth_login $mol_page
 	body /
 		<= Login_form $mol_form_draft
 			form_fields /
-				<= Login_field $mol_form_field
+				<= Email_field $mol_form_field
 					name \Логин
-					Content <= Login_control $mol_string
-						value? <=> login? \
+					Content <= Email_control $mol_string
+						value? <=> email? \
 				<= Password_field $mol_form_field
 					name \Пароль
 					Content <= Password_control $mol_string
@@ -209,20 +209,24 @@ $dosha_client_auth_login $mol_page
 
 - Страница регистрации пользователя. Регистрация пользователя - нужна компания, должность, фио, номер телефона, email
 $dosha_client_auth_registration $mol_page
-	login_success? null
 	title \🔐 Добрый Шаг Регистрация
 	body /
-		<= Login_form $mol_form
+		<= Registration_form $mol_form
 			form_fields /
-				<= Login_field $mol_form_field
-					name \Логин
-					Content <= Login_control $mol_string
-						value? <=> login? \
+				<= Username_field $mol_form_field
+					name \Username
+					Content <= Username_control $mol_string
+						value? <=> username? \
 				<= Password_field $mol_form_field
 					name \Пароль
 					Content <= Password_control $mol_string
 						value? <=> password? \
 						type \password
+				<= Email_field $mol_form_field
+					name \Email
+					Content <= Email_control $mol_string
+						value? <=> email? \
+						type \email
 				<= Company_field $mol_form_field
 					name \Компания
 					Content <= Company_control $mol_string
@@ -240,27 +244,20 @@ $dosha_client_auth_registration $mol_page
 					Content <= Phone_control $mol_string
 						value? <=> phone? \
 						type \phone
-				<= Email_field $mol_form_field
-					name \Email
-					Content <= Email_control $mol_string
-						value? <=> email? \
-						type \email
 			buttons /
 				<= Registration $mol_button_major
 					title \Зарегистрироваться
-					click? <=> login_success?
+					click? <=> registration_success? null
 				<= Login $mol_link
 					title \Войти
 					arg * page \login
 
 - Страница авторизации. Упрощенная - без востановления пароля и регистрации на данный момент
 $dosha_client_auth $mol_book2
-	logout? null
 	title \🔐 ДоШа Авторизация
 	pages /
 		<= Login $dosha_client_auth_login
 		<= Registration $dosha_client_auth_registration
-			login_success? <=> login? null
 
 $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \
@@ -2410,8 +2407,6 @@ $dosha_client $mol_view
 	title \👣 Добрый Шаг
 	sub /
 		<= Auth_page $dosha_client_auth
-			auth => auth
-			logout => logout
 		<= Secure $mol_book2_catalog
 			menu_title \👣 Добрый Шаг
 			param \client
@@ -2422,7 +2417,7 @@ $dosha_client $mol_view
 				<= GitHub $mol_link_source uri \https://github.com/Lyumih/dosha
 				<= Lights $mol_lights_toggle
 				<= Logout $mol_button_minor
-					click? <= logout
+					click? <= logout? null
 					sub / <= Logout_icon $mol_icon_logout
 			menu_foot /
 				<= Coins_links $dosha_client_coins_links
