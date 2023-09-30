@@ -8,12 +8,10 @@ namespace $.$$ {
 		}
 
 		login() {
-			// const url = 'http://localhost:1337/api/foundations'
-
-			// const data = $mol_fetch.json( url ) as any | null
-			// console.log( data, [ ...Object.values( data ) ] )
-			$mol_state_arg.go({})
-			this.auth( true )
+			const auth_result = this.fetch_auth('test', 'pass')
+			console.log(auth_result);
+			// $mol_state_arg.go({})
+			// this.auth( true )
 		}
 
 		pages() {
@@ -24,6 +22,22 @@ namespace $.$$ {
 		@$mol_mem
 		auth( next?: boolean ) {
 			return this.$.$mol_state_local.value( 'auth', next ) ?? false
+		}
+
+		fetch_auth(identifier: string, password: string) {
+			const auth_result = $dosha_fetch.json('auth/local', {
+				method: 'POST',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					identifier,
+					password,
+				})
+			})
+			console.log(auth_result);
+			return auth_result
 		}
 	}
 }
