@@ -1,12 +1,12 @@
 namespace $ {
 
-	const Company = $mol_data_record({
+	const Company = $mol_data_nullable($mol_data_record({
 		id: $mol_data_number,
 		company: $mol_data_string,
 		department:	$mol_data_string,
 		createdAt: $mol_data_string,
 		updatedAt: $mol_data_string,
-	})
+	}))
 
 	export let $dosha_client_auth_login_user_model = $mol_data_record({
 		id: $mol_data_number,
@@ -58,7 +58,7 @@ namespace $.$$ {
 			this.login_submit()
 		}
 
-		// @ $mol_mem
+		@ $mol_mem
 		static get_user(): typeof $dosha_client_auth_login_user_model.Value {
 			return this.$.$mol_state_local.value( 'user' ) as typeof $dosha_client_auth_login_user_model.Value
 		}
@@ -66,6 +66,12 @@ namespace $.$$ {
 		@ $mol_mem
 		static get_jwt(): string {
 			return this.$.$mol_state_local.value( 'jwt' ) ?? ''
+		}
+
+		static update_user() {
+			const user_full = this.$.$dosha_fetch.json( 'users/me?populate=*' )
+			this.$.$mol_state_local.value( 'user', user_full )
+			console.log('update_user', user_full)
 		}
 		
 	}
