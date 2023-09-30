@@ -9,7 +9,7 @@ $dosha_client_auth_login $mol_page
 			title \🏥
 			arg * page \company-login
 	body /
-		<= Login_text $mol_text text \# Войти
+		<= Login_text $mol_text text \# Сотрудник
 		<= Login_form $mol_form_draft
 			form_fields /
 				<= Email_field $mol_form_field

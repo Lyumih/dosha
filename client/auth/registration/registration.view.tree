@@ -9,7 +9,7 @@ $dosha_client_auth_registration $mol_page
 			title \🏥
 			arg * page \company-registration
 	body /
-		<= Registration_text $mol_text text \# Регистрация
+		<= Registration_text $mol_text text \# Сотрудник
 		<= Registration_form $mol_form
 			form_fields /
 				<= Username_field $mol_form_field
