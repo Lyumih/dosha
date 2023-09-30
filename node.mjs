@@ -5540,6 +5540,221 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_wire_sync(obj) {
+        return new Proxy(obj, {
+            get(obj, field) {
+                const val = obj[field];
+                if (typeof val !== 'function')
+                    return val;
+                const temp = $mol_wire_task.getter(val);
+                return function $mol_wire_sync(...args) {
+                    const fiber = temp(obj, args);
+                    return fiber.sync();
+                };
+            },
+            apply(obj, self, args) {
+                const temp = $mol_wire_task.getter(obj);
+                const fiber = temp(self, args);
+                return fiber.sync();
+            },
+        });
+    }
+    $.$mol_wire_sync = $mol_wire_sync;
+})($ || ($ = {}));
+//mol/wire/sync/sync.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
+        const parser = new $mol_dom_context.DOMParser();
+        const doc = parser.parseFromString(text, type);
+        const error = doc.getElementsByTagName('parsererror');
+        if (error.length)
+            throw new Error(error[0].textContent);
+        return doc;
+    }
+    $.$mol_dom_parse = $mol_dom_parse;
+})($ || ($ = {}));
+//mol/dom/parse/parse.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_fetch_response extends $mol_object2 {
+        native;
+        constructor(native) {
+            super();
+            this.native = native;
+        }
+        status() {
+            const types = ['unknown', 'inform', 'success', 'redirect', 'wrong', 'failed'];
+            return types[Math.floor(this.native.status / 100)];
+        }
+        code() {
+            return this.native.status;
+        }
+        message() {
+            return this.native.statusText || `HTTP Error ${this.code()}`;
+        }
+        headers() {
+            return this.native.headers;
+        }
+        mime() {
+            return this.headers().get('content-type');
+        }
+        stream() {
+            return this.native.body;
+        }
+        text() {
+            const buffer = this.buffer();
+            const native = this.native;
+            const mime = native.headers.get('content-type') || '';
+            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
+            const decoder = new TextDecoder(charset);
+            return decoder.decode(buffer);
+        }
+        json() {
+            return $mol_wire_sync(this.native).json();
+        }
+        buffer() {
+            return $mol_wire_sync(this.native).arrayBuffer();
+        }
+        xml() {
+            return $mol_dom_parse(this.text(), 'application/xml');
+        }
+        xhtml() {
+            return $mol_dom_parse(this.text(), 'application/xhtml+xml');
+        }
+        html() {
+            return $mol_dom_parse(this.text(), 'text/html');
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "stream", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "text", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "buffer", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "xml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "xhtml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "html", null);
+    $.$mol_fetch_response = $mol_fetch_response;
+    class $mol_fetch extends $mol_object2 {
+        static request(input, init = {}) {
+            const native = globalThis.fetch ?? $node['undici'].fetch;
+            const controller = new AbortController();
+            let done = false;
+            const promise = native(input, {
+                ...init,
+                signal: controller.signal,
+            }).finally(() => {
+                done = true;
+            });
+            return Object.assign(promise, {
+                destructor: () => {
+                    if (!done && !controller.signal.aborted)
+                        controller.abort();
+                },
+            });
+        }
+        static response(input, init) {
+            return new $mol_fetch_response($mol_wire_sync(this).request(input, init));
+        }
+        static success(input, init) {
+            const response = this.response(input, init);
+            if (response.status() === 'success')
+                return response;
+            throw new Error(response.message());
+        }
+        static stream(input, init) {
+            return this.success(input, init).stream();
+        }
+        static text(input, init) {
+            return this.success(input, init).text();
+        }
+        static json(input, init) {
+            return this.success(input, init).json();
+        }
+        static buffer(input, init) {
+            return this.success(input, init).buffer();
+        }
+        static xml(input, init) {
+            return this.success(input, init).xml();
+        }
+        static xhtml(input, init) {
+            return this.success(input, init).xhtml();
+        }
+        static html(input, init) {
+            return this.success(input, init).html();
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "response", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "success", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "stream", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "text", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "json", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "buffer", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "xml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "xhtml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "html", null);
+    $.$mol_fetch = $mol_fetch;
+})($ || ($ = {}));
+//mol/fetch/fetch.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $dosha_fetch extends $mol_fetch {
+        static json(url, init) {
+            const develop_mode = $mol_state_arg.href_normal().startsWith('http://localhost');
+            const prod_uri_db = 'https://2022831-koplenov.twc1.net//api/';
+            const local_uri_db = 'http://localhost:1337/api/';
+            if (develop_mode) {
+                return super.json(local_uri_db + url, init);
+            }
+            try {
+                return super.json((develop_mode ? local_uri_db : prod_uri_db) + url, init);
+            }
+            catch {
+                return super.json(local_uri_db + url, init);
+            }
+        }
+    }
+    $.$dosha_fetch = $dosha_fetch;
+})($ || ($ = {}));
+//dosha/fetch/fetch.ts
+;
+"use strict";
+var $;
+(function ($) {
     var $$;
     (function ($$) {
         class $dosha_client_auth extends $.$dosha_client_auth {
@@ -5550,8 +5765,8 @@ var $;
                 this.auth(false);
             }
             login() {
-                $mol_state_arg.go({});
-                this.auth(true);
+                const auth_result = this.fetch_auth('test', 'pass');
+                console.log(auth_result);
             }
             pages() {
                 const page = $mol_state_arg.value('page');
@@ -5559,6 +5774,21 @@ var $;
             }
             auth(next) {
                 return this.$.$mol_state_local.value('auth', next) ?? false;
+            }
+            fetch_auth(identifier, password) {
+                const auth_result = $dosha_fetch.json('auth/local', {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        identifier,
+                        password,
+                    })
+                });
+                console.log(auth_result);
+                return auth_result;
             }
         }
         __decorate([
@@ -5986,199 +6216,7 @@ var $;
 //mol/file/file.node.ts
 ;
 "use strict";
-var $;
-(function ($) {
-    function $mol_wire_sync(obj) {
-        return new Proxy(obj, {
-            get(obj, field) {
-                const val = obj[field];
-                if (typeof val !== 'function')
-                    return val;
-                const temp = $mol_wire_task.getter(val);
-                return function $mol_wire_sync(...args) {
-                    const fiber = temp(obj, args);
-                    return fiber.sync();
-                };
-            },
-            apply(obj, self, args) {
-                const temp = $mol_wire_task.getter(obj);
-                const fiber = temp(self, args);
-                return fiber.sync();
-            },
-        });
-    }
-    $.$mol_wire_sync = $mol_wire_sync;
-})($ || ($ = {}));
-//mol/wire/sync/sync.ts
-;
-"use strict";
 //hyoo/hyoo.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
-        const parser = new $mol_dom_context.DOMParser();
-        const doc = parser.parseFromString(text, type);
-        const error = doc.getElementsByTagName('parsererror');
-        if (error.length)
-            throw new Error(error[0].textContent);
-        return doc;
-    }
-    $.$mol_dom_parse = $mol_dom_parse;
-})($ || ($ = {}));
-//mol/dom/parse/parse.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_fetch_response extends $mol_object2 {
-        native;
-        constructor(native) {
-            super();
-            this.native = native;
-        }
-        status() {
-            const types = ['unknown', 'inform', 'success', 'redirect', 'wrong', 'failed'];
-            return types[Math.floor(this.native.status / 100)];
-        }
-        code() {
-            return this.native.status;
-        }
-        message() {
-            return this.native.statusText || `HTTP Error ${this.code()}`;
-        }
-        headers() {
-            return this.native.headers;
-        }
-        mime() {
-            return this.headers().get('content-type');
-        }
-        stream() {
-            return this.native.body;
-        }
-        text() {
-            const buffer = this.buffer();
-            const native = this.native;
-            const mime = native.headers.get('content-type') || '';
-            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
-            const decoder = new TextDecoder(charset);
-            return decoder.decode(buffer);
-        }
-        json() {
-            return $mol_wire_sync(this.native).json();
-        }
-        buffer() {
-            return $mol_wire_sync(this.native).arrayBuffer();
-        }
-        xml() {
-            return $mol_dom_parse(this.text(), 'application/xml');
-        }
-        xhtml() {
-            return $mol_dom_parse(this.text(), 'application/xhtml+xml');
-        }
-        html() {
-            return $mol_dom_parse(this.text(), 'text/html');
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "stream", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "text", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "buffer", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "xml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "xhtml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "html", null);
-    $.$mol_fetch_response = $mol_fetch_response;
-    class $mol_fetch extends $mol_object2 {
-        static request(input, init = {}) {
-            const native = globalThis.fetch ?? $node['undici'].fetch;
-            const controller = new AbortController();
-            let done = false;
-            const promise = native(input, {
-                ...init,
-                signal: controller.signal,
-            }).finally(() => {
-                done = true;
-            });
-            return Object.assign(promise, {
-                destructor: () => {
-                    if (!done && !controller.signal.aborted)
-                        controller.abort();
-                },
-            });
-        }
-        static response(input, init) {
-            return new $mol_fetch_response($mol_wire_sync(this).request(input, init));
-        }
-        static success(input, init) {
-            const response = this.response(input, init);
-            if (response.status() === 'success')
-                return response;
-            throw new Error(response.message());
-        }
-        static stream(input, init) {
-            return this.success(input, init).stream();
-        }
-        static text(input, init) {
-            return this.success(input, init).text();
-        }
-        static json(input, init) {
-            return this.success(input, init).json();
-        }
-        static buffer(input, init) {
-            return this.success(input, init).buffer();
-        }
-        static xml(input, init) {
-            return this.success(input, init).xml();
-        }
-        static xhtml(input, init) {
-            return this.success(input, init).xhtml();
-        }
-        static html(input, init) {
-            return this.success(input, init).html();
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "response", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "success", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "stream", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "text", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "json", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "buffer", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "xml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "xhtml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "html", null);
-    $.$mol_fetch = $mol_fetch;
-})($ || ($ = {}));
-//mol/fetch/fetch.ts
 ;
 "use strict";
 var $;
@@ -11683,26 +11721,6 @@ var $;
     });
 })($ || ($ = {}));
 //dosha/strapi/strapi.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $dosha_fetch extends $mol_fetch {
-        static json(url, init) {
-            const develop_mode = $mol_state_arg.href_normal().startsWith('http://localhost');
-            const prod_uri_db = 'https://2022831-koplenov.twc1.net//api/';
-            const local_uri_db = 'http://localhost:1337/api/';
-            try {
-                return super.json((develop_mode ? local_uri_db : prod_uri_db) + url, init);
-            }
-            catch {
-                return super.json(local_uri_db + url, init);
-            }
-        }
-    }
-    $.$dosha_fetch = $dosha_fetch;
-})($ || ($ = {}));
-//dosha/fetch/fetch.ts
 ;
 "use strict";
 var $;

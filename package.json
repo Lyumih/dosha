@@ -142,6 +142,10 @@
     "$mol_action",
     "$dosha_client_auth_registration",
     "$mol_state_local",
+    "$dosha_fetch",
+    "$mol_fetch",
+    "$mol_wire_sync",
+    "$mol_dom_parse",
     "$mol_theme_auto",
     "$mol_lights",
     "$mol_link_source",
@@ -152,13 +156,10 @@
     "$mol_charset_encoding",
     "$mol_charset_encode",
     "$mol_compare_array",
-    "$mol_wire_sync",
     "$hyoo_lingua_translate",
     "$hyoo_lingua",
     "$hyoo",
     "$mol_huggingface",
-    "$mol_fetch",
-    "$mol_dom_parse",
     "$mol_icon_github_circle",
     "$mol_icon_github",
     "$mol_icon",
@@ -241,7 +242,6 @@
     "$dosha_strapi",
     "$mol_data_array",
     "$mol_data_number",
-    "$dosha_fetch",
     "$dosha_client_training",
     "$dosha_client_rating",
     "$mol_plot_bar",
@@ -421,8 +421,8 @@
   ],
   "dependencies": {
     "jsdom": "*",
-    "chokidar": "*",
     "undici": "*",
+    "chokidar": "*",
     "fake-indexeddb": "*"
   }
 }
