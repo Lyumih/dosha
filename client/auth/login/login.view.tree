@@ -1,15 +1,6 @@
 - Страница авторизации. Упрощенная - без востановления пароля и регистрации на данный момент
-$dosha_client_auth_login $mol_page
-	title \🔐 Добрый Шаг
-	tools /
-		<= Found $mol_link
-			title \🧮
-			arg * page \foundation-login
-		<= Company $mol_link
-			title \🏥
-			arg * page \company-login
-	body /
-		<= Login_text $mol_text text \# Сотрудник
+$dosha_client_auth_login $mol_view
+	sub /
 		<= Login_form $mol_form_draft
 			form_fields /
 				<= Email_field $mol_form_field
@@ -26,8 +17,8 @@ $dosha_client_auth_login $mol_page
 					title \Войти
 					click? <=> login_submit? null
 				<= Registration $mol_link
-					title \Зарегистрироваться
+					title \Регистрация
 					arg * page \registration
 		<= Login_demo_user $mol_button_minor
-			title \Демонстрация
+			title \Демо
 			click? <=> login_demo? null

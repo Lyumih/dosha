@@ -1,19 +1,11 @@
 - Страница регистрации пользователя. Регистрация пользователя - нужна компания, должность, фио, номер телефона, email
-$dosha_client_auth_registration $mol_page
-	title \🔐 Добрый Шаг
-	tools /
-		<= Found $mol_link
-			title \🧮
-			arg * page \foundation-registration
-		<= Company $mol_link
-			title \🏥
-			arg * page \company-registration
-	body /
-		<= Registration_text $mol_text text \# Сотрудник
+$dosha_client_auth_registration $mol_view
+	role? \user
+	sub /
 		<= Registration_form $mol_form
 			form_fields /
 				<= Username_field $mol_form_field
-					name \Username
+					name \Логин
 					Content <= Username_control $mol_string
 						value? <=> username? \
 				<= Password_field $mol_form_field
@@ -28,7 +20,7 @@ $dosha_client_auth_registration $mol_page
 						type \email
 			buttons /
 				<= Registration $mol_button_major
-					title \Зарегистрироваться
+					title \Регистрация
 					click? <=> fetch_registration? null
 				<= Login $mol_link
 					title \Войти

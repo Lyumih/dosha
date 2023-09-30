@@ -22,9 +22,10 @@ namespace $.$$ {
 		login_submit( next?: any ) {
 			console.log('login_submit', next)
 			const result = this.fetch_auth() as typeof $dosha_client_auth_login_jwt_model.Value
-			this.$.$mol_state_local.value( 'user', result.user )
 			this.$.$mol_state_local.value( 'jwt', result.jwt )
-			console.log(result)
+			const user_full = this.$.$dosha_fetch.json( 'users/me?populate=*' )
+			this.$.$mol_state_local.value( 'user', user_full )
+			console.log(user_full)
 			$mol_state_arg.go({})
 		}
 
