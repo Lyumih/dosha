@@ -4,10 +4,10 @@ $dosha_client_auth_login $mol_page
 	body /
 		<= Login_form $mol_form_draft
 			form_fields /
-				<= Login_field $mol_form_field
+				<= Email_field $mol_form_field
 					name \Логин
-					Content <= Login_control $mol_string
-						value? <=> login? \
+					Content <= Email_control $mol_string
+						value? <=> email? \
 				<= Password_field $mol_form_field
 					name \Пароль
 					Content <= Password_control $mol_string

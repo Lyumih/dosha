@@ -4,8 +4,6 @@ $dosha_client $mol_view
 	title \👣 Добрый Шаг
 	sub /
 		<= Auth_page $dosha_client_auth
-			auth => auth
-			logout => logout
 		<= Secure $mol_book2_catalog
 			menu_title \👣 Добрый Шаг
 			param \client
@@ -16,7 +14,7 @@ $dosha_client $mol_view
 				<= GitHub $mol_link_source uri \https://github.com/Lyumih/dosha
 				<= Lights $mol_lights_toggle
 				<= Logout $mol_button_minor
-					click? <= logout
+					click? <= logout? null
 					sub / <= Logout_icon $mol_icon_logout
 			menu_foot /
 				<= Coins_links $dosha_client_coins_links
