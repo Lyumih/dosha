@@ -1,15 +1,14 @@
 namespace $.$$ {
 
-	const FoundationModel = $mol_data_record({
-		data: $mol_data_array($mol_data_record({
-			id: $mol_data_number,
-			attributes: $mol_data_record({
-				title: $mol_data_string,
-				uri: $mol_data_string,
-				active: $mol_data_boolean,
-			})
-		}))
+	const FoundationAttributesModel = $mol_data_record({
+		title: $mol_data_string,
+		uri: $mol_data_string,
+		active: $mol_data_boolean,
 	})
+
+	const FoundationModel = $dosha_strapi(FoundationAttributesModel);
+
+	// const T = $dosha_strapi(FoundationAttributesModel)
 
 	export class $dosha_client_found extends $.$dosha_client_found {
 

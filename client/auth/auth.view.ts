@@ -8,10 +8,10 @@ namespace $.$$ {
 		}
 
 		login() {
-			const url = 'http://localhost:1337/api/foundations'
+			// const url = 'http://localhost:1337/api/foundations'
 
-			const data = $mol_fetch.json( url ) as any | null
-			console.log( data, [ ...Object.values( data ) ] )
+			// const data = $mol_fetch.json( url ) as any | null
+			// console.log( data, [ ...Object.values( data ) ] )
 			$mol_state_arg.go({})
 			this.auth( true )
 		}
