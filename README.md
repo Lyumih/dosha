@@ -7,6 +7,7 @@
 
 
 Посмотреть работающее приложение можно тут: https://lyumih.github.io/dosha/
+База Данных: https://2022831-koplenov.twc1.net/admin/
 
 Репозиторий: https://git.codenrock.com/kokoc-2023/cnrprod-team-57549/activity-and-charity
 Репозиторий БД: https://git.codenrock.com/kokoc-2023/cnrprod-team-57549/dosha-api

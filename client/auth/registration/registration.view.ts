@@ -1,6 +1,5 @@
 namespace $.$$ {
 	export class $dosha_client_auth_registration extends $.$dosha_client_auth_registration {
-		
 		registration_success( next?: any ) {
 			this.fetch_registration()
 		}
@@ -17,8 +16,9 @@ namespace $.$$ {
 					username: this.username(),
 					password: this.password(),
 				})
-			})
-			this.$.$mol_state_local.value( 'user', result )
+			}) as typeof $dosha_client_auth_login_jwt_model.Value
+			this.$.$mol_state_local.value( 'user', result.user )
+			this.$.$mol_state_local.value( 'jwt', result.jwt )
 			$mol_state_arg.go({})
 			console.log(result)
 		}
