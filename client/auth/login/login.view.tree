@@ -20,3 +20,6 @@ $dosha_client_auth_login $mol_page
 				<= Registration $mol_link
 					title \Зарегистрироваться
 					arg * page \registration
+		<= Login_demo_user $mol_button_minor
+			title \Демо
+			click? <=> login_demo? null

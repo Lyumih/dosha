@@ -21,6 +21,12 @@ namespace $.$$ {
 			console.log(auth_result);
 			return auth_result
 		}
+
+		login_demo( next?: any ) {
+			this.email('demo@dosha.com')
+			this.password('123456')
+			this.login_submit()
+		}
 		
 	}
 }
