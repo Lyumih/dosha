@@ -8,13 +8,6 @@ $mol_scroll $mol_view
 		^
 		scroll?event <=> event_scroll?event null
 
-$mol_book2 $mol_scroll
-	menu_title \
-	sub <= pages /$mol_view
-	minimal_width 0
-	Placeholder $mol_view
-	Gap* $mol_view title \
-
 $mol_page $mol_view
 	dom_name \article
 	field *
@@ -39,22 +32,69 @@ $mol_page $mol_view
 			dom_name \footer
 			sub <= foot /$mol_view
 
-$mol_link $mol_view
-	uri \
-	dom_name \a
+$mol_speck $mol_view
 	attr *
 		^
-		href <= uri_toggle \
-		title <= hint_safe <= hint \
-		target <= target \_self
-		download <= file_name \
-		mol_link_current <= current false
-	sub /$mol_view_content
-		<= title
-	arg *
+		mol_theme <= theme \$mol_theme_accent
+	style *
+		^
+		minHeight \1em
+	sub /
+		<= value null
+
+$mol_button $mol_view
+	enabled true
+	click?event null
+	event_click?event null
 	event *
 		^
-		click?event <=> click?event <=> event_click?event null
+		click?event <=> event_activate?event null
+		dblclick?event <=> clicks?event null
+		keydown?event <=> event_key_press?event null 
+	attr *
+		^
+		disabled <= disabled false
+		role \button
+		tabindex <= tab_index 0
+		title <= hint_safe <= hint \
+	sub /$mol_view_content
+		<= title
+	Speck $mol_speck
+		value <= error \
+
+$mol_button_typed $mol_button
+	minimal_height 40
+	minimal_width 40
+
+$mol_button_minor $mol_button_typed
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked? false
+		aria-checked <= aria_checked \false
+		role <= aria_role \checkbox
+	sub /$mol_view_content
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_check_list $mol_view
+	Option* $mol_check
+		checked? <=> option_checked*? false
+		label <= option_label* /
+			<= option_title* \
+		enabled <= option_enabled* <= enabled true
+		hint <= option_hint* \
+		minimal_height 24
+	options *
+	keys /string
+	sub <= items /$mol_check
+
+$mol_switch $mol_check_list
+	value? \
 
 $mol_list $mol_view
 	render_visible_only true
@@ -118,42 +158,6 @@ $mol_text_code_row $mol_paragraph
 		needle <= highlight \
 		uri <= token_uri* \
 	find_pos* null
-
-$mol_speck $mol_view
-	attr *
-		^
-		mol_theme <= theme \$mol_theme_accent
-	style *
-		^
-		minHeight \1em
-	sub /
-		<= value null
-
-$mol_button $mol_view
-	enabled true
-	click?event null
-	event_click?event null
-	event *
-		^
-		click?event <=> event_activate?event null
-		dblclick?event <=> clicks?event null
-		keydown?event <=> event_key_press?event null 
-	attr *
-		^
-		disabled <= disabled false
-		role \button
-		tabindex <= tab_index 0
-		title <= hint_safe <= hint \
-	sub /$mol_view_content
-		<= title
-	Speck $mol_speck
-		value <= error \
-
-$mol_button_typed $mol_button
-	minimal_height 40
-	minimal_width 40
-
-$mol_button_minor $mol_button_typed
 
 $mol_svg $mol_view
 	dom_name \svg
@@ -230,19 +234,6 @@ $mol_float $mol_view
 		^
 		minHeight \auto
 
-$mol_check $mol_button_minor
-	attr *
-		^
-		mol_check_checked <= checked? false
-		aria-checked <= aria_checked \false
-		role <= aria_role \checkbox
-	sub /$mol_view_content
-		<= Icon null
-		<= label /
-			<= Title $mol_view
-				sub /
-					<= title \
-
 $mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
 
 $mol_check_expand $mol_check
@@ -306,6 +297,23 @@ $mol_grid_cell $mol_view
 	minimal_height 40
 
 $mol_grid_number $mol_grid_cell
+
+$mol_link $mol_view
+	uri \
+	dom_name \a
+	attr *
+		^
+		href <= uri_toggle \
+		title <= hint_safe <= hint \
+		target <= target \_self
+		download <= file_name \
+		mol_link_current <= current false
+	sub /$mol_view_content
+		<= title
+	arg *
+	event *
+		^
+		click?event <=> click?event <=> event_click?event null
 
 $mol_image $mol_view
 	dom_name \img
@@ -572,32 +580,9 @@ $mol_form $mol_list
 $mol_form_draft $mol_form
 	model $mol_object2
 
-$mol_text_list $mol_text
-	auto_scroll null
-	attr *
-		^
-		mol_text_list_type <= type \
-	Paragraph* $mol_text_list_item
-		index <= item_index*
-		sub <= block_content*
-
-$mol_text_list_item $mol_paragraph
-	attr *
-		^
-		mol_text_list_item_index <= index 0
-
 - Страница авторизации. Упрощенная - без востановления пароля и регистрации на данный момент
-$dosha_client_auth_login $mol_page
-	title \🔐 Добрый Шаг
-	tools /
-		<= Found $mol_link
-			title \🧮
-			arg * page \foundation-login
-		<= Company $mol_link
-			title \🏥
-			arg * page \company-login
-	body /
-		<= Login_text $mol_text text \# Сотрудник
+$dosha_client_auth_login $mol_view
+	sub /
 		<= Login_form $mol_form_draft
 			form_fields /
 				<= Email_field $mol_form_field
@@ -614,28 +599,20 @@ $dosha_client_auth_login $mol_page
 					title \Войти
 					click? <=> login_submit? null
 				<= Registration $mol_link
-					title \Зарегистрироваться
+					title \Регистрация
 					arg * page \registration
 		<= Login_demo_user $mol_button_minor
-			title \Демонстрация
+			title \Демо
 			click? <=> login_demo? null
 
 - Страница регистрации пользователя. Регистрация пользователя - нужна компания, должность, фио, номер телефона, email
-$dosha_client_auth_registration $mol_page
-	title \🔐 Добрый Шаг
-	tools /
-		<= Found $mol_link
-			title \🧮
-			arg * page \foundation-registration
-		<= Company $mol_link
-			title \🏥
-			arg * page \company-registration
-	body /
-		<= Registration_text $mol_text text \# Сотрудник
+$dosha_client_auth_registration $mol_view
+	role? \user
+	sub /
 		<= Registration_form $mol_form
 			form_fields /
 				<= Username_field $mol_form_field
-					name \Username
+					name \Логин
 					Content <= Username_control $mol_string
 						value? <=> username? \
 				<= Password_field $mol_form_field
@@ -650,18 +627,41 @@ $dosha_client_auth_registration $mol_page
 						type \email
 			buttons /
 				<= Registration $mol_button_major
-					title \Зарегистрироваться
+					title \Регистрация
 					click? <=> fetch_registration? null
 				<= Login $mol_link
 					title \Войти
 					arg * page \login
 
+$mol_text_list $mol_text
+	auto_scroll null
+	attr *
+		^
+		mol_text_list_type <= type \
+	Paragraph* $mol_text_list_item
+		index <= item_index*
+		sub <= block_content*
+
+$mol_text_list_item $mol_paragraph
+	attr *
+		^
+		mol_text_list_item_index <= index 0
+
 - Страница авторизации. Упрощенная - без востановления пароля и регистрации на данный момент
-$dosha_client_auth $mol_book2
-	title \🔐 ДоШа Авторизация
-	pages /
+$dosha_client_auth $mol_page
+	title \🔐 ДоШа
+	tools /
+		<= Role $mol_switch
+			value? <=> role? \user
+			options *
+				user \👔
+				company \🧮
+				found \🏥
+	body /
+		<= Role_text $mol_text text <= role_text \
 		<= Login $dosha_client_auth_login
 		<= Registration $dosha_client_auth_registration
+			role? <= role?
 
 $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \
@@ -683,6 +683,13 @@ $mol_lights_toggle $mol_check_icon
 	checked? <=> lights? false
 
 $mol_icon_logout $mol_icon path \M16,17V14H9V10H16V7L21,12L16,17M14,2C15.1,2 16,2.9 16,4V6H14V4H5V20H14V18H16V20C16,21.1 15.1,22 14,22H5C3.9,22 3,21.1 3,20V4C3,2.9 3.9,2 5,2H14Z
+
+$mol_book2 $mol_scroll
+	menu_title \
+	sub <= pages /$mol_view
+	minimal_width 0
+	Placeholder $mol_view
+	Gap* $mol_view title \
 
 $mol_pop $mol_view
 	showed? false
