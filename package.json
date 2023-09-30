@@ -241,6 +241,7 @@
     "$dosha_strapi",
     "$mol_data_array",
     "$mol_data_number",
+    "$dosha_fetch",
     "$dosha_client_training",
     "$dosha_client_rating",
     "$mol_plot_bar",

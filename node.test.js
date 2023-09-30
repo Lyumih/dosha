@@ -11679,6 +11679,26 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $dosha_fetch extends $mol_fetch {
+        static json(url, init) {
+            const develop_mode = $mol_state_arg.href_normal().startsWith('http://localhost');
+            const prod_uri_db = 'https://2022812312331-koplenov.twc1.net/api/';
+            const local_uri_db = 'http://localhost:1337/api/';
+            try {
+                return super.json((develop_mode ? local_uri_db : prod_uri_db) + url, init);
+            }
+            catch {
+                return super.json(local_uri_db + url, init);
+            }
+        }
+    }
+    $.$dosha_fetch = $dosha_fetch;
+})($ || ($ = {}));
+//dosha/fetch/fetch.ts
+;
+"use strict";
+var $;
+(function ($) {
     var $$;
     (function ($$) {
         const FoundationAttributesModel = $mol_data_record({
@@ -11689,8 +11709,7 @@ var $;
         const FoundationModel = $dosha_strapi(FoundationAttributesModel);
         class $dosha_client_found extends $.$dosha_client_found {
             founds() {
-                const url = 'http://localhost:1337/api/foundations';
-                const request = $mol_fetch.json(url);
+                const request = $dosha_fetch.json('foundations');
                 console.log(request, [...Object.values(request)]);
                 return request ?? {};
             }

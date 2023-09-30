@@ -3467,6 +3467,12 @@ declare namespace $ {
     };
 }
 
+declare namespace $ {
+    class $dosha_fetch extends $mol_fetch {
+        static json(url: string, init?: RequestInit): unknown;
+    }
+}
+
 declare namespace $.$$ {
     const FoundationModel: ((val: {
         data: readonly {
