@@ -8,8 +8,6 @@ namespace $.$$ {
 
 	const FoundationModel = $dosha_strapi(FoundationAttributesModel);
 
-	// const T = $dosha_strapi(FoundationAttributesModel)
-
 	export class $dosha_client_found extends $.$dosha_client_found {
 
 		/** Делаем запрос при старте компонента и сразу же наполняем его данными */
