@@ -8,9 +8,13 @@ namespace $ {
 				Accept: 'application/json',
 				'Content-Type': 'application/json'
 			}
+			const token_header = {
+				Authorization: 'Bearer ' + this.$.$dosha_client_auth_login.get_jwt()
+			}
 			const initWithHeaders = {
 				...init,
 				headers: {
+					...token_header,
 					...headers,
 					...init?.headers
 				}

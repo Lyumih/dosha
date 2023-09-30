@@ -15,4 +15,5 @@ $dosha_client_profile $mol_page
 						type \email
 			buttons /
 				<= Profile_form_save $mol_button_major
-					title \Сохранить
+					title \Обновить
+					click? <=> update_profile? null

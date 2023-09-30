@@ -52,6 +52,11 @@ namespace $.$$ {
 		static get_user(): typeof $dosha_client_auth_login_user_model.Value {
 			return this.$.$mol_state_local.value( 'user' ) as typeof $dosha_client_auth_login_user_model.Value
 		}
+
+		@ $mol_mem
+		static get_jwt(): string {
+			return this.$.$mol_state_local.value( 'jwt' ) ?? ''
+		}
 		
 	}
 }
