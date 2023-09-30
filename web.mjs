@@ -8834,9 +8834,6 @@ var $;
 //mol/data/value/value.ts
 ;
 "use strict";
-//mol/type/partial/undefined/undefined.ts
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_data_setup(value, config) {
@@ -8848,6 +8845,23 @@ var $;
     $.$mol_data_setup = $mol_data_setup;
 })($ || ($ = {}));
 //mol/data/setup/setup.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_nullable(sub) {
+        return $mol_data_setup((val) => {
+            if (val === null)
+                return null;
+            return sub(val);
+        }, sub);
+    }
+    $.$mol_data_nullable = $mol_data_nullable;
+})($ || ($ = {}));
+//mol/data/nullable/nullable.ts
+;
+"use strict";
+//mol/type/partial/undefined/undefined.ts
 ;
 "use strict";
 var $;
@@ -9016,13 +9030,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const Company = $mol_data_record({
+    const Company = $mol_data_nullable($mol_data_record({
         id: $mol_data_number,
         company: $mol_data_string,
         department: $mol_data_string,
         createdAt: $mol_data_string,
         updatedAt: $mol_data_string,
-    });
+    }));
     $.$dosha_client_auth_login_user_model = $mol_data_record({
         id: $mol_data_number,
         email: $mol_data_string,
@@ -9074,7 +9088,15 @@ var $;
             static get_jwt() {
                 return this.$.$mol_state_local.value('jwt') ?? '';
             }
+            static update_user() {
+                const user_full = this.$.$dosha_fetch.json('users/me?populate=*');
+                this.$.$mol_state_local.value('user', user_full);
+                console.log('update_user', user_full);
+            }
         }
+        __decorate([
+            $mol_mem
+        ], $dosha_client_auth_login, "get_user", null);
         __decorate([
             $mol_mem
         ], $dosha_client_auth_login, "get_jwt", null);
@@ -11387,22 +11409,20 @@ var $;
                 return next ?? this.$.$dosha_client_auth_login.get_user().email;
             }
             company(next) {
-                console.log(123432, next, this.$.$dosha_client_auth_login.get_user());
-                return next ?? this.$.$dosha_client_auth_login.get_user().company.company;
+                return next ?? this.$.$dosha_client_auth_login.get_user().company?.company ?? '';
             }
             department(next) {
-                console.log(123, next, this.$.$dosha_client_auth_login.get_user());
-                return next ?? this.$.$dosha_client_auth_login.get_user().company.department;
+                return next ?? this.$.$dosha_client_auth_login.get_user().company?.department ?? '';
             }
             update_profile() {
-                let result = $dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
+                $dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
                     method: 'PUT',
                     body: JSON.stringify({
                         username: this.username(),
                         email: this.email(),
                     })
                 });
-                $mol_state_local.value('user', result);
+                this.$.$dosha_client_auth_login.update_user();
             }
         }
         __decorate([

@@ -2905,9 +2905,6 @@ var $;
 //mol/state/arg/arg.web.test.ts
 ;
 "use strict";
-//mol/type/partial/undefined/undefined.test.ts
-;
-"use strict";
 var $;
 (function ($) {
     $mol_test({
@@ -2975,6 +2972,29 @@ var $;
     });
 })($ || ($ = {}));
 //mol/data/number/number.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is null'() {
+            $mol_data_nullable($mol_data_number)(null);
+        },
+        'Is not null'() {
+            $mol_data_nullable($mol_data_number)(0);
+        },
+        'Is undefined'() {
+            $mol_assert_fail(() => {
+                const Type = $mol_data_nullable($mol_data_number);
+                Type(undefined);
+            }, 'undefined is not a number');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/nullable/nullable.test.ts
+;
+"use strict";
+//mol/type/partial/undefined/undefined.test.ts
 ;
 "use strict";
 var $;
