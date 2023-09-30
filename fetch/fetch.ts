@@ -29,4 +29,14 @@ namespace $ {
 			}
 		}
 	}
+
+	export class $dosha_fetch_user extends $dosha_fetch {
+		static json( url: string, init?: RequestInit ) {
+			const userId = this.$.$dosha_client_auth_login.get_user().id;
+			const response =  super.json( `${url}?populate=*`, init )
+			// @ts-ignore
+			response.data = response.data.filter(item => item.attributes.user_id?.data?.id === userId)
+			return response
+		}
+	}
 }
