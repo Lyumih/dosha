@@ -5272,7 +5272,7 @@ var $;
                 $mol_state_arg.go({});
             }
             fetch_auth() {
-                const auth_result = $dosha_fetch.json('auth/local', {
+                const auth_result = $dosha_fetch.json('auth/local?populate=*', {
                     method: 'POST',
                     body: JSON.stringify({
                         identifier: this.email(),
@@ -10967,50 +10967,89 @@ var $;
     class $dosha_client_coins_links extends $mol_view {
         sub() {
             return [
-                this.coins_list(),
-                this.Button()
+                this.Coins_steps(),
+                this.Coins_training(),
+                this.Coins_achievements(),
+                this.Coins_goods(),
+                this.Coins_charities()
             ];
         }
-        coin_title(id) {
+        steps() {
             return "";
         }
-        coin_type(id) {
-            return "";
-        }
-        Coin_link(id) {
+        Coins_steps() {
             const obj = new this.$.$mol_link();
-            obj.title = () => this.coin_title(id);
+            obj.title = () => this.steps();
             obj.arg = () => ({
                 client: "coins",
-                coins: this.coin_type(id)
+                coins: "steps"
             });
             return obj;
         }
-        coins_list() {
-            return [
-                this.Coin_link("0")
-            ];
+        training() {
+            return "";
         }
-        coins_fetch(next) {
-            if (next !== undefined)
-                return next;
-            return null;
+        Coins_training() {
+            const obj = new this.$.$mol_link();
+            obj.title = () => this.training();
+            obj.arg = () => ({
+                client: "coins",
+                coins: "training"
+            });
+            return obj;
         }
-        Button() {
-            const obj = new this.$.$mol_button();
-            obj.click = (next) => this.coins_fetch(next);
+        achievements() {
+            return "";
+        }
+        Coins_achievements() {
+            const obj = new this.$.$mol_link();
+            obj.title = () => this.achievements();
+            obj.arg = () => ({
+                client: "coins",
+                coins: "achivements"
+            });
+            return obj;
+        }
+        goods() {
+            return "";
+        }
+        Coins_goods() {
+            const obj = new this.$.$mol_link();
+            obj.title = () => this.goods();
+            obj.arg = () => ({
+                client: "coins",
+                coins: "goods"
+            });
+            return obj;
+        }
+        charity() {
+            return "";
+        }
+        Coins_charities() {
+            const obj = new this.$.$mol_link();
+            obj.title = () => this.charity();
+            obj.arg = () => ({
+                client: "coins",
+                coins: "charities"
+            });
             return obj;
         }
     }
     __decorate([
-        $mol_mem_key
-    ], $dosha_client_coins_links.prototype, "Coin_link", null);
+        $mol_mem
+    ], $dosha_client_coins_links.prototype, "Coins_steps", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_coins_links.prototype, "coins_fetch", null);
+    ], $dosha_client_coins_links.prototype, "Coins_training", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_coins_links.prototype, "Button", null);
+    ], $dosha_client_coins_links.prototype, "Coins_achievements", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins_links.prototype, "Coins_goods", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins_links.prototype, "Coins_charities", null);
     $.$dosha_client_coins_links = $dosha_client_coins_links;
 })($ || ($ = {}));
 //dosha/client/coins/links/-view.tree/links.view.tree.ts
@@ -11021,14 +11060,54 @@ var $;
     var $$;
     (function ($$) {
         class $dosha_client_coins_links extends $.$dosha_client_coins_links {
-            coins_fetch() {
+            fetch_coins() {
                 const result = this.$.$dosha_fetch_user.json('coins');
-                console.log(result);
+                return this.coins_result(result.data[0].attributes);
             }
-            coins_list() {
-                return [].map((coin) => this.Coin_link(coin));
+            fetch_test() {
+                this.fetch_coins();
+            }
+            coins_result(next) {
+                return next ?? {};
+            }
+            steps() {
+                this.fetch_test();
+                return this.coins_result().steps || 0 + ' 👟';
+            }
+            training() {
+                return this.coins_result().training || 0 + ' 🏋';
+            }
+            achievements() {
+                return this.coins_result().achievements || 0 + ' 🏆';
+            }
+            goods() {
+                return this.coins_result().goods || 0 + ' 👑';
+            }
+            charity() {
+                return this.coins_result().charity || 0 + ' 🏥';
             }
         }
+        __decorate([
+            $mol_mem
+        ], $dosha_client_coins_links.prototype, "fetch_coins", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_coins_links.prototype, "coins_result", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_coins_links.prototype, "steps", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_coins_links.prototype, "training", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_coins_links.prototype, "achievements", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_coins_links.prototype, "goods", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_coins_links.prototype, "charity", null);
         $$.$dosha_client_coins_links = $dosha_client_coins_links;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

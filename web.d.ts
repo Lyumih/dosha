@@ -3280,19 +3280,29 @@ declare namespace $.$$ {
 declare namespace $ {
     class $dosha_client_coins_links extends $mol_view {
         sub(): readonly any[];
-        coin_title(id: any): string;
-        coin_type(id: any): string;
-        Coin_link(id: any): $$.$mol_link;
-        coins_list(): readonly any[];
-        coins_fetch(next?: any): any;
-        Button(): $$.$mol_button;
+        steps(): string;
+        Coins_steps(): $$.$mol_link;
+        training(): string;
+        Coins_training(): $$.$mol_link;
+        achievements(): string;
+        Coins_achievements(): $$.$mol_link;
+        goods(): string;
+        Coins_goods(): $$.$mol_link;
+        charity(): string;
+        Coins_charities(): $$.$mol_link;
     }
 }
 
 declare namespace $.$$ {
     class $dosha_client_coins_links extends $.$dosha_client_coins_links {
-        coins_fetch(): void;
-        coins_list(): readonly any[];
+        fetch_coins(): any;
+        fetch_test(): void;
+        coins_result(next?: any): any;
+        steps(): any;
+        training(): any;
+        achievements(): any;
+        goods(): any;
+        charity(): any;
     }
 }
 

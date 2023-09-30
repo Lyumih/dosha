@@ -863,13 +863,31 @@ $dosha_client_coins $mol_book2_catalog
 
 $dosha_client_coins_links $mol_view
 	sub /
-		<= coins_list /
-			<= Coin_link*0 $mol_link
-				title <= coin_title* \
-				arg *
-					client \coins
-					coins <= coin_type* \
-		<= Button $mol_button click? <=> coins_fetch? null
+		<= Coins_steps $mol_link
+			title <= steps \
+			arg *
+				client \coins
+				coins \steps
+		<= Coins_training $mol_link
+			title <= training \
+			arg *
+				client \coins
+				coins \training
+		<= Coins_achievements $mol_link
+			title <= achievements \
+			arg *
+				client \coins
+				coins \achivements
+		<= Coins_goods $mol_link
+			title <= goods \
+			arg *
+				client \coins
+				coins \goods
+		<= Coins_charities $mol_link
+			title <= charity \
+			arg *
+				client \coins
+				coins \charities
 
 - История пользователя, сколько заработал, куда и что пошло, в какие фонды.
 - Истории - сборник из добрых дел, благотворительности - общий по компании / отделу. Добавить фильтрации
