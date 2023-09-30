@@ -28,8 +28,34 @@ namespace $.$$ {
 					username: this.username(),
 					email: this.email(),
 				})
-			}) as typeof this.$.$dosha_client_auth_login_user_model.Value
+			})
 			this.$.$dosha_client_auth_login.update_user()
+		}
+
+		@ $mol_mem
+		update_company() {
+			// http://localhost:1337/api/companies?filters[$and][0][company][$eq]=Kokoc&filters[$and][1][department][$eq]=Marketing		}
+			if (this.company() && this.department()) {
+				const d = '$'
+				const uri = `companies?filters[${d}and][0][company][${d}eqi]=${this.company()}&filters[${d}and][1][department][${d}eqi]=${this.department()}`
+				const result = this.$.$dosha_fetch.json(uri) as { data: []}
+				if (result && result.data.length > 0) {
+					console.log(result)
+					$dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
+						method: 'PUT',
+						body: JSON.stringify({
+							company: {
+								// @ts-ignore
+								connect: [result.data[0].id]
+							}
+						})
+					})
+					this.$.$dosha_client_auth_login.update_user()
+				} else {
+					throw Error('Компания не найдена')
+				}
+				console.log(result)
+			}
 		}
 	}
 }
