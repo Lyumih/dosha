@@ -3230,7 +3230,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $dosha_client_found extends $.$dosha_client_found {
-        founds(): any[];
+        founds(): any;
         active_founds(): readonly any[];
         new_founds(): readonly any[];
         get_found(id: string): any;

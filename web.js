@@ -5234,11 +5234,11 @@ var $;
                 this.auth(false);
             }
             login() {
-                console.log('login');
-                const API_KEY = 'AIzaSyCbuQH3ZZnXCarsdaCGMW_Jrj4hzjcKsgQ';
-                const url = 'http://localhost:1337/api/founds';
+                const url = 'http://localhost:1337/api/foundations';
                 const data = $mol_fetch.json(url);
                 console.log(data, [...Object.values(data)]);
+                $mol_state_arg.go({});
+                this.auth(true);
             }
             pages() {
                 const page = $mol_state_arg.value('page');
@@ -10885,32 +10885,32 @@ var $;
     (function ($$) {
         class $dosha_client_found extends $.$dosha_client_found {
             founds() {
-                const url = 'https://dosha-api-default-rtdb.firebaseio.com/founds.json';
-                const data = $mol_fetch.json(url);
-                console.log(data, [...Object.values(data)]);
-                return [...Object.values(data)] ?? [];
+                const url = 'http://localhost:1337/api/foundations';
+                const request = $mol_fetch.json(url);
+                console.log(request, [...Object.values(request)]);
+                return request.data ?? [];
             }
             active_founds() {
-                console.log('active_founds');
-                return this.founds().filter((f) => f.active).map((found) => this.Found_active(found.uri)) || [];
+                console.log('active_founds', this.founds());
+                return this.founds().filter((f) => f.attributes.active).map((found) => this.Found_active(found.id)) || [];
             }
             new_founds() {
-                return this.founds().filter((f) => f.uri && f.active !== true).map((found) => this.Found_new(found.uri)) || [];
+                return this.founds().filter((f) => f.attributes.active !== true).map((found) => this.Found_new(found.id)) || [];
             }
             get_found(id) {
-                return this.founds().find((found) => found.uri === id);
+                return this.founds().find((found) => found.id === id);
             }
             found_active_title(id) {
-                return this.get_found(id)?.title || '';
+                return this.get_found(id)?.attributes.title || '';
             }
             found_active_uri(id) {
-                return this.get_found(id)?.uri || '';
+                return this.get_found(id)?.attributes.uri || '';
             }
             found_new_title(id) {
-                return this.get_found(id)?.title || '';
+                return this.get_found(id)?.attributes.title || '';
             }
             found_new_uri(id) {
-                return this.get_found(id)?.uri || '';
+                return this.get_found(id)?.attributes.uri || '';
             }
             add_new_found(next) {
                 console.log('test', next);

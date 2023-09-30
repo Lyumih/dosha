@@ -9,7 +9,7 @@
 Посмотреть работающее приложение можно тут: https://lyumih.github.io/dosha/
 
 Репозиторий: https://git.codenrock.com/kokoc-2023/cnrprod-team-57549/activity-and-charity
-Репозиторий БД: https://git.codenrock.com/kokoc-2023/cnrprod-team-57549/just4fun-dosha-strapi
+Репозиторий БД: https://git.codenrock.com/kokoc-2023/cnrprod-team-57549/dosha-api
 
 # Как запустить:
 - Установить mam локально
