@@ -11878,7 +11878,8 @@ var $;
         }
         body() {
             return [
-                this.Profile_form()
+                this.Profile_form(),
+                this.Company_form()
             ];
         }
         username(next) {
@@ -11914,6 +11915,28 @@ var $;
             obj.Content = () => this.Email_control();
             return obj;
         }
+        update_profile(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Profile_form_save() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Обновить профиль";
+            obj.click = (next) => this.update_profile(next);
+            return obj;
+        }
+        Profile_form() {
+            const obj = new this.$.$mol_form_draft();
+            obj.form_fields = () => [
+                this.Username_field(),
+                this.Email_field()
+            ];
+            obj.buttons = () => [
+                this.Profile_form_save()
+            ];
+            return obj;
+        }
         company(next) {
             if (next !== undefined)
                 return next;
@@ -11946,27 +11969,25 @@ var $;
             obj.Content = () => this.Department_control();
             return obj;
         }
-        update_profile(next) {
+        update_company(next) {
             if (next !== undefined)
                 return next;
             return null;
         }
-        Profile_form_save() {
+        Company_form_save() {
             const obj = new this.$.$mol_button_major();
-            obj.title = () => "Обновить";
-            obj.click = (next) => this.update_profile(next);
+            obj.title = () => "Обновить компанию";
+            obj.click = (next) => this.update_company(next);
             return obj;
         }
-        Profile_form() {
+        Company_form() {
             const obj = new this.$.$mol_form_draft();
             obj.form_fields = () => [
-                this.Username_field(),
-                this.Email_field(),
                 this.Company_field(),
                 this.Department_field()
             ];
             obj.buttons = () => [
-                this.Profile_form_save()
+                this.Company_form_save()
             ];
             return obj;
         }
@@ -11991,6 +12012,15 @@ var $;
     ], $dosha_client_profile.prototype, "Email_field", null);
     __decorate([
         $mol_mem
+    ], $dosha_client_profile.prototype, "update_profile", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Profile_form_save", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Profile_form", null);
+    __decorate([
+        $mol_mem
     ], $dosha_client_profile.prototype, "company", null);
     __decorate([
         $mol_mem
@@ -12009,13 +12039,13 @@ var $;
     ], $dosha_client_profile.prototype, "Department_field", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_profile.prototype, "update_profile", null);
+    ], $dosha_client_profile.prototype, "update_company", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_profile.prototype, "Profile_form_save", null);
+    ], $dosha_client_profile.prototype, "Company_form_save", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_profile.prototype, "Profile_form", null);
+    ], $dosha_client_profile.prototype, "Company_form", null);
     $.$dosha_client_profile = $dosha_client_profile;
 })($ || ($ = {}));
 //dosha/client/profile/-view.tree/profile.view.tree.ts
@@ -12048,6 +12078,29 @@ var $;
                 });
                 this.$.$dosha_client_auth_login.update_user();
             }
+            update_company() {
+                if (this.company() && this.department()) {
+                    const d = '$';
+                    const uri = `companies?filters[${d}and][0][company][${d}eqi]=${this.company()}&filters[${d}and][1][department][${d}eqi]=${this.department()}`;
+                    const result = this.$.$dosha_fetch.json(uri);
+                    if (result && result.data.length > 0) {
+                        console.log(result);
+                        $dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
+                            method: 'PUT',
+                            body: JSON.stringify({
+                                company: {
+                                    connect: [result.data[0].id]
+                                }
+                            })
+                        });
+                        this.$.$dosha_client_auth_login.update_user();
+                    }
+                    else {
+                        throw Error('Компания не найдена');
+                    }
+                    console.log(result);
+                }
+            }
         }
         __decorate([
             $mol_mem
@@ -12061,6 +12114,9 @@ var $;
         __decorate([
             $mol_mem
         ], $dosha_client_profile.prototype, "department", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_profile.prototype, "update_company", null);
         $$.$dosha_client_profile = $dosha_client_profile;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

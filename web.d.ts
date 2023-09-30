@@ -3531,15 +3531,18 @@ declare namespace $ {
         email(next?: any): string;
         Email_control(): $$.$mol_string;
         Email_field(): $$.$mol_form_field;
+        update_profile(next?: any): any;
+        Profile_form_save(): $mol_button_major;
+        Profile_form(): $$.$mol_form_draft;
         company(next?: any): string;
         Company_control(): $$.$mol_string;
         Company_field(): $$.$mol_form_field;
         department(next?: any): string;
         Department_control(): $$.$mol_string;
         Department_field(): $$.$mol_form_field;
-        update_profile(next?: any): any;
-        Profile_form_save(): $mol_button_major;
-        Profile_form(): $$.$mol_form_draft;
+        update_company(next?: any): any;
+        Company_form_save(): $mol_button_major;
+        Company_form(): $$.$mol_form_draft;
     }
 }
 
@@ -3550,6 +3553,7 @@ declare namespace $.$$ {
         company(next?: string): string;
         department(next?: string): string;
         update_profile(): void;
+        update_company(): void;
     }
 }
 

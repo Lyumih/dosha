@@ -917,6 +917,12 @@ $dosha_client_profile $mol_page
 					Content <= Email_control $mol_string
 						value? <=> email? \
 						type \email
+			buttons /
+				<= Profile_form_save $mol_button_major
+					title \Обновить профиль
+					click? <=> update_profile? null
+		<= Company_form $mol_form_draft
+			form_fields /
 				<= Company_field $mol_form_field
 					name \Компания
 					Content <= Company_control $mol_string
@@ -926,9 +932,9 @@ $dosha_client_profile $mol_page
 					Content <= Department_control $mol_string
 						value? <=> department? \
 			buttons /
-				<= Profile_form_save $mol_button_major
-					title \Обновить
-					click? <=> update_profile? null
+				<= Company_form_save $mol_button_major
+					title \Обновить компанию
+					click? <=> update_company? null
 
 - Страница с фондами. Выбрать фонд, предложить новый, сколько уже было перевено средств в фонды и какие
 $dosha_client_found $mol_page
