@@ -2868,6 +2868,13 @@ declare namespace $ {
         updatedAt: string;
         blocked: boolean;
         confirmed: boolean;
+        company: {
+            id: number;
+            updatedAt: string;
+            company: string;
+            department: string;
+            createdAt: string;
+        };
     }) => Readonly<{
         id: number;
         email: string;
@@ -2877,6 +2884,13 @@ declare namespace $ {
         updatedAt: string;
         blocked: boolean;
         confirmed: boolean;
+        company: Readonly<{
+            id: number;
+            updatedAt: string;
+            company: string;
+            department: string;
+            createdAt: string;
+        }>;
     }>) & {
         config: {
             id: (val: number) => number;
@@ -2887,6 +2901,34 @@ declare namespace $ {
             updatedAt: (val: string) => string;
             blocked: (val: boolean) => boolean;
             confirmed: (val: boolean) => boolean;
+            company: ((val: {
+                id: number;
+                updatedAt: string;
+                company: string;
+                department: string;
+                createdAt: string;
+            }) => Readonly<{
+                id: number;
+                updatedAt: string;
+                company: string;
+                department: string;
+                createdAt: string;
+            }>) & {
+                config: {
+                    id: (val: number) => number;
+                    company: (val: string) => string;
+                    department: (val: string) => string;
+                    createdAt: (val: string) => string;
+                    updatedAt: (val: string) => string;
+                };
+                Value: Readonly<{
+                    id: number;
+                    updatedAt: string;
+                    company: string;
+                    department: string;
+                    createdAt: string;
+                }>;
+            };
         };
         Value: Readonly<{
             id: number;
@@ -2897,6 +2939,13 @@ declare namespace $ {
             updatedAt: string;
             blocked: boolean;
             confirmed: boolean;
+            company: Readonly<{
+                id: number;
+                updatedAt: string;
+                company: string;
+                department: string;
+                createdAt: string;
+            }>;
         }>;
     };
     let $dosha_client_auth_login_jwt_model: ((val: {
@@ -2909,6 +2958,13 @@ declare namespace $ {
             updatedAt: string;
             blocked: boolean;
             confirmed: boolean;
+            company: {
+                id: number;
+                updatedAt: string;
+                company: string;
+                department: string;
+                createdAt: string;
+            };
         };
         jwt: string;
     }) => Readonly<{
@@ -2921,6 +2977,13 @@ declare namespace $ {
             updatedAt: string;
             blocked: boolean;
             confirmed: boolean;
+            company: Readonly<{
+                id: number;
+                updatedAt: string;
+                company: string;
+                department: string;
+                createdAt: string;
+            }>;
         }>;
         jwt: string;
     }>) & {
@@ -2935,6 +2998,13 @@ declare namespace $ {
                 updatedAt: string;
                 blocked: boolean;
                 confirmed: boolean;
+                company: {
+                    id: number;
+                    updatedAt: string;
+                    company: string;
+                    department: string;
+                    createdAt: string;
+                };
             }) => Readonly<{
                 id: number;
                 email: string;
@@ -2944,6 +3014,13 @@ declare namespace $ {
                 updatedAt: string;
                 blocked: boolean;
                 confirmed: boolean;
+                company: Readonly<{
+                    id: number;
+                    updatedAt: string;
+                    company: string;
+                    department: string;
+                    createdAt: string;
+                }>;
             }>) & {
                 config: {
                     id: (val: number) => number;
@@ -2954,6 +3031,34 @@ declare namespace $ {
                     updatedAt: (val: string) => string;
                     blocked: (val: boolean) => boolean;
                     confirmed: (val: boolean) => boolean;
+                    company: ((val: {
+                        id: number;
+                        updatedAt: string;
+                        company: string;
+                        department: string;
+                        createdAt: string;
+                    }) => Readonly<{
+                        id: number;
+                        updatedAt: string;
+                        company: string;
+                        department: string;
+                        createdAt: string;
+                    }>) & {
+                        config: {
+                            id: (val: number) => number;
+                            company: (val: string) => string;
+                            department: (val: string) => string;
+                            createdAt: (val: string) => string;
+                            updatedAt: (val: string) => string;
+                        };
+                        Value: Readonly<{
+                            id: number;
+                            updatedAt: string;
+                            company: string;
+                            department: string;
+                            createdAt: string;
+                        }>;
+                    };
                 };
                 Value: Readonly<{
                     id: number;
@@ -2964,6 +3069,13 @@ declare namespace $ {
                     updatedAt: string;
                     blocked: boolean;
                     confirmed: boolean;
+                    company: Readonly<{
+                        id: number;
+                        updatedAt: string;
+                        company: string;
+                        department: string;
+                        createdAt: string;
+                    }>;
                 }>;
             };
         };
@@ -2977,6 +3089,13 @@ declare namespace $ {
                 updatedAt: string;
                 blocked: boolean;
                 confirmed: boolean;
+                company: Readonly<{
+                    id: number;
+                    updatedAt: string;
+                    company: string;
+                    department: string;
+                    createdAt: string;
+                }>;
             }>;
             jwt: string;
         }>;
@@ -3488,11 +3607,17 @@ declare namespace $ {
         title(): string;
         body(): readonly any[];
         username(next?: any): string;
-        Username(): $$.$mol_string;
+        Username_control(): $$.$mol_string;
         Username_field(): $$.$mol_form_field;
         email(next?: any): string;
-        Email(): $$.$mol_string;
+        Email_control(): $$.$mol_string;
         Email_field(): $$.$mol_form_field;
+        company(next?: any): string;
+        Company_control(): $$.$mol_string;
+        Company_field(): $$.$mol_form_field;
+        department(next?: any): string;
+        Department_control(): $$.$mol_string;
+        Department_field(): $$.$mol_form_field;
         update_profile(next?: any): any;
         Profile_form_save(): $mol_button_major;
         Profile_form(): $$.$mol_form_draft;
@@ -3503,6 +3628,8 @@ declare namespace $.$$ {
     class $dosha_client_profile extends $.$dosha_client_profile {
         username(next?: string): string;
         email(next?: string): string;
+        company(next?: string): string;
+        department(next?: any): any;
         update_profile(): void;
     }
 }

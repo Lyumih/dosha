@@ -9006,7 +9006,6 @@ var $;
             const userId = this.$.$dosha_client_auth_login.get_user().id;
             const response = super.json(`${url}?populate=*`, init);
             response.data = response.data.filter(item => item.attributes.user_id?.data?.id === userId);
-            console.log(2, response);
             return response;
         }
     }
@@ -9017,6 +9016,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const Company = $mol_data_record({
+        id: $mol_data_number,
+        company: $mol_data_string,
+        department: $mol_data_string,
+        createdAt: $mol_data_string,
+        updatedAt: $mol_data_string,
+    });
     $.$dosha_client_auth_login_user_model = $mol_data_record({
         id: $mol_data_number,
         email: $mol_data_string,
@@ -9026,6 +9032,7 @@ var $;
         updatedAt: $mol_data_string,
         blocked: $mol_data_boolean,
         confirmed: $mol_data_boolean,
+        company: Company,
     });
     $.$dosha_client_auth_login_jwt_model = $mol_data_record({
         jwt: $mol_data_string,
@@ -9068,9 +9075,6 @@ var $;
                 return this.$.$mol_state_local.value('jwt') ?? '';
             }
         }
-        __decorate([
-            $mol_mem
-        ], $dosha_client_auth_login, "get_user", null);
         __decorate([
             $mol_mem
         ], $dosha_client_auth_login, "get_jwt", null);
@@ -11239,7 +11243,7 @@ var $;
                 return next;
             return "";
         }
-        Username() {
+        Username_control() {
             const obj = new this.$.$mol_string();
             obj.value = (next) => this.username(next);
             return obj;
@@ -11247,7 +11251,7 @@ var $;
         Username_field() {
             const obj = new this.$.$mol_form_field();
             obj.name = () => "Логин";
-            obj.Content = () => this.Username();
+            obj.Content = () => this.Username_control();
             return obj;
         }
         email(next) {
@@ -11255,7 +11259,7 @@ var $;
                 return next;
             return "";
         }
-        Email() {
+        Email_control() {
             const obj = new this.$.$mol_string();
             obj.value = (next) => this.email(next);
             obj.type = () => "email";
@@ -11264,7 +11268,39 @@ var $;
         Email_field() {
             const obj = new this.$.$mol_form_field();
             obj.name = () => "Email";
-            obj.Content = () => this.Email();
+            obj.Content = () => this.Email_control();
+            return obj;
+        }
+        company(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Company_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.company(next);
+            return obj;
+        }
+        Company_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Компания";
+            obj.Content = () => this.Company_control();
+            return obj;
+        }
+        department(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Department_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.department(next);
+            return obj;
+        }
+        Department_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Подразделение";
+            obj.Content = () => this.Department_control();
             return obj;
         }
         update_profile(next) {
@@ -11282,7 +11318,9 @@ var $;
             const obj = new this.$.$mol_form_draft();
             obj.form_fields = () => [
                 this.Username_field(),
-                this.Email_field()
+                this.Email_field(),
+                this.Company_field(),
+                this.Department_field()
             ];
             obj.buttons = () => [
                 this.Profile_form_save()
@@ -11295,7 +11333,7 @@ var $;
     ], $dosha_client_profile.prototype, "username", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_profile.prototype, "Username", null);
+    ], $dosha_client_profile.prototype, "Username_control", null);
     __decorate([
         $mol_mem
     ], $dosha_client_profile.prototype, "Username_field", null);
@@ -11304,10 +11342,28 @@ var $;
     ], $dosha_client_profile.prototype, "email", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_profile.prototype, "Email", null);
+    ], $dosha_client_profile.prototype, "Email_control", null);
     __decorate([
         $mol_mem
     ], $dosha_client_profile.prototype, "Email_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "company", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Company_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Company_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "department", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Department_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Department_field", null);
     __decorate([
         $mol_mem
     ], $dosha_client_profile.prototype, "update_profile", null);
@@ -11328,13 +11384,21 @@ var $;
     (function ($$) {
         class $dosha_client_profile extends $.$dosha_client_profile {
             username(next) {
-                return next ?? $dosha_client_auth_login.get_user().username;
+                return next ?? this.$.$dosha_client_auth_login.get_user().username;
             }
             email(next) {
-                return next ?? $dosha_client_auth_login.get_user().email;
+                return next ?? this.$.$dosha_client_auth_login.get_user().email;
+            }
+            company(next) {
+                console.log(123432, next, this.$.$dosha_client_auth_login.get_user());
+                return next ?? this.$.$dosha_client_auth_login.get_user().company.company;
+            }
+            department(next) {
+                console.log(123, next, this.$.$dosha_client_auth_login.get_user());
+                return next ?? this.$.$dosha_client_auth_login.get_user().company.department;
             }
             update_profile() {
-                let result = $dosha_fetch.json('users/' + $dosha_client_auth_login.get_user().id, {
+                let result = $dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
                     method: 'PUT',
                     body: JSON.stringify({
                         username: this.username(),
@@ -11350,6 +11414,12 @@ var $;
         __decorate([
             $mol_mem
         ], $dosha_client_profile.prototype, "email", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_profile.prototype, "company", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_profile.prototype, "department", null);
         $$.$dosha_client_profile = $dosha_client_profile;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
