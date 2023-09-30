@@ -5063,12 +5063,162 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $dosha_client_auth_login extends $mol_page {
-        login_success(next) {
-            if (next !== undefined)
-                return next;
-            return null;
+    class $mol_form_draft extends $mol_form {
+        model() {
+            const obj = new this.$.$mol_object2();
+            return obj;
         }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_form_draft.prototype, "model", null);
+    $.$mol_form_draft = $mol_form_draft;
+})($ || ($ = {}));
+//mol/form/draft/-view.tree/draft.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_state_local extends $mol_object {
+        static 'native()';
+        static native() {
+            if (this['native()'])
+                return this['native()'];
+            check: try {
+                const native = $mol_dom_context.localStorage;
+                if (!native)
+                    break check;
+                native.setItem('', '');
+                native.removeItem('');
+                return this['native()'] = native;
+            }
+            catch (error) {
+                console.warn(error);
+            }
+            return this['native()'] = {
+                getItem(key) {
+                    return this[':' + key];
+                },
+                setItem(key, value) {
+                    this[':' + key] = value;
+                },
+                removeItem(key) {
+                    this[':' + key] = void 0;
+                }
+            };
+        }
+        static changes(next) { return next; }
+        static value(key, next) {
+            this.changes();
+            if (next === void 0)
+                return JSON.parse(this.native().getItem(key) || 'null');
+            if (next === null)
+                this.native().removeItem(key);
+            else
+                this.native().setItem(key, JSON.stringify(next));
+            return next;
+        }
+        prefix() { return ''; }
+        value(key, next) {
+            return $mol_state_local.value(this.prefix() + '.' + key, next);
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_state_local, "changes", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_local, "value", null);
+    $.$mol_state_local = $mol_state_local;
+})($ || ($ = {}));
+//mol/state/local/local.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_form_draft extends $.$mol_form_draft {
+            value_str(field, next) {
+                return String(this.value(field, next) ?? '');
+            }
+            value_numb(field, next) {
+                return Number(this.value(field, next) ?? 0);
+            }
+            value_bool(field, next) {
+                return Boolean(this.value(field, next) ?? false);
+            }
+            value(field, next) {
+                return this.state(next?.valueOf && { ...this.state(), [field]: next })[field]
+                    ?? this.model()[field]();
+            }
+            state(next) {
+                return $mol_state_local.value(`${this}.state()`, next) ?? {};
+            }
+            changed() {
+                return Object.keys(this.state()).length > 0;
+            }
+            submit_allowed() {
+                return this.changed() && super.submit_allowed();
+            }
+            submit(next) {
+                const model = this.model();
+                for (let [field, next] of Object.entries(this.state())) {
+                    const prev = model[field]();
+                    switch (typeof prev) {
+                        case 'boolean':
+                            next = String(next) === 'true';
+                            break;
+                        case 'number':
+                            next = Number(next);
+                            break;
+                        case 'string':
+                            next = String(next);
+                            break;
+                    }
+                    ;
+                    model[field](next);
+                }
+                this.state(null);
+            }
+        }
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_draft.prototype, "value_str", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_draft.prototype, "value_numb", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_draft.prototype, "value_bool", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_draft.prototype, "value", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form_draft.prototype, "state", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form_draft.prototype, "changed", null);
+        __decorate([
+            $mol_action
+        ], $mol_form_draft.prototype, "submit", null);
+        $$.$mol_form_draft = $mol_form_draft;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/form/draft/draft.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/form/draft/draft.view.css", "[mol_form_draft] {\n\twidth: 100%;\n}\n");
+})($ || ($ = {}));
+//mol/form/draft/-css/draft.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $dosha_client_auth_login extends $mol_page {
         title() {
             return "🔐 ДоШа Войти";
         }
@@ -5110,10 +5260,15 @@ var $;
             obj.Content = () => this.Password_control();
             return obj;
         }
+        login_submit(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
         Login() {
             const obj = new this.$.$mol_button_major();
             obj.title = () => "Войти";
-            obj.click = (next) => this.login_success(next);
+            obj.click = (next) => this.login_submit(next);
             return obj;
         }
         Registration() {
@@ -5125,7 +5280,7 @@ var $;
             return obj;
         }
         Login_form() {
-            const obj = new this.$.$mol_form();
+            const obj = new this.$.$mol_form_draft();
             obj.form_fields = () => [
                 this.Login_field(),
                 this.Password_field()
@@ -5137,9 +5292,6 @@ var $;
             return obj;
         }
     }
-    __decorate([
-        $mol_mem
-    ], $dosha_client_auth_login.prototype, "login_success", null);
     __decorate([
         $mol_mem
     ], $dosha_client_auth_login.prototype, "login", null);
@@ -5160,6 +5312,9 @@ var $;
     ], $dosha_client_auth_login.prototype, "Password_field", null);
     __decorate([
         $mol_mem
+    ], $dosha_client_auth_login.prototype, "login_submit", null);
+    __decorate([
+        $mol_mem
     ], $dosha_client_auth_login.prototype, "Login", null);
     __decorate([
         $mol_mem
@@ -5170,6 +5325,255 @@ var $;
     $.$dosha_client_auth_login = $dosha_client_auth_login;
 })($ || ($ = {}));
 //dosha/client/auth/login/-view.tree/login.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_sync(obj) {
+        return new Proxy(obj, {
+            get(obj, field) {
+                const val = obj[field];
+                if (typeof val !== 'function')
+                    return val;
+                const temp = $mol_wire_task.getter(val);
+                return function $mol_wire_sync(...args) {
+                    const fiber = temp(obj, args);
+                    return fiber.sync();
+                };
+            },
+            apply(obj, self, args) {
+                const temp = $mol_wire_task.getter(obj);
+                const fiber = temp(self, args);
+                return fiber.sync();
+            },
+        });
+    }
+    $.$mol_wire_sync = $mol_wire_sync;
+})($ || ($ = {}));
+//mol/wire/sync/sync.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
+        const parser = new $mol_dom_context.DOMParser();
+        const doc = parser.parseFromString(text, type);
+        const error = doc.getElementsByTagName('parsererror');
+        if (error.length)
+            throw new Error(error[0].textContent);
+        return doc;
+    }
+    $.$mol_dom_parse = $mol_dom_parse;
+})($ || ($ = {}));
+//mol/dom/parse/parse.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_fetch_response extends $mol_object2 {
+        native;
+        constructor(native) {
+            super();
+            this.native = native;
+        }
+        status() {
+            const types = ['unknown', 'inform', 'success', 'redirect', 'wrong', 'failed'];
+            return types[Math.floor(this.native.status / 100)];
+        }
+        code() {
+            return this.native.status;
+        }
+        message() {
+            return this.native.statusText || `HTTP Error ${this.code()}`;
+        }
+        headers() {
+            return this.native.headers;
+        }
+        mime() {
+            return this.headers().get('content-type');
+        }
+        stream() {
+            return this.native.body;
+        }
+        text() {
+            const buffer = this.buffer();
+            const native = this.native;
+            const mime = native.headers.get('content-type') || '';
+            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
+            const decoder = new TextDecoder(charset);
+            return decoder.decode(buffer);
+        }
+        json() {
+            return $mol_wire_sync(this.native).json();
+        }
+        buffer() {
+            return $mol_wire_sync(this.native).arrayBuffer();
+        }
+        xml() {
+            return $mol_dom_parse(this.text(), 'application/xml');
+        }
+        xhtml() {
+            return $mol_dom_parse(this.text(), 'application/xhtml+xml');
+        }
+        html() {
+            return $mol_dom_parse(this.text(), 'text/html');
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "stream", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "text", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "buffer", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "xml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "xhtml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "html", null);
+    $.$mol_fetch_response = $mol_fetch_response;
+    class $mol_fetch extends $mol_object2 {
+        static request(input, init = {}) {
+            const native = globalThis.fetch ?? $node['undici'].fetch;
+            const controller = new AbortController();
+            let done = false;
+            const promise = native(input, {
+                ...init,
+                signal: controller.signal,
+            }).finally(() => {
+                done = true;
+            });
+            return Object.assign(promise, {
+                destructor: () => {
+                    if (!done && !controller.signal.aborted)
+                        controller.abort();
+                },
+            });
+        }
+        static response(input, init) {
+            return new $mol_fetch_response($mol_wire_sync(this).request(input, init));
+        }
+        static success(input, init) {
+            const response = this.response(input, init);
+            if (response.status() === 'success')
+                return response;
+            throw new Error(response.message());
+        }
+        static stream(input, init) {
+            return this.success(input, init).stream();
+        }
+        static text(input, init) {
+            return this.success(input, init).text();
+        }
+        static json(input, init) {
+            return this.success(input, init).json();
+        }
+        static buffer(input, init) {
+            return this.success(input, init).buffer();
+        }
+        static xml(input, init) {
+            return this.success(input, init).xml();
+        }
+        static xhtml(input, init) {
+            return this.success(input, init).xhtml();
+        }
+        static html(input, init) {
+            return this.success(input, init).html();
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "response", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "success", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "stream", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "text", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "json", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "buffer", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "xml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "xhtml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "html", null);
+    $.$mol_fetch = $mol_fetch;
+})($ || ($ = {}));
+//mol/fetch/fetch.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $dosha_fetch extends $mol_fetch {
+        static json(url, init) {
+            const develop_mode = $mol_state_arg.href_normal().startsWith('http://localhost');
+            const prod_uri_db = 'https://2022831-koplenov.twc1.net//api/';
+            const local_uri_db = 'http://localhost:1337/api/';
+            if (develop_mode) {
+                return super.json(local_uri_db + url, init);
+            }
+            try {
+                return super.json((develop_mode ? local_uri_db : prod_uri_db) + url, init);
+            }
+            catch {
+                return super.json(local_uri_db + url, init);
+            }
+        }
+    }
+    $.$dosha_fetch = $dosha_fetch;
+})($ || ($ = {}));
+//dosha/fetch/fetch.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $dosha_client_auth_login extends $.$dosha_client_auth_login {
+            login_submit(next) {
+                console.log('login_submit', next);
+                const result = this.fetch_auth(this.login(), this.password());
+                this.$.$mol_state_local.value('user', result);
+                console.log(result);
+                $mol_state_arg.go({});
+            }
+            fetch_auth(identifier, password) {
+                const auth_result = $dosha_fetch.json('auth/local', {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        identifier,
+                        password,
+                    })
+                });
+                console.log(auth_result);
+                return auth_result;
+            }
+        }
+        $$.$dosha_client_auth_login = $dosha_client_auth_login;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//dosha/client/auth/login/login.view.ts
 ;
 "use strict";
 var $;
@@ -5418,11 +5822,6 @@ var $;
 var $;
 (function ($) {
     class $dosha_client_auth extends $mol_book2 {
-        auth(next) {
-            if (next !== undefined)
-                return next;
-            return false;
-        }
         logout(next) {
             if (next !== undefined)
                 return next;
@@ -5437,15 +5836,14 @@ var $;
                 this.Registration()
             ];
         }
+        Login() {
+            const obj = new this.$.$dosha_client_auth_login();
+            return obj;
+        }
         login(next) {
             if (next !== undefined)
                 return next;
             return null;
-        }
-        Login() {
-            const obj = new this.$.$dosha_client_auth_login();
-            obj.login_success = (next) => this.login(next);
-            return obj;
         }
         Registration() {
             const obj = new this.$.$dosha_client_auth_registration();
@@ -5455,294 +5853,19 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $dosha_client_auth.prototype, "auth", null);
-    __decorate([
-        $mol_mem
     ], $dosha_client_auth.prototype, "logout", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_auth.prototype, "login", null);
+    ], $dosha_client_auth.prototype, "Login", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_auth.prototype, "Login", null);
+    ], $dosha_client_auth.prototype, "login", null);
     __decorate([
         $mol_mem
     ], $dosha_client_auth.prototype, "Registration", null);
     $.$dosha_client_auth = $dosha_client_auth;
 })($ || ($ = {}));
 //dosha/client/auth/-view.tree/auth.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_state_local extends $mol_object {
-        static 'native()';
-        static native() {
-            if (this['native()'])
-                return this['native()'];
-            check: try {
-                const native = $mol_dom_context.localStorage;
-                if (!native)
-                    break check;
-                native.setItem('', '');
-                native.removeItem('');
-                return this['native()'] = native;
-            }
-            catch (error) {
-                console.warn(error);
-            }
-            return this['native()'] = {
-                getItem(key) {
-                    return this[':' + key];
-                },
-                setItem(key, value) {
-                    this[':' + key] = value;
-                },
-                removeItem(key) {
-                    this[':' + key] = void 0;
-                }
-            };
-        }
-        static changes(next) { return next; }
-        static value(key, next) {
-            this.changes();
-            if (next === void 0)
-                return JSON.parse(this.native().getItem(key) || 'null');
-            if (next === null)
-                this.native().removeItem(key);
-            else
-                this.native().setItem(key, JSON.stringify(next));
-            return next;
-        }
-        prefix() { return ''; }
-        value(key, next) {
-            return $mol_state_local.value(this.prefix() + '.' + key, next);
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_state_local, "changes", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_local, "value", null);
-    $.$mol_state_local = $mol_state_local;
-})($ || ($ = {}));
-//mol/state/local/local.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_sync(obj) {
-        return new Proxy(obj, {
-            get(obj, field) {
-                const val = obj[field];
-                if (typeof val !== 'function')
-                    return val;
-                const temp = $mol_wire_task.getter(val);
-                return function $mol_wire_sync(...args) {
-                    const fiber = temp(obj, args);
-                    return fiber.sync();
-                };
-            },
-            apply(obj, self, args) {
-                const temp = $mol_wire_task.getter(obj);
-                const fiber = temp(self, args);
-                return fiber.sync();
-            },
-        });
-    }
-    $.$mol_wire_sync = $mol_wire_sync;
-})($ || ($ = {}));
-//mol/wire/sync/sync.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
-        const parser = new $mol_dom_context.DOMParser();
-        const doc = parser.parseFromString(text, type);
-        const error = doc.getElementsByTagName('parsererror');
-        if (error.length)
-            throw new Error(error[0].textContent);
-        return doc;
-    }
-    $.$mol_dom_parse = $mol_dom_parse;
-})($ || ($ = {}));
-//mol/dom/parse/parse.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_fetch_response extends $mol_object2 {
-        native;
-        constructor(native) {
-            super();
-            this.native = native;
-        }
-        status() {
-            const types = ['unknown', 'inform', 'success', 'redirect', 'wrong', 'failed'];
-            return types[Math.floor(this.native.status / 100)];
-        }
-        code() {
-            return this.native.status;
-        }
-        message() {
-            return this.native.statusText || `HTTP Error ${this.code()}`;
-        }
-        headers() {
-            return this.native.headers;
-        }
-        mime() {
-            return this.headers().get('content-type');
-        }
-        stream() {
-            return this.native.body;
-        }
-        text() {
-            const buffer = this.buffer();
-            const native = this.native;
-            const mime = native.headers.get('content-type') || '';
-            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
-            const decoder = new TextDecoder(charset);
-            return decoder.decode(buffer);
-        }
-        json() {
-            return $mol_wire_sync(this.native).json();
-        }
-        buffer() {
-            return $mol_wire_sync(this.native).arrayBuffer();
-        }
-        xml() {
-            return $mol_dom_parse(this.text(), 'application/xml');
-        }
-        xhtml() {
-            return $mol_dom_parse(this.text(), 'application/xhtml+xml');
-        }
-        html() {
-            return $mol_dom_parse(this.text(), 'text/html');
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "stream", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "text", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "buffer", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "xml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "xhtml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "html", null);
-    $.$mol_fetch_response = $mol_fetch_response;
-    class $mol_fetch extends $mol_object2 {
-        static request(input, init = {}) {
-            const native = globalThis.fetch ?? $node['undici'].fetch;
-            const controller = new AbortController();
-            let done = false;
-            const promise = native(input, {
-                ...init,
-                signal: controller.signal,
-            }).finally(() => {
-                done = true;
-            });
-            return Object.assign(promise, {
-                destructor: () => {
-                    if (!done && !controller.signal.aborted)
-                        controller.abort();
-                },
-            });
-        }
-        static response(input, init) {
-            return new $mol_fetch_response($mol_wire_sync(this).request(input, init));
-        }
-        static success(input, init) {
-            const response = this.response(input, init);
-            if (response.status() === 'success')
-                return response;
-            throw new Error(response.message());
-        }
-        static stream(input, init) {
-            return this.success(input, init).stream();
-        }
-        static text(input, init) {
-            return this.success(input, init).text();
-        }
-        static json(input, init) {
-            return this.success(input, init).json();
-        }
-        static buffer(input, init) {
-            return this.success(input, init).buffer();
-        }
-        static xml(input, init) {
-            return this.success(input, init).xml();
-        }
-        static xhtml(input, init) {
-            return this.success(input, init).xhtml();
-        }
-        static html(input, init) {
-            return this.success(input, init).html();
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "response", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "success", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "stream", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "text", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "json", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "buffer", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "xml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "xhtml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "html", null);
-    $.$mol_fetch = $mol_fetch;
-})($ || ($ = {}));
-//mol/fetch/fetch.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $dosha_fetch extends $mol_fetch {
-        static json(url, init) {
-            const develop_mode = $mol_state_arg.href_normal().startsWith('http://localhost');
-            const prod_uri_db = 'https://2022831-koplenov.twc1.net//api/';
-            const local_uri_db = 'http://localhost:1337/api/';
-            if (develop_mode) {
-                return super.json(local_uri_db + url, init);
-            }
-            try {
-                return super.json((develop_mode ? local_uri_db : prod_uri_db) + url, init);
-            }
-            catch {
-                return super.json(local_uri_db + url, init);
-            }
-        }
-    }
-    $.$dosha_fetch = $dosha_fetch;
-})($ || ($ = {}));
-//dosha/fetch/fetch.ts
 ;
 "use strict";
 var $;
@@ -5756,31 +5879,12 @@ var $;
                 });
                 this.auth(false);
             }
-            login() {
-                const auth_result = this.fetch_auth('test', 'pass');
-                console.log(auth_result);
-            }
             pages() {
                 const page = $mol_state_arg.value('page');
                 return page === 'registration' ? [this.Registration()] : [this.Login()];
             }
             auth(next) {
-                return this.$.$mol_state_local.value('auth', next) ?? false;
-            }
-            fetch_auth(identifier, password) {
-                const auth_result = $dosha_fetch.json('auth/local', {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        identifier,
-                        password,
-                    })
-                });
-                console.log(auth_result);
-                return auth_result;
+                return this.$.$mol_state_local.value('user', next) ?? null;
             }
         }
         __decorate([
@@ -26689,7 +26793,9 @@ var $;
     (function ($$) {
         class $dosha_client extends $.$dosha_client {
             sub() {
-                return this.auth() ? [this.Secure()] : [this.Auth_page()];
+                const user = this.$.$mol_state_local.value('user');
+                console.log(user);
+                return user ? [this.Secure()] : [this.Auth_page()];
             }
         }
         $$.$dosha_client = $dosha_client;
