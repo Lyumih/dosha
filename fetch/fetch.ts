@@ -36,7 +36,7 @@ namespace $ {
 			const response =  super.json( `${url}?populate=*`, init )
 			// @ts-ignore
 			response.data = response.data.filter(item => item.attributes.user_id?.data?.id === userId)
-			console.log(2, response)
+			// console.log(2, response)
 			return response
 		}
 	}

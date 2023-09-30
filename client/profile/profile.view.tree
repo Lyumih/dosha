@@ -6,13 +6,21 @@ $dosha_client_profile $mol_page
 			form_fields /
 				<= Username_field $mol_form_field
 					name \Логин
-					Content <= Username $mol_string
+					Content <= Username_control $mol_string
 						value? <=> username? \
 				<= Email_field $mol_form_field
 					name \Email
-					Content <= Email $mol_string
+					Content <= Email_control $mol_string
 						value? <=> email? \
 						type \email
+				<= Company_field $mol_form_field
+					name \Компания
+					Content <= Company_control $mol_string
+						value? <=> company? \
+				<= Department_field $mol_form_field
+					name \Подразделение
+					Content <= Department_control $mol_string
+						value? <=> department? \
 			buttons /
 				<= Profile_form_save $mol_button_major
 					title \Обновить

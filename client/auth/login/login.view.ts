@@ -1,4 +1,13 @@
 namespace $ {
+
+	const Company = $mol_data_record({
+		id: $mol_data_number,
+		company: $mol_data_string,
+		department:	$mol_data_string,
+		createdAt: $mol_data_string,
+		updatedAt: $mol_data_string,
+	})
+
 	export let $dosha_client_auth_login_user_model = $mol_data_record({
 		id: $mol_data_number,
 		email: $mol_data_string,
@@ -8,6 +17,7 @@ namespace $ {
 		updatedAt: $mol_data_string,
 		blocked: $mol_data_boolean,
 		confirmed: $mol_data_boolean,
+		company: Company,
 	})
 
 	export let $dosha_client_auth_login_jwt_model = $mol_data_record({
@@ -48,7 +58,7 @@ namespace $.$$ {
 			this.login_submit()
 		}
 
-		@ $mol_mem
+		// @ $mol_mem
 		static get_user(): typeof $dosha_client_auth_login_user_model.Value {
 			return this.$.$mol_state_local.value( 'user' ) as typeof $dosha_client_auth_login_user_model.Value
 		}
