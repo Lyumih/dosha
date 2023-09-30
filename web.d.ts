@@ -1637,6 +1637,9 @@ declare namespace $ {
     class $dosha_fetch extends $mol_fetch {
         static json(url: string, init?: RequestInit): unknown;
     }
+    class $dosha_fetch_user extends $dosha_fetch {
+        static json(url: string, init?: RequestInit): unknown;
+    }
 }
 
 declare namespace $ {
@@ -3261,10 +3264,35 @@ declare namespace $ {
         param(): string;
         spreads(): Record<string, any>;
         Steps_page(): $$.$dosha_client_steps;
-        Trainin_page(): $mol_page;
-        Achivments_page(): $mol_page;
+        Training_page(): $mol_page;
+        Achivements_page(): $mol_page;
         Goods_page(): $mol_page;
-        Charity_page(): $mol_page;
+        Charities_page(): $mol_page;
+    }
+}
+
+declare namespace $.$$ {
+    class $dosha_client_coins extends $.$dosha_client_coins {
+        fetch_coins(): void;
+    }
+}
+
+declare namespace $ {
+    class $dosha_client_coins_links extends $mol_view {
+        sub(): readonly any[];
+        coin_title(id: any): string;
+        coin_type(id: any): string;
+        Coin_link(id: any): $$.$mol_link;
+        coins_list(): readonly any[];
+        coins_fetch(next?: any): any;
+        Button(): $$.$mol_button;
+    }
+}
+
+declare namespace $.$$ {
+    class $dosha_client_coins_links extends $.$dosha_client_coins_links {
+        coins_fetch(): void;
+        coins_list(): readonly any[];
     }
 }
 
@@ -6948,8 +6976,8 @@ declare namespace $ {
         logout(next?: any): any;
         Logout_icon(): $mol_icon_logout;
         Logout(): $mol_button_minor;
-        Coins_links(): $dosha_client_coins_links;
-        Coins_page(): $dosha_client_coins;
+        Coins_links(): $$.$dosha_client_coins_links;
+        Coins_page(): $$.$dosha_client_coins;
         History_page(): $dosha_client_history;
         Profile_page(): $$.$dosha_client_profile;
         Found_page(): $$.$dosha_client_found;
@@ -6964,14 +6992,6 @@ declare namespace $ {
         Partners_page(): $dosha_client_partners;
         Company_page(): $dosha_company;
         Secure(): $$.$mol_book2_catalog;
-    }
-    class $dosha_client_coins_links extends $mol_view {
-        sub(): readonly any[];
-        Coins_steps(): $$.$mol_link;
-        Coins_training(): $$.$mol_link;
-        Coins_achivments(): $$.$mol_link;
-        Coins_goods(): $$.$mol_link;
-        Coins_charity(): $$.$mol_link;
     }
 }
 

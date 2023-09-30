@@ -852,14 +852,24 @@ $dosha_client_coins $mol_book2_catalog
 	param \coins
 	spreads *
 		steps <= Steps_page $dosha_client_steps
-		training <= Trainin_page $mol_page
+		training <= Training_page $mol_page
 			title \🏋 Тренировка
-		achivments <= Achivments_page $mol_page
+		achivements <= Achivements_page $mol_page
 			title \🏆 Достижения
 		goods <= Goods_page $mol_page
 			title \👑 Добрые дела
-		charity <= Charity_page $mol_page
+		charities <= Charities_page $mol_page
 			title \🏥 Благотворительность
+
+$dosha_client_coins_links $mol_view
+	sub /
+		<= coins_list /
+			<= Coin_link*0 $mol_link
+				title <= coin_title* \
+				arg *
+					client \coins
+					coins <= coin_type* \
+		<= Button $mol_button click? <=> coins_fetch? null
 
 - История пользователя, сколько заработал, куда и что пошло, в какие фонды.
 - Истории - сборник из добрых дел, благотворительности - общий по компании / отделу. Добавить фильтрации
@@ -2453,30 +2463,4 @@ $dosha_client $mol_view
 				company <= Company_page $dosha_company
 					menu_title \🧮 Компания *
 
-$dosha_client_coins_links $mol_view
-	sub /
-		<= Coins_steps $mol_link
-			title \12 👟
-			arg *
-				client \coins
-				coins \steps
-		<= Coins_training $mol_link
-			title \5 🏋
-			arg *
-				client \coins
-				coins \training
-		<= Coins_achivments $mol_link
-			title \1 🏆
-			arg *
-				client \coins
-				coins \achivments
-		<= Coins_goods $mol_link
-			title \2 👑
-			arg *
-				client \coins
-				coins \goods
-		<= Coins_charity $mol_link
-			title \30 🏥
-			arg *
-				client \coins
-				coins \charity
+
