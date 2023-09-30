@@ -10992,7 +10992,7 @@ var $;
             return {
                 steps: this.Steps_page(),
                 training: this.Training_page(),
-                achivements: this.Achivements_page(),
+                achievements: this.Achievements_page(),
                 goods: this.Goods_page(),
                 charities: this.Charities_page()
             };
@@ -11006,7 +11006,7 @@ var $;
             obj.title = () => "🏋 Тренировка";
             return obj;
         }
-        Achivements_page() {
+        Achievements_page() {
             const obj = new this.$.$mol_page();
             obj.title = () => "🏆 Достижения";
             return obj;
@@ -11030,7 +11030,7 @@ var $;
     ], $dosha_client_coins.prototype, "Training_page", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_coins.prototype, "Achivements_page", null);
+    ], $dosha_client_coins.prototype, "Achievements_page", null);
     __decorate([
         $mol_mem
     ], $dosha_client_coins.prototype, "Goods_page", null);
@@ -11047,9 +11047,6 @@ var $;
     var $$;
     (function ($$) {
         class $dosha_client_coins extends $.$dosha_client_coins {
-            fetch_coins() {
-                const result = this.$.$dosha_fetch.json('coins');
-            }
         }
         $$.$dosha_client_coins = $dosha_client_coins;
     })($$ = $.$$ || ($.$$ = {}));
@@ -11101,7 +11098,7 @@ var $;
             obj.title = () => this.achievements();
             obj.arg = () => ({
                 client: "coins",
-                coins: "achivements"
+                coins: "achievements"
             });
             return obj;
         }

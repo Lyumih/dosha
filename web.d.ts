@@ -3425,7 +3425,7 @@ declare namespace $ {
         spreads(): Record<string, any>;
         Steps_page(): $$.$dosha_client_steps;
         Training_page(): $mol_page;
-        Achivements_page(): $mol_page;
+        Achievements_page(): $mol_page;
         Goods_page(): $mol_page;
         Charities_page(): $mol_page;
     }
@@ -3433,7 +3433,6 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $dosha_client_coins extends $.$dosha_client_coins {
-        fetch_coins(): void;
     }
 }
 

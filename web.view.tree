@@ -860,7 +860,7 @@ $dosha_client_coins $mol_book2_catalog
 		steps <= Steps_page $dosha_client_steps
 		training <= Training_page $mol_page
 			title \🏋 Тренировка
-		achivements <= Achivements_page $mol_page
+		achievements <= Achievements_page $mol_page
 			title \🏆 Достижения
 		goods <= Goods_page $mol_page
 			title \👑 Добрые дела
@@ -883,7 +883,7 @@ $dosha_client_coins_links $mol_view
 			title <= achievements \
 			arg *
 				client \coins
-				coins \achivements
+				coins \achievements
 		<= Coins_goods $mol_link
 			title <= goods \
 			arg *
