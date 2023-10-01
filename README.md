@@ -23,15 +23,10 @@
 
 Репозиторий: https://git.codenrock.com/kokoc-2023/cnrprod-team-57549/activity-and-charity
 Репозиторий БД: https://git.codenrock.com/kokoc-2023/cnrprod-team-57549/bd-try-5
-
-
-
-
-
-
+База данных: https://drive.google.com/file/d/1g-V7_pAsHo-P0Q6HMt8baOW5SycUZWzl/view?usp=sharing - нужно положить в папку .tmp/data.db (там настроены пользователи)
 
 # Как запустить:
-- Установить mam локально
+- Установить mam локально https://mol.hyoo.ru/#!section=docs/=yr3qrg_z2908a
 - Склонировать проект в папку
 - Запустить проект
 - Перейти в папку проекта
