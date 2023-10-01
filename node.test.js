@@ -9690,8 +9690,8 @@ var $;
     class $dosha_fetch extends $mol_fetch {
         static json(url, init) {
             const develop_mode = $mol_state_arg.href_normal().startsWith('http://localhost');
-            const prod_uri_db = 'https://2022831-koplenov.twc1.net//api/';
-            const local_uri_db = 'http://localhost:1337/api/';
+            const prod_uri_db = 'https://2022831-koplenov.twc1.net/api/';
+            const local_uri_db = 'http://localhost:1337api/';
             const headers = {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
