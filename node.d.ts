@@ -2882,6 +2882,13 @@ declare namespace $ {
             department: string;
             createdAt: string;
         } | null;
+        foundation: {
+            title: string;
+            uri: string;
+            id: number;
+            updatedAt: string;
+            createdAt: string;
+        } | null;
     }) => Readonly<{
         id: number;
         email: string;
@@ -2896,6 +2903,13 @@ declare namespace $ {
             updatedAt: string;
             company: string;
             department: string;
+            createdAt: string;
+        }> | null;
+        foundation: Readonly<{
+            title: string;
+            uri: string;
+            id: number;
+            updatedAt: string;
             createdAt: string;
         }> | null;
     }>) & {
@@ -2957,6 +2971,55 @@ declare namespace $ {
                     createdAt: string;
                 }> | null;
             };
+            foundation: ((val: {
+                title: string;
+                uri: string;
+                id: number;
+                updatedAt: string;
+                createdAt: string;
+            } | null) => Readonly<{
+                title: string;
+                uri: string;
+                id: number;
+                updatedAt: string;
+                createdAt: string;
+            }> | null) & {
+                config: ((val: {
+                    title: string;
+                    uri: string;
+                    id: number;
+                    updatedAt: string;
+                    createdAt: string;
+                }) => Readonly<{
+                    title: string;
+                    uri: string;
+                    id: number;
+                    updatedAt: string;
+                    createdAt: string;
+                }>) & {
+                    config: {
+                        id: (val: number) => number;
+                        title: (val: string) => string;
+                        uri: (val: string) => string;
+                        createdAt: (val: string) => string;
+                        updatedAt: (val: string) => string;
+                    };
+                    Value: Readonly<{
+                        title: string;
+                        uri: string;
+                        id: number;
+                        updatedAt: string;
+                        createdAt: string;
+                    }>;
+                };
+                Value: Readonly<{
+                    title: string;
+                    uri: string;
+                    id: number;
+                    updatedAt: string;
+                    createdAt: string;
+                }> | null;
+            };
         };
         Value: Readonly<{
             id: number;
@@ -2972,6 +3035,13 @@ declare namespace $ {
                 updatedAt: string;
                 company: string;
                 department: string;
+                createdAt: string;
+            }> | null;
+            foundation: Readonly<{
+                title: string;
+                uri: string;
+                id: number;
+                updatedAt: string;
                 createdAt: string;
             }> | null;
         }>;
@@ -2993,6 +3063,13 @@ declare namespace $ {
                 department: string;
                 createdAt: string;
             } | null;
+            foundation: {
+                title: string;
+                uri: string;
+                id: number;
+                updatedAt: string;
+                createdAt: string;
+            } | null;
         };
         jwt: string;
     }) => Readonly<{
@@ -3010,6 +3087,13 @@ declare namespace $ {
                 updatedAt: string;
                 company: string;
                 department: string;
+                createdAt: string;
+            }> | null;
+            foundation: Readonly<{
+                title: string;
+                uri: string;
+                id: number;
+                updatedAt: string;
                 createdAt: string;
             }> | null;
         }>;
@@ -3033,6 +3117,13 @@ declare namespace $ {
                     department: string;
                     createdAt: string;
                 } | null;
+                foundation: {
+                    title: string;
+                    uri: string;
+                    id: number;
+                    updatedAt: string;
+                    createdAt: string;
+                } | null;
             }) => Readonly<{
                 id: number;
                 email: string;
@@ -3047,6 +3138,13 @@ declare namespace $ {
                     updatedAt: string;
                     company: string;
                     department: string;
+                    createdAt: string;
+                }> | null;
+                foundation: Readonly<{
+                    title: string;
+                    uri: string;
+                    id: number;
+                    updatedAt: string;
                     createdAt: string;
                 }> | null;
             }>) & {
@@ -3108,6 +3206,55 @@ declare namespace $ {
                             createdAt: string;
                         }> | null;
                     };
+                    foundation: ((val: {
+                        title: string;
+                        uri: string;
+                        id: number;
+                        updatedAt: string;
+                        createdAt: string;
+                    } | null) => Readonly<{
+                        title: string;
+                        uri: string;
+                        id: number;
+                        updatedAt: string;
+                        createdAt: string;
+                    }> | null) & {
+                        config: ((val: {
+                            title: string;
+                            uri: string;
+                            id: number;
+                            updatedAt: string;
+                            createdAt: string;
+                        }) => Readonly<{
+                            title: string;
+                            uri: string;
+                            id: number;
+                            updatedAt: string;
+                            createdAt: string;
+                        }>) & {
+                            config: {
+                                id: (val: number) => number;
+                                title: (val: string) => string;
+                                uri: (val: string) => string;
+                                createdAt: (val: string) => string;
+                                updatedAt: (val: string) => string;
+                            };
+                            Value: Readonly<{
+                                title: string;
+                                uri: string;
+                                id: number;
+                                updatedAt: string;
+                                createdAt: string;
+                            }>;
+                        };
+                        Value: Readonly<{
+                            title: string;
+                            uri: string;
+                            id: number;
+                            updatedAt: string;
+                            createdAt: string;
+                        }> | null;
+                    };
                 };
                 Value: Readonly<{
                     id: number;
@@ -3123,6 +3270,13 @@ declare namespace $ {
                         updatedAt: string;
                         company: string;
                         department: string;
+                        createdAt: string;
+                    }> | null;
+                    foundation: Readonly<{
+                        title: string;
+                        uri: string;
+                        id: number;
+                        updatedAt: string;
                         createdAt: string;
                     }> | null;
                 }>;
@@ -3143,6 +3297,13 @@ declare namespace $ {
                     updatedAt: string;
                     company: string;
                     department: string;
+                    createdAt: string;
+                }> | null;
+                foundation: Readonly<{
+                    title: string;
+                    uri: string;
+                    id: number;
+                    updatedAt: string;
                     createdAt: string;
                 }> | null;
             }>;
@@ -3691,13 +3852,21 @@ declare namespace $ {
     class $dosha_client_found extends $mol_page {
         title(): string;
         body(): readonly any[];
-        you_found(): string;
-        You_found(): $$.$mol_text;
+        Your_found_text(): $$.$mol_text;
+        clean_found_enabled(next?: any): any;
+        clean_found(next?: any): any;
         Make_auto(): $mol_button_minor;
+        current_found_title(): string;
+        current_found_uri(): string;
+        Your_found_link(): $$.$mol_link_iconed;
+        Your_found(): $mol_view;
         Active_founds_label(): $$.$mol_text;
+        choose_active_found(id: any, next?: any): any;
+        Found_active_choose(id: any): $mol_button_minor;
         found_active_title(id: any): string;
         found_active_uri(id: any): string;
-        Found_active(id: any): $$.$mol_link_iconed;
+        Found_active_link(id: any): $$.$mol_link_iconed;
+        Found_active(id: any): $mol_view;
         active_founds(): readonly any[];
         Active_founds(): $$.$mol_list;
         Waiting_founds_label(): $$.$mol_text;
@@ -4076,7 +4245,18 @@ declare namespace $.$$ {
         }>;
     };
     export class $dosha_client_found extends $.$dosha_client_found {
-        founds(): typeof FoundationModel.Value;
+        current_found_title(next?: any): string;
+        current_found_uri(): string;
+        clean_found_enabled(next?: any): false | Readonly<{
+            title: string;
+            uri: string;
+            id: number;
+            updatedAt: string;
+            createdAt: string;
+        }>;
+        clean_found(next?: any): void;
+        choose_active_found(id: any, next?: any): void;
+        founds(next?: any): typeof FoundationModel.Value;
         active_founds(): readonly any[];
         new_founds(): readonly any[];
         get_found(id: string): {

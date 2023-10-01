@@ -9661,6 +9661,13 @@ var $;
         createdAt: $mol_data_string,
         updatedAt: $mol_data_string,
     }));
+    const Foundation = $mol_data_nullable($mol_data_record({
+        id: $mol_data_number,
+        title: $mol_data_string,
+        uri: $mol_data_string,
+        createdAt: $mol_data_string,
+        updatedAt: $mol_data_string,
+    }));
     $.$dosha_client_auth_login_user_model = $mol_data_record({
         id: $mol_data_number,
         email: $mol_data_string,
@@ -9671,6 +9678,7 @@ var $;
         blocked: $mol_data_boolean,
         confirmed: $mol_data_boolean,
         company: Company,
+        foundation: Foundation,
     });
     $.$dosha_client_auth_login_jwt_model = $mol_data_record({
         jwt: $mol_data_string,
@@ -9682,12 +9690,10 @@ var $;
     (function ($$) {
         class $dosha_client_auth_login extends $.$dosha_client_auth_login {
             login_submit(next) {
-                console.log('login_submit', next);
                 const result = this.fetch_auth();
                 this.$.$mol_state_local.value('jwt', result.jwt);
                 const user_full = this.$.$dosha_fetch.json('users/me?populate=*');
                 this.$.$mol_state_local.value('user', user_full);
-                console.log(user_full);
                 $mol_state_arg.go({});
             }
             fetch_auth() {
@@ -9698,7 +9704,6 @@ var $;
                         password: this.password(),
                     })
                 });
-                console.log(auth_result);
                 return auth_result;
             }
             login_demo(next) {
@@ -9715,7 +9720,6 @@ var $;
             static update_user() {
                 const user_full = this.$.$dosha_fetch.json('users/me?populate=*');
                 this.$.$mol_state_local.value('user', user_full);
-                console.log('update_user', user_full);
             }
         }
         __decorate([
@@ -9903,11 +9907,9 @@ var $;
                         })
                     });
                 }
-                console.log('Update role');
                 const user_full = this.$.$dosha_fetch.json('users/me?populate=*');
                 this.$.$mol_state_local.value('user', user_full);
                 $mol_state_arg.go({});
-                console.log(result);
             }
         }
         $$.$dosha_client_auth_registration = $dosha_client_auth_registration;
@@ -12084,7 +12086,6 @@ var $;
                     const uri = `companies?filters[${d}and][0][company][${d}eqi]=${this.company()}&filters[${d}and][1][department][${d}eqi]=${this.department()}`;
                     const result = this.$.$dosha_fetch.json(uri);
                     if (result && result.data.length > 0) {
-                        console.log(result);
                         $dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
                             method: 'PUT',
                             body: JSON.stringify({
@@ -12098,7 +12099,6 @@ var $;
                     else {
                         throw Error('Компания не найдена');
                     }
-                    console.log(result);
                 }
             }
         }
@@ -12131,8 +12131,8 @@ var $;
         }
         body() {
             return [
-                this.You_found(),
-                this.Make_auto(),
+                this.Your_found_text(),
+                this.Your_found(),
                 this.Active_founds_label(),
                 this.Active_founds(),
                 this.Waiting_founds_label(),
@@ -12140,22 +12140,62 @@ var $;
                 this.New_found_form()
             ];
         }
-        you_found() {
-            return "# Ваш фонд: **Лиза Алерт**";
-        }
-        You_found() {
+        Your_found_text() {
             const obj = new this.$.$mol_text();
-            obj.text = () => this.you_found();
+            obj.text = () => "Вы выбираете фонд:";
             return obj;
+        }
+        clean_found_enabled(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        clean_found(next) {
+            if (next !== undefined)
+                return next;
+            return null;
         }
         Make_auto() {
             const obj = new this.$.$mol_button_minor();
-            obj.title = () => "Выбирать фонд автоматически?";
+            obj.title = () => "Х";
+            obj.enabled = (next) => this.clean_found_enabled(next);
+            obj.click = (next) => this.clean_found(next);
+            return obj;
+        }
+        current_found_title() {
+            return "";
+        }
+        current_found_uri() {
+            return "";
+        }
+        Your_found_link() {
+            const obj = new this.$.$mol_link_iconed();
+            obj.title = () => this.current_found_title();
+            obj.uri = () => this.current_found_uri();
+            return obj;
+        }
+        Your_found() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.Make_auto(),
+                this.Your_found_link()
+            ];
             return obj;
         }
         Active_founds_label() {
             const obj = new this.$.$mol_text();
-            obj.text = () => "# Фонды, с которыми мы уже работаем";
+            obj.text = () => "Фонды, с которыми мы уже работаем";
+            return obj;
+        }
+        choose_active_found(id, next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Found_active_choose(id) {
+            const obj = new this.$.$mol_button_minor();
+            obj.title = () => "✨";
+            obj.click = (next) => this.choose_active_found(id, next);
             return obj;
         }
         found_active_title(id) {
@@ -12164,10 +12204,18 @@ var $;
         found_active_uri(id) {
             return "";
         }
-        Found_active(id) {
+        Found_active_link(id) {
             const obj = new this.$.$mol_link_iconed();
             obj.title = () => this.found_active_title(id);
             obj.uri = () => this.found_active_uri(id);
+            return obj;
+        }
+        Found_active(id) {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.Found_active_choose(id),
+                this.Found_active_link(id)
+            ];
             return obj;
         }
         active_founds() {
@@ -12182,7 +12230,7 @@ var $;
         }
         Waiting_founds_label() {
             const obj = new this.$.$mol_text();
-            obj.text = () => "# Фонды, которые скоро добавим в работу";
+            obj.text = () => "Фонды, которые скоро добавим в работу";
             return obj;
         }
         found_new_title(id) {
@@ -12231,6 +12279,7 @@ var $;
         New_found_uri() {
             const obj = new this.$.$mol_string();
             obj.value = (next) => this.new_found_uri(next);
+            obj.type = () => "url";
             return obj;
         }
         New_found_uri_field() {
@@ -12264,13 +12313,34 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $dosha_client_found.prototype, "You_found", null);
+    ], $dosha_client_found.prototype, "Your_found_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_found.prototype, "clean_found_enabled", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_found.prototype, "clean_found", null);
     __decorate([
         $mol_mem
     ], $dosha_client_found.prototype, "Make_auto", null);
     __decorate([
         $mol_mem
+    ], $dosha_client_found.prototype, "Your_found_link", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_found.prototype, "Your_found", null);
+    __decorate([
+        $mol_mem
     ], $dosha_client_found.prototype, "Active_founds_label", null);
+    __decorate([
+        $mol_mem_key
+    ], $dosha_client_found.prototype, "choose_active_found", null);
+    __decorate([
+        $mol_mem_key
+    ], $dosha_client_found.prototype, "Found_active_choose", null);
+    __decorate([
+        $mol_mem_key
+    ], $dosha_client_found.prototype, "Found_active_link", null);
     __decorate([
         $mol_mem_key
     ], $dosha_client_found.prototype, "Found_active", null);
@@ -12371,20 +12441,47 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        const FoundationAttributesModel = $mol_data_record({
+        const FoundationModel = $dosha_strapi($mol_data_record({
             title: $mol_data_string,
             uri: $mol_data_string,
             active: $mol_data_boolean,
-        });
-        const FoundationModel = $dosha_strapi(FoundationAttributesModel);
+        }));
         class $dosha_client_found extends $.$dosha_client_found {
-            founds() {
-                const request = $dosha_fetch.json('foundations');
-                console.log(request, [...Object.values(request)]);
-                return request ?? {};
+            current_found_title(next) {
+                return this.$.$dosha_client_auth_login.get_user().foundation?.title ?? "Автоматический";
+            }
+            current_found_uri() {
+                return this.$.$dosha_client_auth_login.get_user().foundation?.uri ?? 'https://trends.rbc.ru/trends/social/5f2d51b19a79476077e5f164';
+            }
+            clean_found_enabled(next) {
+                return this.$.$dosha_client_auth_login.get_user().foundation ?? false;
+            }
+            clean_found(next) {
+                this.$.$dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        foundation: {
+                            disconnect: [this.$.$dosha_client_auth_login.get_user().foundation?.id]
+                        }
+                    })
+                });
+                return this.$.$dosha_client_auth_login.update_user();
+            }
+            choose_active_found(id, next) {
+                this.$.$dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        foundation: {
+                            connect: [id]
+                        }
+                    })
+                });
+                this.$.$dosha_client_auth_login.update_user();
+            }
+            founds(next) {
+                return this.$.$dosha_fetch.json('foundations') ?? {};
             }
             active_founds() {
-                console.log('active_founds', this.founds());
                 return this.founds() ? this.founds().data.filter((data) => data.attributes.active).map((data) => this.Found_active(data.id)) : [];
             }
             new_founds() {
@@ -12406,18 +12503,22 @@ var $;
                 return this.get_found(id)?.uri || '';
             }
             add_new_found(next) {
-                console.log('test', next);
-                if (this.new_found_title() && this.new_found_uri()) {
+                if (this.new_found_title() && new URL(this.new_found_uri())) {
                     this.add_new_found_fetch(this.new_found_title(), this.new_found_uri());
                     this.founds();
                 }
+                else {
+                    throw new Error('Не все поля заполнены');
+                }
             }
             add_new_found_fetch(title, uri) {
-                const url = 'https://dosha-api-default-rtdb.firebaseio.com/founds.json';
-                $mol_fetch.json(url, {
+                this.$.$dosha_fetch.json('foundations', {
                     method: 'POST',
-                    body: JSON.stringify({ title, uri }),
+                    body: JSON.stringify({
+                        data: { title, uri }
+                    }),
                 });
+                this.founds(true);
             }
         }
         __decorate([
@@ -26974,7 +27075,6 @@ var $;
     (function ($$) {
         class $dosha_company_report extends $.$dosha_company_report {
             download() {
-                console.log('Скачать отчёт');
                 const report_content = 'Отчёт для оплаты. Контент';
                 return new $mol_dom_context.Blob([report_content], { type: 'text/x-marked' });
             }

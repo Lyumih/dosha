@@ -940,17 +940,29 @@ $dosha_client_profile $mol_page
 $dosha_client_found $mol_page
 	title \🏥 Фонды
 	body /
-		<= You_found $mol_text text <= you_found \# Ваш фонд: **Лиза Алерт**
-		<= Make_auto $mol_button_minor
-			title \Выбирать фонд автоматически?
-		<= Active_founds_label $mol_text text \# Фонды, с которыми мы уже работаем
+		<= Your_found_text $mol_text text \Вы выбираете фонд:
+		<= Your_found $mol_view
+			sub /
+				<= Make_auto $mol_button_minor
+					title \Х
+					enabled? <=> clean_found_enabled? null
+					click? <=> clean_found? null
+				<= Your_found_link $mol_link_iconed
+					title <= current_found_title \
+					uri <= current_found_uri \
+		<= Active_founds_label $mol_text text \Фонды, с которыми мы уже работаем
 		<= Active_founds $mol_list
 			rows <= active_founds /
-				<= Found_active*0 $mol_link_iconed
-					title <= found_active_title* \
-					uri <= found_active_uri* \
+				<= Found_active*0 $mol_view
+					sub /
+						<= Found_active_choose* $mol_button_minor
+							title \✨
+							click? <=> choose_active_found*? null
+						<= Found_active_link* $mol_link_iconed
+							title <= found_active_title* \
+							uri <= found_active_uri* \
 		-
-		<= Waiting_founds_label $mol_text text \# Фонды, которые скоро добавим в работу
+		<= Waiting_founds_label $mol_text text \Фонды, которые скоро добавим в работу
 		<= New_founds $mol_list
 			rows <= new_founds /
 				<= Found_new*0 $mol_link_iconed
@@ -966,6 +978,7 @@ $dosha_client_found $mol_page
 					name \Ссылка на фонд
 					Content <= New_found_uri $mol_string
 						value? <=> new_found_uri? \
+						type \url
 			buttons /
 				<= New_found_add $mol_button_minor
 					title \Предложить новый фонд
