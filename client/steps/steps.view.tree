@@ -8,7 +8,7 @@ $dosha_client_steps $mol_page
 			value? <=> add_dosha? 0
 			value_max 40000
 		<= Add_dosha_save $mol_button_major
-			title \Добавить шаги за сегодня. +37 👟
+			title \Добавить шаги за сегодня.
 			click? <= add_today_steps? null
 		<= Steps_auto $mol_button_major
 			title \Подключить автоматическое списание

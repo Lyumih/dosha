@@ -11,7 +11,8 @@ $dosha_client_coins $mol_book2_catalog
 					\Просто ежедневный спорт.
 					\Самая любимая моя рутина
 				<= Training_check $mol_button_major
-					title \Отметиться за сегодня +25 🏋
+					title \Отметиться за сегодня
+					click? <=> training_check? null
 		achievements <= Achievements_page $mol_page
 			title \🏆 Достижения
 			body /
@@ -23,7 +24,7 @@ $dosha_client_coins $mol_book2_catalog
 				- Сделать минимальное кол-во символов - 100 на текстареа и 1 картинку для зарабатывания баллов
 				<= Achievements_story $mol_textarea
 				<= Send_achievements $mol_button_major
-					title \Это уже История! +50 🏆
+					title \Это уже История!
 		goods <= Goods_page $mol_page
 			title \👑 Добрые дела
 			body /
@@ -35,7 +36,7 @@ $dosha_client_coins $mol_book2_catalog
 				<= Goods_story $mol_textarea
 					hint \Это было самое обыкновенное чудо...
 				<= Goods_send $mol_button_major
-					title \Поделиться историей. +30 👑
+					title \Поделиться историей.
 		charities <= Charities_page $mol_page
 			title \🏥 Благотворительность
 			body /
@@ -47,4 +48,4 @@ $dosha_client_coins $mol_book2_catalog
 				<= Charities_textarea $mol_textarea
 					hint \У нас в городе есть небольшой приют, которому я ...
 				<= Charities_send $mol_button_major
-					title \Рассказать. +47 🏥
+					title \Рассказать.

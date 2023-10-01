@@ -16,6 +16,18 @@ namespace $ {
 		updatedAt: $mol_data_string,
 	} ) )
 
+	const Coin = $mol_data_nullable( $mol_data_record( {
+		id: $mol_data_number,
+		achievements: $mol_data_number,
+		charities: $mol_data_number,
+		goods: $mol_data_number,
+		steps: $mol_data_number,
+		trainings: $mol_data_number,
+		user_id: $mol_data_number,
+		createdAt: $mol_data_string,
+		updatedAt: $mol_data_string,
+	} ) )
+
 	export let $dosha_client_auth_login_user_model = $mol_data_record( {
 		id: $mol_data_number,
 		email: $mol_data_string,
@@ -27,6 +39,7 @@ namespace $ {
 		confirmed: $mol_data_boolean,
 		company: Company,
 		foundation: Foundation,
+		coin: Coin,
 	} )
 
 	export let $dosha_client_auth_login_jwt_model = $mol_data_record( {
