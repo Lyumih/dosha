@@ -58,6 +58,12 @@ $dosha_branding $mol_page
 						fantasy \fantasy
 						monospace \monospace
 						cursive \cursive
+				<= Font_size_text $mol_text text \Размер шрифта
+				<= Font_size $mol_number
+					hint \Размер шрифта
+					value? <=> font_size? null
+					value_min 4
+					value_max 64
 				- Colors
 				<= Color_hue_text $mol_text text \Тон цвета
 				<= Color_hue $mol_number
@@ -82,12 +88,6 @@ $dosha_branding $mol_page
 					max 10
 					precision_view 1
 					precision_change 1
-				<= Font_size_text $mol_text text \Размер шрифта
-				<= Font_size $mol_number
-					hint \Размер шрифта
-					value? <=> font_size? null
-					value_min 4
-					value_max 64
 				- Spaces / Borders
 		<= Config_background $mol_list
 			rows /
@@ -99,7 +99,7 @@ $dosha_branding $mol_page
 				- Buttons
 		<= Save_configs $mol_button_major
 			title \Сохранить настройки
-		<= Config_textarea $mol_textarea
+		- <= Config_textarea $mol_textarea
 			sidebar_showed true
 			value? <= config_all? \
 			enabled false
