@@ -6,5 +6,5 @@ $dosha_client_history $mol_page
 	body /
 		<= History_text $mol_text text \
 			\# Ваши интересные истории
-			\Пока ещё нет новых историй
+			\Скоро появятся истории новых историй
 		- Добавить бесконечную ленту $mol_infity и $mol_list
