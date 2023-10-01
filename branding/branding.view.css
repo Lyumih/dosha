@@ -1,5 +1,33 @@
 [dosha_branding_timer_dice_list] {
 	flex-direction: row;
-	min-height: 20px!important;
+	min-height: 30px!important;
 	justify-content: space-around;
+}
+
+
+[dosha_branding_font_style_switcher_option]:nth-child(1) {
+	font-style: normal;
+	font-weight: normal;
+}
+[dosha_branding_font_style_switcher_option]:nth-child(2) {
+	font-style: italic;
+}
+[dosha_branding_font_style_switcher_option]:nth-child(3) {
+	font-weight: lighter;
+}
+[dosha_branding_font_style_switcher_option]:nth-child(4) {
+	font-weight: bold;
+}
+
+[dosha_branding_font_family_switcher_option]:nth-child(1) {
+	font-family: serif;
+}
+[dosha_branding_font_family_switcher_option]:nth-child(2) {
+	font-family: "fantasy";
+}
+[dosha_branding_font_family_switcher_option]:nth-child(3) {
+	font-family: "monospace"!important;
+}
+[dosha_branding_font_family_switcher_option]:nth-child(4) {
+	font-family: "cursive";
 }
