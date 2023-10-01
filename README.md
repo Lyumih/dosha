@@ -17,19 +17,27 @@
 
 
 
-
 Посмотреть работающее приложение можно тут: https://lyumih.github.io/dosha/
 База Данных: https://2022831-koplenov.twc1.net/admin/
+
+
+ВИДЕОИНСТРУКЦИЯ ПО ЗАПУСКУ ПРОЕКТА: https://drive.google.com/file/d/1aLMNrqIdYUk-xMgOl4D75th3cG_y5EM6/view?usp=sharing
+ЮТУБ: https://youtu.be/OJaXSAAEOTE
 
 Репозиторий: https://git.codenrock.com/kokoc-2023/cnrprod-team-57549/activity-and-charity
 Репозиторий БД: https://git.codenrock.com/kokoc-2023/cnrprod-team-57549/bd-try-5
 База данных: https://drive.google.com/file/d/1g-V7_pAsHo-P0Q6HMt8baOW5SycUZWzl/view?usp=sharing - нужно положить в папку .tmp/data.db (там настроены пользователи)
 
 # Как запустить:
+Фронт:
 - Установить mam локально https://mol.hyoo.ru/#!section=docs/=yr3qrg_z2908a
 - Склонировать проект в папку
 - Запустить проект
-- Перейти в папку проекта
+- Перейти в папку проекта http://localhost:9080/dosha/client/-/test.html
+
+Бек:
+- Склонировать репозиторий репозиторий с бд
+- 
 
 # Задачи
 - Сделать бэк
