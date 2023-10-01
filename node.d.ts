@@ -2859,6 +2859,8 @@ declare namespace $ {
 declare namespace $ {
     class $dosha_fetch extends $mol_fetch {
         static json(url: string, init?: RequestInit): unknown;
+        static json_post(url: string, init?: RequestInit): unknown;
+        static json_put(url: string, init?: RequestInit): unknown;
     }
     class $dosha_fetch_user extends $dosha_fetch {
         static json(url: string, init?: RequestInit): unknown;
@@ -3796,11 +3798,11 @@ declare namespace $ {
 declare namespace $.$$ {
     class $dosha_client_coins_links extends $.$dosha_client_coins_links {
         coins_result(next?: any): any;
-        steps(): any;
-        training(): any;
-        achievements(): any;
-        goods(): any;
-        charity(): any;
+        steps(): string;
+        training(): string;
+        achievements(): string;
+        goods(): string;
+        charity(): string;
     }
 }
 

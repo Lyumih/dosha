@@ -9637,13 +9637,19 @@ var $;
                 return super.json(local_uri_db + url, initWithHeaders);
             }
         }
+        static json_post(url, init) {
+            return this.json(url, { method: 'POST', ...init });
+        }
+        static json_put(url, init) {
+            return this.json(url, { method: 'PUT', ...init });
+        }
     }
     $.$dosha_fetch = $dosha_fetch;
     class $dosha_fetch_user extends $dosha_fetch {
         static json(url, init) {
             const userId = this.$.$dosha_client_auth_login.get_user().id;
             const response = super.json(`${url}?populate=*`, init);
-            response.data = response.data.filter(item => item.attributes.user_id?.data?.id === userId);
+            response.data = response.data.filter(item => item?.attributes?.user_id?.data?.id === userId);
             return response;
         }
     }
@@ -9697,8 +9703,7 @@ var $;
                 $mol_state_arg.go({});
             }
             fetch_auth() {
-                const auth_result = $dosha_fetch.json('auth/local', {
-                    method: 'POST',
+                const auth_result = $dosha_fetch.json_post('auth/local', {
                     body: JSON.stringify({
                         identifier: this.email(),
                         password: this.password(),
@@ -9890,8 +9895,7 @@ var $;
     (function ($$) {
         class $dosha_client_auth_registration extends $.$dosha_client_auth_registration {
             fetch_registration() {
-                const result = this.$.$dosha_fetch.json('auth/local/register', {
-                    method: "POST",
+                const result = this.$.$dosha_fetch.json_post('auth/local/register', {
                     body: JSON.stringify({
                         email: this.email(),
                         username: this.username(),
@@ -9900,8 +9904,7 @@ var $;
                 });
                 this.$.$mol_state_local.value('jwt', result.jwt);
                 if (this.role() !== 'user') {
-                    this.$.$dosha_fetch.json('users/' + result.user.id, {
-                        method: "PUT",
+                    this.$.$dosha_fetch.json_put('users/' + result.user.id, {
                         body: JSON.stringify({
                             role: this.role() === 'company' ? 3 : 5,
                         })
@@ -11808,19 +11811,19 @@ var $;
                     const result = this.$.$dosha_fetch_user.json('coins')?.data[0]?.attributes;
                     this.coins_result(result ?? { steps: 0 });
                 }
-                return this.coins_result()?.steps || 0 + ' 👟';
+                return (this.coins_result()?.steps || 0) + ' 👟';
             }
             training() {
-                return this.coins_result()?.training || 0 + ' 🏋';
+                return (this.coins_result()?.training || 0) + ' 🏋';
             }
             achievements() {
-                return this.coins_result()?.achievements || 0 + ' 🏆';
+                return (this.coins_result()?.achievements || 0) + ' 🏆';
             }
             goods() {
-                return this.coins_result()?.goods || 0 + ' 👑';
+                return (this.coins_result()?.goods || 0) + ' 👑';
             }
             charity() {
-                return this.coins_result()?.charity || 0 + ' 🏥';
+                return (this.coins_result()?.charity || 0) + ' 🏥';
             }
         }
         __decorate([
@@ -12457,8 +12460,7 @@ var $;
                 return this.$.$dosha_client_auth_login.get_user().foundation ?? false;
             }
             clean_found(next) {
-                this.$.$dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
-                    method: 'PUT',
+                this.$.$dosha_fetch.json_put('users/' + this.$.$dosha_client_auth_login.get_user().id, {
                     body: JSON.stringify({
                         foundation: {
                             disconnect: [this.$.$dosha_client_auth_login.get_user().foundation?.id]
@@ -12468,8 +12470,7 @@ var $;
                 return this.$.$dosha_client_auth_login.update_user();
             }
             choose_active_found(id, next) {
-                this.$.$dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
-                    method: 'PUT',
+                this.$.$dosha_fetch.json_put('users/' + this.$.$dosha_client_auth_login.get_user().id, {
                     body: JSON.stringify({
                         foundation: {
                             connect: [id]
@@ -12512,8 +12513,7 @@ var $;
                 }
             }
             add_new_found_fetch(title, uri) {
-                this.$.$dosha_fetch.json('foundations', {
-                    method: 'POST',
+                this.$.$dosha_fetch.json_post('foundations', {
                     body: JSON.stringify({
                         data: { title, uri }
                     }),
