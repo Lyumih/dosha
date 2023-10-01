@@ -23,8 +23,9 @@ $dosha_client $mol_view
 				history <= History_page $dosha_client_history
 				found <= Found_page $dosha_client_found
 				training <= Training_page $dosha_client_training
-				rating <= Rating_page $dosha_client_rating
 				city <= City_page $dosha_client_city
+				rating <= Rating_page $dosha_client_rating
+				partners <= Partners_page $dosha_client_partners
 				chat <= Chat_page $mol_page
 					title \🎭 Чат
 					body /
@@ -35,10 +36,14 @@ $dosha_client $mol_view
 							sub <= chat_pages
 				presentation <= Persentation_page $hyoo_page
 					title \📽 Презентация
-				partners <= Partners_page $dosha_client_partners
 				profile <= Profile_page $dosha_client_profile
 				- Отдельное приложение ДоШа Компания
 				company <= Company_page $dosha_company
 					menu_title \🧮 Компания *
+				- Отдельное приложение ДоШа Фонды
+				joke <= Joke $mol_text text \
+					\Шутка дня. 
+					\Кто зарабатывает 300к в секунду, тому и парсить 300 сайтов в минуту
+				- Добавить шутку дня про 1 трэк ^-^. Варианты - шутка про 300
 
 

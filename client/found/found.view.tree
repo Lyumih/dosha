@@ -24,7 +24,7 @@ $dosha_client_found $mol_page
 							title <= found_active_title* \
 							uri <= found_active_uri* \
 		-
-		<= Waiting_founds_label $mol_text text \Фонды, которые скоро добавим в работу
+		<= Waiting_founds_label $mol_text text \Фонды, которые скоро добавим
 		<= New_founds $mol_list
 			rows <= new_founds /
 				<= Found_new*0 $mol_link_iconed
