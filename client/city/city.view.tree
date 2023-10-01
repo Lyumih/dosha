@@ -2,4 +2,31 @@
 $dosha_client_city $mol_page
 	title \🏓 Ваш город
 	body /
-		<= City_label $mol_text text \Найдите совместные увлечения в вашем городе
+		<= City_label $mol_text text \
+			\Найдите совместные увлечения в вашем городе
+			\*Пока новых мероприятий нет.*
+			\# Добавьте своё мероприятие и оно появится в списке
+		<= Create_event $mol_form
+			form_fields /
+				<= City $mol_form_field
+					name \Город
+					Content <= City_control $mol_string
+						value? <=> city? \
+				<= Name $mol_form_field
+					name \Название
+					Content <= Name_control $mol_string
+						value? <=> name? \
+				<= Description $mol_form_field
+					name \Описание
+					Content <= Description_control $mol_string
+						value? <=> description? \
+				<= Date_field $mol_form_field
+					name \Дата
+					Content <= Date_control $mol_string
+						value? <=> date? \
+						type \date
+			buttons /
+				<= Registration $mol_button_major
+					title \Добавить мероприятие
+					click? <=> fetch_registration? null
+

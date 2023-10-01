@@ -86,3 +86,21 @@ $dosha_company $mol_book2_catalog
 					blob <= download?
 		report <= Report_page $dosha_company_report
 		branding <= Branding_page $dosha_branding
+		admin <= Admin_page $mol_page
+			title \CMS
+			body /
+				<= Admin_link $mol_link_iconed
+					title \CMS Админка PROD
+					uri \https://2022831-koplenov.twc1.net/admin
+				<= Admin_user $mol_text text \
+					\# Админ компании Кокос
+					\- First name: kokos
+					\- Last name: kompany
+					\- Email: kokos_company@dosha.com
+					\
+					\# Супер админ:
+					\- Login: **koplenov@gmail.com**
+					\- Password: **vu*5PZ5@xVV*PF**
+				<= Admin_develop_link $mol_link_iconed
+					title \CMS Админка Локальная
+					uri \http://localhost:1337/admin/

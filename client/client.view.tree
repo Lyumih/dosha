@@ -35,7 +35,8 @@ $dosha_client $mol_view
 						<= Chat $mol_chat
 							seed \dosha_chat_v1
 							pages => chat_pages
-				presentation <= Persentation_page $hyoo_page
+				- Модуль создание презентаций от компании для сотрудников. Пока выключил
+				- presentation <= Persentation_page $hyoo_page
 					title \📽 Презентация
 				profile <= Profile_page $dosha_client_profile
 				- Отдельное приложение ДоШа Компания
