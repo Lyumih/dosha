@@ -21,8 +21,7 @@ namespace $.$$ {
 		}
 
 		clean_found( next?: any ) {
-			this.$.$dosha_fetch.json( 'users/' + this.$.$dosha_client_auth_login.get_user().id, {
-				method: 'PUT',
+			this.$.$dosha_fetch.json_put( 'users/' + this.$.$dosha_client_auth_login.get_user().id, {
 				body: JSON.stringify( {
 					foundation: {
 						disconnect: [ this.$.$dosha_client_auth_login.get_user().foundation?.id ]
@@ -33,8 +32,7 @@ namespace $.$$ {
 		}
 
 		choose_active_found( id: any, next?: any ) {
-			this.$.$dosha_fetch.json( 'users/' + this.$.$dosha_client_auth_login.get_user().id, {
-				method: 'PUT',
+			this.$.$dosha_fetch.json_put( 'users/' + this.$.$dosha_client_auth_login.get_user().id, {
 				body: JSON.stringify( {
 					foundation: {
 						connect: [ id ]
@@ -88,8 +86,7 @@ namespace $.$$ {
 		}
 
 		add_new_found_fetch( title: string, uri: string ) {
-			this.$.$dosha_fetch.json( 'foundations', {
-				method: 'POST',
+			this.$.$dosha_fetch.json_post( 'foundations', {
 				body: JSON.stringify( {
 					data: { title, uri }
 				} ),

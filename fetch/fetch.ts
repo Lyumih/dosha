@@ -28,6 +28,14 @@ namespace $ {
 				return super.json( local_uri_db + url, initWithHeaders )
 			}
 		}
+
+		static json_post( url: string, init?: RequestInit ) {
+			return this.json(url, { method: 'POST', ...init })
+		}
+
+		static json_put( url: string, init?: RequestInit ) {
+			return this.json(url, {method: 'PUT', ...init })
+		}
 	}
 
 	export class $dosha_fetch_user extends $dosha_fetch {
@@ -35,7 +43,7 @@ namespace $ {
 			const userId = this.$.$dosha_client_auth_login.get_user().id;
 			const response =  super.json( `${url}?populate=*`, init )
 			// @ts-ignore
-			response.data = response.data.filter(item => item.attributes.user_id?.data?.id === userId)
+			response.data = response.data.filter(item => item?.attributes?.user_id?.data?.id === userId)
 			return response
 		}
 	}
