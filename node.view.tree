@@ -1128,7 +1128,34 @@ $dosha_client_training $mol_book2_catalog
 $dosha_client_city $mol_page
 	title \🏓 Ваш город
 	body /
-		<= City_label $mol_text text \Найдите совместные увлечения в вашем городе
+		<= City_label $mol_text text \
+			\Найдите совместные увлечения в вашем городе
+			\*Пока новых мероприятий нет.*
+			\# Добавьте своё мероприятие и оно появится в списке
+		<= Create_event $mol_form
+			form_fields /
+				<= City $mol_form_field
+					name \Город
+					Content <= City_control $mol_string
+						value? <=> city? \
+				<= Name $mol_form_field
+					name \Название
+					Content <= Name_control $mol_string
+						value? <=> name? \
+				<= Description $mol_form_field
+					name \Описание
+					Content <= Description_control $mol_string
+						value? <=> description? \
+				<= Date_field $mol_form_field
+					name \Дата
+					Content <= Date_control $mol_string
+						value? <=> date? \
+						type \date
+			buttons /
+				<= Registration $mol_button_major
+					title \Добавить мероприятие
+					click? <=> fetch_registration? null
+
 
 $mol_svg_group $mol_svg
 	dom_name \g
@@ -1652,875 +1679,6 @@ $mol_chat $mol_link
 			Body <= Embed $mol_frame
 				uri <= embed \
 
-$mol_avatar $mol_icon
-	view_box \0 0 24 24
-	id \
-	path \M 12 12 l 0 0 M 0 0 l 0 0 M 24 24 l 0 0 M 0 24 l 0 0 M 24 0 l 0 0
-
-$hyoo_meta_link $mol_link
-	minimal_height 40
-	meta $hyoo_meta_model
-		id => id
-		title => title
-	param \
-	all_title @ \All
-	sub /
-		<= Avatar $mol_avatar
-			id <= id
-		<= Title $mol_dimmer
-			haystack <= title
-			needle <= highlight \
-
-$hyoo_page_side_news $mol_page
-	side $hyoo_page_side
-		news => news
-	title @ \Interesting
-	attr *
-		^
-		mol_theme \$mol_theme_special
-	body /
-		<= Section_list $mol_list
-			rows <= items /
-				<= Item*0 $hyoo_meta_link
-					meta <= item* $hyoo_page_side
-					title <= item_title* \
-					Avatar null
-
-$mol_icon_magnify $mol_icon path \M9.5,3C13.09,3 16,5.91 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16C5.91,16 3,13.09 3,9.5C3,5.91 5.91,3 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z
-
-$mol_icon_pencil $mol_icon path \M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z
-
-$mol_icon_pencil_outline $mol_icon path \M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z
-
-$mol_ghost $mol_view
-	Sub $mol_view
-
-$mol_drag $mol_ghost
-	event *
-		dragstart?event <=> drag_start?event <=> start?event null
-		drag?event <=> drag_move?event <=> move?event null
-		dragend?event <=> drag_end?event <=> end?event null
-	attr *
-		draggable true
-		mol_drag_status <= status? \ready
-	transfer *
-		text/plain \
-		text/html \
-		text/uri-list \
-	allow_copy true
-	allow_link true
-	allow_move true
-	image <= dom_node
-
-$mol_drop $mol_ghost
-	enabled? true
-	event *
-		dragenter?event <=> enter?event null
-		dragover?event <=> move?event null
-		dragleave?event <=> leave?event null
-		drop?event <=> drop?event null
-	attr * mol_drop_status <= status? \ready
-	adopt?transfer *
-	receive?transfer null
-	allow /
-		\copy
-		\move
-		\link
-
-$mol_icon_pin $mol_icon path \M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12Z
-
-$mol_icon_pin_outline $mol_icon path \M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12M8.8,14L10,12.8V4H14V12.8L15.2,14H8.8Z
-
-$hyoo_meta_menu_items $mol_list
-	id \
-	editing false
-	drop_allow /
-		\move
-		\link
-	list $hyoo_crowd_list
-		list => ids
-	item* $hyoo_meta_model
-		title => item_title*
-	item_list* $hyoo_crowd_list
-	item_moved*? null
-	rows <= items /
-		<= Item*0_0 $mol_list
-			rows <= item_content* /
-				<= Item_row* $mol_view
-					sub <= item_row* /
-						<= Item_expand* $mol_check_expand
-							expandable <= item_expandable* false
-							expanded? <=> item_expanded*? true
-						<= Item_drop_after* $mol_drop
-							enabled <= editable false
-							adopt? <=> transfer_adopt? null
-							receive? <=> receive_after*? null
-							allow <= drop_allow
-							Sub <= Item_drag* $mol_drag
-								end? <=> item_drag_end*? null
-								transfer *
-									text/plain <= item_text* \
-									text/html <= item_html* \
-									text/uri-list <= item_uri* \
-								Sub <= Item_link* $hyoo_meta_link
-									meta <= item*
-									param <= param \
-									highlight <= highlight \
-									Avatar null
-						<= Item_remove* $mol_button_minor
-							hint @ \Remove
-							click? <=> item_remove*? null
-							sub /
-								<= Item_remove_icon* $mol_icon_cross
-						<= Item_pin* $mol_button_minor
-							hint @ \Pin here
-							click? <=> item_pin*? null
-							sub /
-								<= Item_pin_icon* $mol_icon_pin_outline
-						<= Item_drop_inside* $mol_drop
-							enabled <= editable
-							adopt? <=> transfer_adopt? null
-							receive? <=> receive_inside*? null
-							allow <= drop_allow
-							Sub <= Item_add* $mol_button_minor
-								hint @ \Add page inside
-								click? <=> item_add*? null
-								sub /
-									<= Item_add_icon* $mol_icon_plus
-				<= Item_items* $hyoo_meta_menu_items
-					editing <= editing
-					list <= item_list*
-					item* <= item*
-					item_moved*? <=> item_moved*?
-					item_expanded*? <=> item_expanded*?
-					item_list* <= item_list*
-					item_uri* <= item_uri*
-					highlight <= highlight
-					item_add*? <=> item_add*?
-
-$hyoo_meta_menu $mol_page
-	editable true
-	item_moved*? null
-	yard $hyoo_sync_yard
-	item* $hyoo_meta_model
-		title => item_title*
-	list $hyoo_crowd_list
-		list => ids
-		world => world
-	item_list* $hyoo_crowd_list
-	drop_allow /
-		\move
-		\link
-	Logo $mol_avatar
-		id <= id \
-	tools_ext /
-	head /
-		<= Title
-		<= Tools
-		<= Search $mol_search
-			query? <=> search? \
-	tools /
-		<= Search_toggle $mol_check_icon
-			hint @ \Fulltext search
-			checked? <=> search_show? false
-			Icon <= Search_icon $mol_icon_magnify
-		<= Editing $mol_check_icon
-			hint @ \Edit list
-			checked? <=> editing? false
-			Icon <= Editing_icon $mol_icon_pencil_outline
-		<= Add $mol_button_minor
-			hint @ \Add new
-			click? <=> add? null
-			sub /
-				<= Add_icon $mol_icon_plus
-		^ tools_ext
-	body /
-		<= Found $hyoo_meta_menu_items
-			editing <= editing
-			drop_allow /
-			list <= list
-			ids <= found /$mol_int62_string
-			highlight <= search
-			item_uri* <= item_uri* \
-			item_moved*? <=> item_moved*?
-			- item_list* <= item_list*
-			item_add*? <=> item_add*? null
-		<= Content $hyoo_meta_menu_items
-			editing <= editing
-			drop_allow <= drop_allow
-			list <= list
-			item_uri* <= item_uri* \
-			item_expanded*? <=> item_expanded*? false
-			item_moved*? <=> item_moved*?
-			item_list* <= item_list*
-			item_add*? <=> item_add*? null
-		<= Drop_end $mol_drop
-			enabled <= editable
-			adopt? <=> transfer_adopt? null
-			receive? <=> receive_end? null
-			Sub <= Drop_zone $mol_view
-			allow <= drop_allow
-
-$hyoo_page_side_menu $hyoo_meta_menu
-	side_current $hyoo_page_side
-	Title $hyoo_meta_link
-		meta <= side $hyoo_page_side
-			title => title
-
-$mol_bar $mol_view
-
-$mol_icon_chevron_left $mol_icon path \M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z
-
-$mol_icon_chevron_right $mol_icon path \M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z
-
-$mol_paginator $mol_bar
-	sub /
-		<= Backward $mol_button_minor
-			hint <= backward_hint @ \Backward
-			click?event <=> backward?event null
-			sub / <= Backward_icon $mol_icon_chevron_left
-		<= Value $mol_view sub / <= value? 0
-		<= Forward $mol_button_minor
-			hint <= forward_hint @ \Forward
-			click?event <=> forward?event null
-			sub / <= Forward_icon $mol_icon_chevron_right
-
-$mol_search_jumper $mol_search
-	Root $mol_view
-	Index $mol_paginator
-		value? <=> index? 0
-		forward?event => forward?event
-		backward?event => backward?event
-	plugins /
-		^
-		<= Backward $mol_hotkey
-			mod_shift true
-			key * enter?event <=> backward?event
-		<= Forward $mol_hotkey
-			key *
-				enter?event <=> forward?event
-				escape? <=> escape? null
-
-$mol_icon_information $mol_icon path \M13,9H11V7H13M13,17H11V11H13M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2Z
-
-$mol_icon_information_outline $mol_icon path \M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M11,17H13V11H11V17Z
-
-$mol_icon_bookmark $mol_icon path \M17,3H7C5.9,3 5,3.9 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z
-
-$mol_icon_bookmark_outline $mol_icon path \M17,18L12,15.82L7,18V5H17M17,3H7C5.9,3 5,3.9 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z
-
-$mol_pick $mol_pop
-	event *
-		^
-		keydown?event <=> keydown?event null
-	Anchor <= Trigger $mol_check
-		minimal_width 40
-		minimal_height 40
-		enabled <= trigger_enabled true
-		checked? <=> showed?
-		sub <= trigger_content /$mol_view_content
-			<= title
-		hint <= hint \
-
-$mol_icon_calendar $mol_icon path \M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z
-
-$mol_icon_calendar_today $mol_icon path \M7,10H12V15H7M19,19H5V8H19M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3Z
-
-$mol_format $mol_string
-	allow \0123456789
-	hint <= mask*0 \
-	keyboard \numeric
-
-$mol_icon_trash_can $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z
-
-$mol_icon_trash_can_outline $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z
-
-$mol_hor $mol_view
-
-$mol_calendar $mol_list
-	sub /
-		<= Head $mol_view
-			sub <= head /
-				<= Title $mol_view
-					minimal_height 24
-					sub /
-						<= title \
-		<= Weekdays $mol_hor
-			sub <= weekdays /$mol_view
-	weeks /$mol_view
-	weeks_count 6
-	-
-	Weekday* $mol_calendar_day
-		holiday <= weekend* false
-		sub /
-			<= weekday* \
-	-
-	Week* $mol_hor
-		sub <= week_days* /$mol_view
-	-
-	Day* $mol_calendar_day
-		ghost <= day_ghost* false
-		holiday <= day_holiday* false
-		selected <= day_selected* false
-		today <= day_today* false
-		theme <= day_theme* null
-		sub <= day_content* /
-			<= day_text* \
-	-
-	month_string \
-	month_moment $mol_time_moment
-
-$mol_calendar_day $mol_view
-	minimal_height 24
-	minimal_width 36
-	attr *
-		mol_calendar_holiday <= holiday false
-		mol_calendar_ghost <= ghost false
-		mol_calendar_selected <= selected false
-		mol_calendar_today <= today false
-		mol_theme <= theme null
-
-$mol_date $mol_pick
-	Icon $mol_icon_calendar
-	-
-	bubble_content /
-		<= Input_row $mol_view sub <= input_content /
-			<= Today $mol_button_minor
-				hint @ \Today
-				enabled <= enabled true
-				click?event <=> today_click?event null
-				sub /
-					<= Today_icon $mol_icon_calendar_today
-			<= Input $mol_format
-				value? <=> value? \
-				value_changed? => value_changed?
-				mask* <= input_mask* \
-				enabled <= enabled true
-			<= Clear $mol_button_minor
-				hint @ \Clear
-				enabled <= enabled true
-				click?event <=> clear?event null
-				sub /
-					<= Clear_icon $mol_icon_trash_can_outline
-		<= Calendar $mol_date_calendar
-			enabled <= enabled true
-			month_moment <= month_moment <= value_moment
-			day_selected* <= day_selected* false
-			day_click*?event <=> day_click*?event null
-			Title => Calendar_title
-			head /
-				<= Calendar_tools $mol_view
-					sub /
-						<= Prev $mol_button_minor
-							hint <= prev_hint @ \Previous month
-							click?event <=> prev?event null
-							sub /
-								<= Prev_icon $mol_icon_chevron_left
-						<= Calendar_title
-						<= Next $mol_button_minor
-							hint <= next_hint @ \Next month
-							click?event <=> next?event null
-							sub /
-								<= Next_icon $mol_icon_chevron_right
-	-
-	value_number? +NaN
-	value_moment? $mol_time_moment
-
-$mol_date_calendar $mol_calendar
-	day_content* /
-		<= Day_button* $mol_button_minor
-			title <= day_text*
-			event_click?event <=> day_click*?event null
-			minimal_height 24
-			enabled <= enabled true
-
-$hyoo_page_side_view $mol_page
-	profile $hyoo_page_side
-	peer* $hyoo_page_side
-	book $hyoo_page_side
-	highlight \
-	side $hyoo_page_side
-		id => id
-		editable => editable
-		title? => title?
-		details? => side_details?
-		released => released
-		release => side_release
-		changed_moment => changed_moment
-		authors => authors
-		following => following
-	plugins /
-		<= Search_start $mol_hotkey
-			key * F? <=> search_start? null
-			mod_ctrl true
-	auto /
-		<= slides_send null
-		<= history_mark null
-	Logo <= Menu_toggle $mol_check
-		checked? <=> menu_showed? false
-		hint @ \Menu Showing
-		sub /
-			<= Avatar $mol_avatar
-				id <= id
-	head /
-		<= Title
-		<= Tools
-		<= Search $mol_search_jumper
-			query?val <=> search_query?val \
-			Root <= Details
-			clear? <=> search_stop? null
-	tools /
-		<= Edit_toggle $mol_check_icon
-			hint @ \Edit page
-			checked? <=> editing? false
-			Icon <= Edit_icon $mol_icon_pencil_outline
-			label <= edit_toggle_label /
-				<= Unreleased $mol_speck
-		<= Search_toggle $mol_check_icon
-			hint @ \Find on page
-			checked? <=> search_show? false
-			Icon <= Search_icon $mol_icon_magnify
-		<= Info_toggle $mol_check_icon
-			hint @ \Info page
-			checked? <=> info? false
-			Icon <= Info_icon $mol_icon_information_outline
-		<= Bookmark_toggle $mol_check_icon
-			hint @ \Bookmark page
-			checked? <=> bookmark? false
-			Icon <= Bookmark_icon $mol_icon_bookmark_outline
-	slides_content \
-		\# {title}
-		\{details}
-	body /
-		<= Details $mol_text
-			text <= details \
-			highlight <= search_query
-			- Empty <= Details_empty $mol_text text \...
-		<= Signature $mol_view
-			sub /
-				<= Changed $mol_date
-					value_moment <= changed_moment
-				<= Author_list $mol_view
-					sub <= author_list /
-						<= Author_link*0_0 $hyoo_meta_link
-							meta <= peer*
-				<= Following $hyoo_meta_link
-					meta <= following
-
-$mol_string_button $mol_string
-
-$mol_icon_publish $mol_icon path \M5,4V6H19V4H5M5,14H9V20H15V14H19L12,7L5,14Z
-
-$mol_icon_export $mol_icon path \M23,12L19,8V11H10V13H19V16M1,18V6C1,4.89 1.9,4 3,4H15C16.1,4 17,4.9 17,6V9H15V6H3V18H15V15H17V18C17,19.1 16.1,20 15,20H3C1.9,20 1,19.1 1,18Z
-
-$mol_icon_download $mol_icon path \M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z
-
-$mol_button_download $mol_button_minor
-	blob null
-	uri \
-	file_name \blob.bin
-	sub /
-		<= Icon $mol_icon_download
-		<= title \
-
-$mol_icon_shield $mol_icon path \M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z
-
-$mol_icon_shield_account $mol_icon path \M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5C13.66,5 15,6.34 15,8C15,9.66 13.66,11 12,11C10.34,11 9,9.66 9,8C9,6.34 10.34,5 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z
-
-$hyoo_page_side_edit $mol_page
-	side $hyoo_page_side
-		title? => title?
-		details? => details?
-		details_selection? => details_selection?
-		aura? => aura?
-		editable => editable
-		released => released
-	Title $mol_string_button
-		hint @ \Title
-		- bring => bring
-		value? <=> title?
-		enabled <= editable
-	export_sign @ \\\Current Original on $hyoo_page.\{link}\\
-	tools /
-		<= Syntax $mol_link_iconed
-			hint @ \MarkedText Syntax
-			uri \https://marked.hyoo.ru/
-			icon \https://marked.hyoo.ru/hyoo/marked/logo/logo.svg
-			title \
-		<= Publish $mol_button_minor
-			click? <=> publish? null
-			disabled <= released
-			hint @ \Publish
-			sub /
-				<= Publish_icon $mol_icon_publish
-		<= Export $mol_pick
-			hint @ \Download markdown
-			trigger_content /
-				<= Export_icon $mol_icon_export
-			bubble_content /
-				<= Download $mol_button_download
-					title @ \Download Book as MT File
-					file_name <= download_name \{filename}.mt
-					blob <= download_blob $mol_blob
-				<= Copy_html $mol_button_copy
-					title @ \Copy to Clipboard
-					text <= copy_text \
-					html <= copy_html \
-		<= Rights_toggle $mol_check_icon
-			hint @ \Access Rights
-			checked? <=> rights? false
-			Icon <= Rights_icon $mol_icon_shield_account
-		<= Close $mol_button_minor
-			click? <=> close? null
-			sub / <= Close_icon $mol_icon_cross
-	body /
-		<= Details_edit $mol_textarea
-			hint @ \Details
-			value? <=> details?
-			selection? <=> details_selection?
-			enabled <= editable
-		<= Aura_field $mol_form_field
-			name @ \Page Background
-			Content <= Aura $mol_string_button
-				hint @ \hyper link
-				value? <=> aura?
-				enabled <= editable
-
-$mol_expander $mol_list
-	rows /
-		<= Label $mol_view
-			sub /
-				<= Trigger $mol_check_expand
-					checked? <=> expanded? false
-					expandable <= expandable true
-					label <= label /
-						<= title
-				<= Tools null
-		<= Content $mol_list
-			rows <= content /
-
-$hyoo_page_side_info $mol_page
-	Text $mol_text
-		flow_tokens => text_tokens
-		block_text* => text_header_title*
-		header_arg* => section_arg*
-		header_level* => section_level*
-	side $hyoo_page_side
-		details => details
-		details_node => details_node
-		referrers_list => referrers_list
-		referrers_stat* => referrers_stat*
-	title @ \Page Info
-	tools /
-		<= Slides $mol_link_iconed
-			hint @ \View as Slides
-			uri <= slides_uri \https://slides.hyoo.ru/#!slides={source}
-			title \
-		<= Close $mol_button_minor
-			click? <=> close? null
-			sub /
-				<= Close_icon $mol_icon_cross
-	body /
-		<= Stat $mol_view sub /
-			<= Size $mol_labeler
-				title @ \Size
-				content /
-					<= size \0
-			<= Chars $mol_labeler
-				title @ \Chars
-				content /
-					<= chars \0
-			<= Words $mol_labeler
-				title @ \Words
-				content /
-					<= words \0
-			<= Weight $mol_labeler
-				title @ \Weight
-				content /
-					<= weight \0B
-		<= Section_list $mol_expander
-			title @ \Sections
-			expanded? <=> section_expanded? false
-			content <= section_list /
-				<= Section_link*0 $mol_link
-					arg <= section_arg*
-					title <= section_title* \
-		<= Ref_list $mol_expander
-			title @ \Referrers
-			expanded? <=> ref_expanded? false
-			content <= ref_list /
-				<= Ref_item*0_0 $mol_view
-					sub /
-						<= Ref_item_link* $mol_link_iconed
-							uri <= ref_uri* \
-						<= Ref_item_stat* $mol_view
-							sub / <= ref_stat* 0
-		<= Word_list $mol_expander
-			title @ \Key Words
-			content / <= Word_list_items $mol_row
-				sub <= word_list_items /
-					<= Word_item*0_0 $mol_view
-						sub /
-							<= Word_item_text* $mol_view
-								sub / <= word_item_text* \
-							<= Word_item_stat* $mol_speck
-								value <= word_item_stat* 0
-								theme \$mol_theme_special
-				- Empty <= Word_list_empty $mol_card
-					title @ \No words
-
-$hyoo_meta_rights $mol_page
-	title @ \Rights
-	meta $hyoo_meta_model
-		editors => editors
-	body /
-		<= Content $mol_list
-			rows <= blocks /
-				<= Editor_list $mol_list
-					rows <= editor_list /
-						<= Editor_link*0_0 $hyoo_meta_link
-							meta <= peer* $hyoo_meta_person
-				<= Editor_add $mol_form_field
-					name @ \Add new
-					bid <= editor_add_bid @ \Irrevocable!
-					Content <= Editor_add_form $mol_list
-						rows <= editor_add_rows /
-							<= Editor_add_bar $mol_bar sub /
-								<= Editor_add_id $mol_string
-									hint @ \Id or Profile Link
-									value? <=> editor_add_id? \
-									enabled <= editable false
-								<= Editor_add_submit $mol_button_major
-									enabled <= editor_add_allowed false
-									click? <=> editor_add_submit? null
-									sub /
-										<= Editor_add_icon $mol_icon_plus
-							<= Editor_add_preview $hyoo_meta_link
-								meta <= editor_add_preview $hyoo_meta_model
-							<= Editor_fill_all $mol_button_minor
-								title @ \Allow anyone
-								click? <=> editor_fill_all? null
-
-$mol_icon_eye $mol_icon path \M12,9C10.34,9 9,10.34 9,12C9,13.66 10.34,15 12,15C13.66,15 15,13.66 15,12C15,10.34 13.66,9 12,9M12,17C9.24,17 7,14.76 7,12C7,9.24 9.24,7 12,7C14.76,7 17,9.24 17,12C17,14.76 14.76,17 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z
-
-$mol_password $mol_view
-	type? \password
-	sub <= content /
-		<= Pass $mol_string
-			type <= type
-			hint <= hint \
-			value? <=> value? \
-			submit?event <=> submit?event null
-			enabled <= enabled true
-		<= Show $mol_check_icon
-			checked? <=> checked? true
-			Icon <= Show_icon $mol_icon_eye
-
-$hyoo_meta_safe $mol_page
-	title @ \Private keys
-	yard $hyoo_sync_yard
-	bid_pass_long @ \> 7 letters
-	key_size 133
-	attr *
-		^
-		mol_theme \$mol_theme_special
-	body /
-		<= Content $mol_list rows <= content /
-			<= Export_block $mol_list rows <= export_rows /
-				<= Expot_bid $mol_text text @ \Your private access keys are stored in the browser. In order not to lose them or transfer to another device, it is recommended to come up with a strong password for exporting them.
-				<= Export_pass $mol_list rows /
-					<= Password_field $mol_form_field
-						name @ \Password
-						bids / <= password_bid \
-						Content <= Password $mol_password
-							value? <=> password? \
-					<= Recall_field $mol_form_field
-						name @ \Hint for recall
-						Content <= Recall $mol_string
-							enabled <= recall_enabled true
-							value? <=> recall? \
-				<= Export_link $mol_link
-					uri <= export_link \
-					title @ \This link contains your encrypted prvate keys. Save it to a secure place on another physical device. Using this link you can restore your private keys by enterig same password.
-			<= Import_block $mol_list rows <= import_rows /
-				<= Iport_descr $mol_text text @ \
-					\To import a private key, you must enter the password from it.
-					\**If the current key is not saved, it will be lost forever.**
-				<= Import_pass $mol_list rows /
-					<= Recall_field
-					<= Password_field
-				<= Import_switch $mol_button_minor
-					click? <=> import_switch? null
-					sub /
-						<= Peer_new $mol_avatar id <= peer_new \
-						<= impot_switch_title @ \Switch
-
-$mol_icon_dots_vertical $mol_icon path \M12,16C13.1,16 14,16.9 14,18C14,19.1 13.1,20 12,20C10.9,20 10,19.1 10,18C10,16.9 10.9,16 12,16M12,10C13.1,10 14,10.9 14,12C14,13.1 13.1,14 12,14C10.9,14 10,13.1 10,12C10,10.9 10.9,10 12,10M12,4C13.1,4 14,4.9 14,6C14,7.1 13.1,8 12,8C10.9,8 10,7.1 10,6C10,4.9 10.9,4 12,4Z
-
-$mol_select $mol_pick
-	dictionary? *
-	options /string
-	value? \
-	option_label_default \
-	Option_row* $mol_button_minor
-		event_click?event <=> event_select*?event null
-		sub <= option_content* /
-			<= Option_label* $mol_dimmer
-				haystack <= option_label* \
-				needle <= filter_pattern? \
-	No_options $mol_view
-		sub /
-			<= no_options_message @ \No options
-	plugins /
-		^
-		<= Nav $mol_nav
-			keys_y <= nav_components /$mol_view
-			current_y?component <=> option_focused?component null
-			cycle? <=> nav_cycle? true
-	hint @ \Pick..
-	bubble_content /
-		<= Filter
-		<= Bubble_pane $mol_scroll sub /
-			<= Menu $mol_list
-				rows <= menu_content /$mol_view
-	Filter $mol_string
-		value? <=> filter_pattern? \
-		hint @ \Filter..
-		submit?event <=> submit?event null
-		enabled <= enabled true
-	Trigger_icon $mol_icon_dots_vertical
-
-$mol_icon_sync $mol_icon path \M12,18C8.69,18 6,15.31 6,12C6,11 6.25,10.03 6.7,9.2L5.24,7.74C4.46,8.97 4,10.43 4,12C4,16.42 7.58,20 12,20V23L16,19L12,15M12,4V1L8,5L12,9V6C15.31,6 18,8.69 18,12C18,13 17.75,13.97 17.3,14.8L18.76,16.26C19.54,15.03 20,13.57 20,12C20,7.58 16.42,4 12,4Z
-
-$mol_icon_sync_off $mol_icon path \M20,4H14V10L16.24,7.76C17.32,8.85 18,10.34 18,12C18,13 17.75,13.94 17.32,14.77L18.78,16.23C19.55,15 20,13.56 20,12C20,9.79 19.09,7.8 17.64,6.36L20,4M2.86,5.41L5.22,7.77C4.45,9 4,10.44 4,12C4,14.21 4.91,16.2 6.36,17.64L4,20H10V14L7.76,16.24C6.68,15.15 6,13.66 6,12C6,11 6.25,10.06 6.68,9.23L14.76,17.31C14.5,17.44 14.26,17.56 14,17.65V19.74C14.79,19.53 15.54,19.2 16.22,18.78L18.58,21.14L19.85,19.87L4.14,4.14L2.86,5.41M10,6.35V4.26C9.2,4.47 8.45,4.8 7.77,5.22L9.23,6.68C9.5,6.56 9.73,6.44 10,6.35Z
-
-$hyoo_sync_online $mol_select
-	minimal_width 40
-	minimal_height 40
-	yard $hyoo_sync_yard
-		master_list => dictionary
-		master_cursor? => master_cursor?
-	Filter null
-	option_content* /
-		<= Option_logo* $mol_avatar
-			id <= master_id* \
-		<= option_label*
-	trigger_content /
-		<= Link $mol_link
-			uri <= master_link \
-			sub <= link_content /
-				<= Well $mol_avatar
-					id <= master_link \
-				<= Fail $mol_icon_sync_off
-			hint <= message <= hint \$hyoo_sync
-
-$mol_icon_key $mol_icon path \M7,14C5.9,14 5,13.1 5,12C5,10.9 5.9,10 7,10C8.1,10 9,10.9 9,12C9,13.1 8.1,14 7,14M12.65,10C11.83,7.67 9.61,6 7,6C3.69,6 1,8.69 1,12C1,15.31 3.69,18 7,18C9.61,18 11.83,16.33 12.65,14H17V18H21V14H23V10H12.65Z
-
-$mol_icon_key_variant $mol_icon path \M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14C4.69,14 2,11.31 2,8C2,4.69 4.69,2 8,2C11.31,2 14,4.69 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5C5.9,5 5,5.9 5,7C5,8.1 5.9,9 7,9C8.1,9 9,8.1 9,7C9,5.9 8.1,5 7,5Z
-
-$mol_icon_image $mol_icon path \M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5C3.9,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19Z
-
-$hyoo_page_menu $hyoo_meta_menu
-	title @ \In Bookmarks
-	attr *
-		^
-		mol_theme \$mol_theme_special
-	head /
-		<= Profile $hyoo_meta_link
-			meta <= side $hyoo_page_side
-			hint @ \Profile
-			Title null
-		<= Title
-		<= Tools
-	Logo null
-	foot /
-		<= Online $hyoo_sync_online
-			yard <= yard
-		<= Safe_showing $mol_check_icon
-			hint @ \Private Keys
-			Icon <= Safe_icon $mol_icon_key_variant
-			checked? <=> safe_showing? false
-		<= About $mol_link_iconed
-			hint @ \About $hyoo_page
-			title \
-			uri \http://page.hyoo.ru/
-		<= Aura_showing $mol_check_icon
-			hint @ \Backgrounds Showing
-			Icon <= Aura_icon $mol_icon_image
-			checked? <=> aura_showing? true
-		<= Lights $mol_lights_toggle
-
-$hyoo_page $mol_book2
-	side_main_id \iy8wtn_tky6pc
-	yard $hyoo_sync_client
-	side* $hyoo_page_side
-		title => side_title*
-		pages_node => pages_node*
-	side_current $hyoo_page_side
-	profile $hyoo_page_side
-		bookmarks_node => bookmarks_node
-	style *
-		^
-		backgroundImage <= aura_image \
-	plugins /
-		<= Theme $mol_theme_auto
-	auto /
-		<= ref_track null
-	pages /
-		<= News $hyoo_page_side_news
-			side <= profile
-		<= Side_menu $hyoo_page_side_menu
-			yard <= yard
-			side <= book_side $hyoo_page_side
-			side_current <= side_current
-			list <= book_pages_node null
-			item_list* <= pages_node*
-			item_uri* <= side_uri* \
-			item_add*? <=> side_add*? null
-			tools_ext <= tools_ext /
-		<= View*0_0 $hyoo_page_side_view
-			side <= side*
-			peer* <= side*
-			profile <= profile
-			menu_showed? <=> side_menu_showed? false
-			editing? <=> editing? false
-			info? <=> info? false
-			highlight <= search
-			Details => View_details*
-		<= Edit*0_0 $hyoo_page_side_edit
-			side <= side*
-			rights? <=> rights? false
-			close? <=> edit_close*? null
-		<= Info*0_0 $hyoo_page_side_info
-			side <= side*
-			close? <=> info_close*? null
-			Text <= View_details*
-		<= Rights*0_0 $hyoo_meta_rights
-			meta <= side*
-			peer* <= side*
-			tools /
-				<= Rights_close $mol_button_minor
-					click? <=> rights_close? null
-					sub /
-						<= Сlose_icon $mol_icon_cross
-		<= Safe $hyoo_meta_safe
-			yard <= yard
-			tools /
-				<= Safe_close $mol_button_minor
-					click? <=> safe_close? null
-					sub /
-						<= Safe_icon $mol_icon_cross
-	Placeholder <= Menu $hyoo_page_menu
-		yard <= yard
-		side <= profile
-		list <= bookmarks_node
-		item_uri* <= side_uri* \
-		add? <=> page_add? null
-		item_add*? <=> side_add*? null
-		aura_showing? <=> aura_showing? true
-		safe_showing? <=> safe? false
-		search => search
-
 $mol_icon_dice_d6 $mol_icon path \M5,3H19C20.1,3 21,3.9 21,5V19C21,20.1 20.1,21 19,21H5C3.9,21 3,20.1 3,19V5C3,3.9 3.9,3 5,3M5,5V19H19V5H5M13.39,9.53C10.89,9.5 10.86,11.53 10.86,11.53C10.86,11.53 11.41,10.87 12.53,10.87C13.19,10.87 14.5,11.45 14.55,13.41C14.61,15.47 12.77,16 12.77,16C12.77,16 9.27,16.86 9.3,12.66C9.33,7.94 13.39,8.33 13.39,8.33V9.53M11.95,12.1C11.21,12 10.83,12.78 10.83,12.78L10.85,13.5C10.85,14.27 11.39,14.83 12,14.83C12.61,14.83 13.05,14.27 13.05,13.5C13.05,12.73 12.56,12.1 11.95,12.1Z
 
 $mol_icon_dice_d12 $mol_icon path \M12,2L1.5,9.64L5.5,22H18.5L22.5,9.64L12,2M17,20H7L3.85,10.4L12,4.47L20.15,10.4L17,20M17,15.75V17H11.66V15.91C11.66,15.91 15.23,12.45 15.23,11.4C15.23,10.12 14.18,10.25 14.18,10.25C13.5,10.3 13,10.87 13,11.55H11.44C11.5,10.09 12.72,8.94 14.27,9C16.74,9 16.77,10.85 16.77,11.3C16.77,13.07 13.58,15.77 13.58,15.77L17,15.75M10.5,17H8.89V10.89L7,11.47V10.19L10.31,9H10.5V17Z
@@ -2537,7 +1695,7 @@ $mol_icon_dice_d20 $mol_icon path \M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.
 $dosha_branding $mol_page
 	configs? \
 	target_root \
-	title \ДоШа Брендинг
+	title \Брендинг
 	tools /
 		<= Copy_settings $mol_button_copy
 			text <= configs
@@ -2570,6 +1728,7 @@ $dosha_branding $mol_page
 				brand_company \Компания
 				brand_standard \Стандарт
 				brand_personal \Личный
+		- Не успел дореализовать сохранение
 		<= Config_theme $mol_list
 			rows /
 				- Fonts
@@ -2587,23 +1746,36 @@ $dosha_branding $mol_page
 						fantasy \fantasy
 						monospace \monospace
 						cursive \cursive
-				- Colors
-				<= Color_hue $mol_number
-					hint \hue
-					value? <=> hue? null
-					value_min 0
-					value_max 360
-					precision_change 10
-				<= Color_luma $mol_number
-					hint \luma
-				<= Color_satur $mol_number
-					hint \satur
 				<= Font_size_text $mol_text text \Размер шрифта
 				<= Font_size $mol_number
 					hint \Размер шрифта
 					value? <=> font_size? null
 					value_min 4
 					value_max 64
+				- Colors
+				<= Color_hue_text $mol_text text \Тон цвета
+				<= Color_hue $mol_number
+					hint \hue
+					value? <=> hue? null
+					value_min 0
+					value_max 360
+					precision_change 10
+				<= Color_luma_text $mol_text text \Яркость цвета
+				<= Color_luma $mol_number
+					hint \luma
+					value? <=> luma? null
+					value_min -1
+					value_max 1
+					precision_view 0.2
+					precision_change 0.2
+				<= Color_satur_text $mol_text text \Насыщенность цвета
+				<= Color_satur $mol_number
+					hint \satur
+					value? <=> satur? null
+					value_min -10
+					value_max 10
+					precision_view 1
+					precision_change 1
 				- Spaces / Borders
 		<= Config_background $mol_list
 			rows /
@@ -2615,7 +1787,7 @@ $dosha_branding $mol_page
 				- Buttons
 		<= Save_configs $mol_button_major
 			title \Сохранить настройки
-		<= Config_textarea $mol_textarea
+		- <= Config_textarea $mol_textarea
 			sidebar_showed true
 			value? <= config_all? \
 			enabled false
@@ -2656,24 +1828,156 @@ $dosha_client_profile $mol_page
 		<= Branding $dosha_branding
 			title \Брендинг
 
+$mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
+
+$mol_check_box $mol_check
+	Icon $mol_icon_tick
+
+$mol_icon_download $mol_icon path \M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z
+
+$mol_button_download $mol_button_minor
+	blob null
+	uri \
+	file_name \blob.bin
+	sub /
+		<= Icon $mol_icon_download
+		<= title \
+
 $dosha_company_report $mol_page
-	title \Отчёт
+	title \Отчёты
 	body /
-		<= Download_report $mol_button_download
-			file_name \dosha_report.txt
-			title \Скачать отчёт для оплаты
+		<= Report_text $mol_text text \# Отчёты за ноябрь 2023 г.
+		<= Download_report_salary $mol_button_download
+			file_name \dosha_report_salary.txt
+			title \Загрузить отчёт для оплаты по Филиалам
 			blob <= download $mol_blob
+		<= Download_report_people $mol_button_download
+			file_name \dosha_report_people.txt
+			title \Загрузить отчёт по сотрудникам
+			blob <= download
+		<= Download_report_rating $mol_button_download
+			file_name \dosha_report_rating.txt
+			title \Загрузить отчёт по рейтингу
+			blob <= download
+		<= Download_report_events $mol_button_download
+			file_name \dosha_report_events.txt
+			title \Загрузить отчёт по мероприятиям
+			blob <= download
+		<= Download_report_trainings $mol_button_download
+			file_name \dosha_report_trainings.txt
+			title \Загрузить отчёт по тренировкам
+			blob <= download
+		<= Download_report_partners $mol_button_download
+			file_name \dosha_report_events.txt
+			title \Загрузить отчёт по партнёрам и акциям
+			blob <= download
 
 - Приложение для компании - информация по сотрудникам, настройка цветовой схемы, распечатка отчётов для оплаты, админка
 $dosha_company $mol_book2_catalog
 	menu_title \ДоШа Компания
 	param \company
 	spreads *
+		settings <= Settings_page $mol_page
+			title \Настройки проекта
+			body /
+				<= Settings_text $mol_text text <= settings_values?
+				<= Settings_keep $mol_check_box
+					title \Разблокировать файлы настроек
+					checked? <=> safe? true
+				<= Settings_update $mol_button_major
+					enabled? <=> safe?
+					title \Обновить файл конфигурации dosha.production.yaml
+				<= Settings_change $mol_textarea
+					enabled? <=> safe?
+					value? <=> settings_values? \
+						\env:
+						\	# # Настройки проекта. Рассчитывается 1 пользователя по максимум
+						\	# Коэффициент монет за шаги:
+						\	# Авторизован через API фитнес часов:
+						\	# За 50000 шагов - максимум 30 монет в день
+						\	STEPS_AUTH: 30
+						\	# Пользователь не авторизован:
+						\	# За 50000 шагов - максимум 5 монеты в день
+						\	STEPS_NOT_AUTH: 5
+						\	# За отметку по тренировке - максимум 5 монеты в день
+						\	TRAINING_SIGN: 5
+						\	# За достижения - максимум 200 монет в день
+						\	ACHIEVEMENTS: 200
+						\	# За добрые дела - максимум 200 монет в день
+						\	GOODS_DEALS: 200
+						\	# За благотворительность - максимум 200 монет в день
+						\	CHARITY: 200
+						\	# Категорий равными долями - 6
+						\	CATEGORIES: 6
 		people <= People_page $mol_page
 			title \Пользователи
 			body /
-				<= People_text $mol_text text \Пользователи компании и статистика по ним
+				<= People_text $mol_text text \
+					\# Пользователи компании и статистика по ним
+					\- Сотрудников в компании: 490
+					\- Зарегистрированы в приложении: 368 (72%)
+					\- Активные пользователи: 330 (87%)
+					\- Оценка приложения: Позитивная
+					\- Максимальное кол-во собранных монет: 426 монет (Анисимова Мария, бухгалтер)
+					\- Минимальное кол-во собранных монет: 37 монет (Анисимова Мария, бухгалтер)
+					\- Создано мероприятий на платформе: 14
+					\- Реально проведено мероприятий в городе: 7
+				<= Download_report_partners $mol_button_download
+					file_name \dosha_detail_people_report.txt
+					title \Загрузить детальный отчёт по Пользователям
+					blob <= download? null
+		events <= Events_page $mol_page
+			title \Мероприятия
+			body /
+				<= Events_text $mol_text text \
+					\# Мероприятия за этот месяц
+					\Будут:
+					\- 21.10.2023 Финал по футболу среди подразделений. Вручение призов
+					\- 12.10.2023 Полуфинал по футболу среди подразделений
+					\Сейчас идут:
+					\- 01.10.2023 Хакатон Кокос 2023.
+					\Прошли:
+					\- 24.09.2023 Юбилей компании - 10 лет
+				<= Download_report_events $mol_button_download
+					file_name \dosha_detail_events.txt
+					title \Загрузить детальный отчёт по Мероприятиям
+					blob <= download?
+		budget <= Budget_page $mol_page
+			title \Бюджет
+			body /
+				<= Budget_text $mol_text text \
+					\# Бюджет компании на проект.
+					\Выделено: 120 000 руб. на 6 направлений. Освоен на 76%.
+					\- Номинация 1. Шаги. Бюджет освоен на 100%. 20 000 руб
+					\- Номинация 2. Тренировка. Бюджет освоен на 50%. 10 000 руб
+					\- Номинация 3. Достижения. Бюджет освоен на 10%. Осталось 18 000 руб.
+					\- Номинация 4. Добрые дела. Бюджет освоен на 30%. Осталось: 14 000 руб
+					\- Номинация 5. Благотворительность. Бюджет освоен на 100%. Осталось 0 руб.
+					\- Номинация 6. Призы за рейтинг. Бюджет освоен на 100%. Осталось 0 руб.
+				<= Download_report_budget $mol_button_download
+					file_name \dosha_detail_budget.xslx
+					title \Загрузить детальный отчёт по Бюджету проекта
+					blob <= download?
 		report <= Report_page $dosha_company_report
+		branding <= Branding_page $dosha_branding
+		admin <= Admin_page $mol_page
+			title \CMS
+			body /
+				<= Admin_link $mol_link_iconed
+					title \CMS Админка PROD
+					uri \https://2022831-koplenov.twc1.net/admin
+				<= Admin_user $mol_text text \
+					\# Админ компании Кокос
+					\- First name: kokos
+					\- Last name: kompany
+					\- Email: kokos_company@dosha.com
+					\
+					\# Супер админ:
+					\- Login: **koplenov@gmail.com**
+					\- Password: **vu*5PZ5@xVV*PF**
+				<= Admin_develop_link $mol_link_iconed
+					title \CMS Админка Локальная
+					uri \http://localhost:1337/admin/
 
 - Приложение ДоШа - Добрые Шаги. Главное меню и навигация
 $dosha_client $mol_view
@@ -2712,7 +2016,8 @@ $dosha_client $mol_view
 						<= Chat $mol_chat
 							seed \dosha_chat_v1
 							pages => chat_pages
-				presentation <= Persentation_page $hyoo_page
+				- Модуль создание презентаций от компании для сотрудников. Пока выключил
+				- presentation <= Persentation_page $hyoo_page
 					title \📽 Презентация
 				profile <= Profile_page $dosha_client_profile
 				- Отдельное приложение ДоШа Компания
