@@ -25,17 +25,30 @@ namespace $.$$ {
 
 		@ $mol_mem
 		font_size( next?: any ) {
-			document.documentElement.style.setProperty('font-size', `${next}px`)
+			if (next) document.documentElement.style.setProperty('font-size', `${next}px`)
 			return next ?? 16
 		}
 
 		@ $mol_mem
 		hue( next?: any ) {
+			// Так меняются настройки
 			if (next) document.documentElement.style.setProperty('--mol_theme_hue', `${next}deg`);
+			return next ?? 210
+		}
+		@ $mol_mem
+		luma( next?: any ) {
+			// Так меняются настройки
+			if (next) document.documentElement.style.setProperty('--mol_theme_luma', `${next}deg`);
+			return next ?? 0
+		}
+		@ $mol_mem
+		satur( next?: any ) {
+			// Так меняются настройки
+			if (next) document.documentElement.style.setProperty('--mol_theme_satur', `${next}deg`);
 			return next ?? 0
 		}
 
-		// document.documentElement.style.setProperty('--mol_gap_block', '4rem'); Поменять переменные
+		// document.documentElement.style.setProperty('--mol_gap_block', '4rem'); Поменять переменные в моловской теме
 
 		// @ $mol_mem
 		// config_all(next?: string){

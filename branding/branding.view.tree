@@ -59,16 +59,29 @@ $dosha_branding $mol_page
 						monospace \monospace
 						cursive \cursive
 				- Colors
+				<= Color_hue_text $mol_text text \Тон цвета
 				<= Color_hue $mol_number
 					hint \hue
 					value? <=> hue? null
 					value_min 0
 					value_max 360
 					precision_change 10
+				<= Color_luma_text $mol_text text \Яркость цвета
 				<= Color_luma $mol_number
 					hint \luma
+					value? <=> luma? null
+					min -1
+					max 1
+					precision_view 0.2
+					precision_change 0.2
+				<= Color_satur_text $mol_text text \Насыщенность цвета
 				<= Color_satur $mol_number
 					hint \satur
+					value? <=> satur? null
+					min -10
+					max 10
+					precision_view 1
+					precision_change 1
 				<= Font_size_text $mol_text text \Размер шрифта
 				<= Font_size $mol_number
 					hint \Размер шрифта
