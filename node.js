@@ -27221,6 +27221,374 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_dice_d6 extends $mol_icon {
+        path() {
+            return "M5,3H19C20.1,3 21,3.9 21,5V19C21,20.1 20.1,21 19,21H5C3.9,21 3,20.1 3,19V5C3,3.9 3.9,3 5,3M5,5V19H19V5H5M13.39,9.53C10.89,9.5 10.86,11.53 10.86,11.53C10.86,11.53 11.41,10.87 12.53,10.87C13.19,10.87 14.5,11.45 14.55,13.41C14.61,15.47 12.77,16 12.77,16C12.77,16 9.27,16.86 9.3,12.66C9.33,7.94 13.39,8.33 13.39,8.33V9.53M11.95,12.1C11.21,12 10.83,12.78 10.83,12.78L10.85,13.5C10.85,14.27 11.39,14.83 12,14.83C12.61,14.83 13.05,14.27 13.05,13.5C13.05,12.73 12.56,12.1 11.95,12.1Z";
+        }
+    }
+    $.$mol_icon_dice_d6 = $mol_icon_dice_d6;
+})($ || ($ = {}));
+//mol/icon/dice/d6/-view.tree/d6.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_dice_d12 extends $mol_icon {
+        path() {
+            return "M12,2L1.5,9.64L5.5,22H18.5L22.5,9.64L12,2M17,20H7L3.85,10.4L12,4.47L20.15,10.4L17,20M17,15.75V17H11.66V15.91C11.66,15.91 15.23,12.45 15.23,11.4C15.23,10.12 14.18,10.25 14.18,10.25C13.5,10.3 13,10.87 13,11.55H11.44C11.5,10.09 12.72,8.94 14.27,9C16.74,9 16.77,10.85 16.77,11.3C16.77,13.07 13.58,15.77 13.58,15.77L17,15.75M10.5,17H8.89V10.89L7,11.47V10.19L10.31,9H10.5V17Z";
+        }
+    }
+    $.$mol_icon_dice_d12 = $mol_icon_dice_d12;
+})($ || ($ = {}));
+//mol/icon/dice/d12/-view.tree/d12.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_dice_d20 extends $mol_icon {
+        path() {
+            return "M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5M12,4.15L5,8.09V15.91L12,19.85L19,15.91V8.09L12,4.15M14.93,8.27C16.35,8.27 17.5,9.42 17.5,10.84V13.5C17.5,14.9 16.35,16.05 14.93,16.05C13.5,16.05 12.36,14.9 12.36,13.5V10.84C12.36,9.42 13.51,8.27 14.93,8.27M14.92,9.71C14.34,9.71 13.86,10.18 13.86,10.77V13.53C13.86,14.12 14.34,14.6 14.92,14.6C15.5,14.6 16,14.12 16,13.53V10.77C16,10.18 15.5,9.71 14.92,9.71M11.45,14.76V15.96L6.31,15.93V14.91C6.31,14.91 9.74,11.58 9.75,10.57C9.75,9.33 8.73,9.46 8.73,9.46C8.73,9.46 7.75,9.5 7.64,10.71L6.14,10.76C6.14,10.76 6.18,8.26 8.83,8.26C11.2,8.26 11.23,10.04 11.23,10.5C11.23,12.18 8.15,14.77 8.15,14.77L11.45,14.76Z";
+        }
+    }
+    $.$mol_icon_dice_d20 = $mol_icon_dice_d20;
+})($ || ($ = {}));
+//mol/icon/dice/d20/-view.tree/d20.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $dosha_branding extends $mol_page {
+        configs(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        title() {
+            return "ДоШа Брендинг";
+        }
+        tools() {
+            return [
+                this.Copy_settings()
+            ];
+        }
+        body() {
+            return [
+                this.Branding_text(),
+                this.Reset_configs(),
+                this.Random_configs(),
+                this.Timer_dice_list(),
+                this.Switch_brand_type(),
+                this.Config_theme(),
+                this.Config_background(),
+                this.Config_content(),
+                this.Save_configs(),
+                this.Config_textarea()
+            ];
+        }
+        Copy_settings() {
+            const obj = new this.$.$mol_button_copy();
+            obj.text = () => this.configs();
+            return obj;
+        }
+        Branding_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "# Создай свою уникальный стиль\nЖми \"Восстановить\" в любой ситуации";
+            return obj;
+        }
+        Reset_configs() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Восстановить";
+            return obj;
+        }
+        Random_configs() {
+            const obj = new this.$.$mol_button_minor();
+            obj.title = () => "Случайно";
+            return obj;
+        }
+        Dice_icon_normal() {
+            const obj = new this.$.$mol_icon_dice_d6();
+            return obj;
+        }
+        random_checked_normal(next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        Random_timer_normal() {
+            const obj = new this.$.$mol_check_icon();
+            obj.Icon = () => this.Dice_icon_normal();
+            obj.checked = (next) => this.random_checked_normal(next);
+            return obj;
+        }
+        Dice_icon_hard() {
+            const obj = new this.$.$mol_icon_dice_d12();
+            return obj;
+        }
+        random_checked_hard(next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        Random_timer_hard() {
+            const obj = new this.$.$mol_check_icon();
+            obj.Icon = () => this.Dice_icon_hard();
+            obj.checked = (next) => this.random_checked_hard(next);
+            return obj;
+        }
+        Dice_icon_hell() {
+            const obj = new this.$.$mol_icon_dice_d20();
+            return obj;
+        }
+        random_checked_hell(next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        Random_timer_hell() {
+            const obj = new this.$.$mol_check_icon();
+            obj.Icon = () => this.Dice_icon_hell();
+            obj.checked = (next) => this.random_checked_hell(next);
+            return obj;
+        }
+        Timer_dice_list() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Random_timer_normal(),
+                this.Random_timer_hard(),
+                this.Random_timer_hell()
+            ];
+            return obj;
+        }
+        brand_type(next) {
+            if (next !== undefined)
+                return next;
+            return "brand_company";
+        }
+        Switch_brand_type() {
+            const obj = new this.$.$mol_switch();
+            obj.value = (next) => this.brand_type(next);
+            obj.options = () => ({
+                brand_company: "Компания",
+                brand_standard: "Стандарт",
+                brand_personal: "Личный"
+            });
+            return obj;
+        }
+        font_style(next) {
+            if (next !== undefined)
+                return next;
+            return "font_normal";
+        }
+        Font_switcher() {
+            const obj = new this.$.$mol_switch();
+            obj.value = (next) => this.font_style(next);
+            obj.options = () => ({
+                font_normal: "Обычный",
+                font_italic: "Курсив",
+                font_think: "Тонкий",
+                font_bold: "Жирный"
+            });
+            return obj;
+        }
+        font_family(next) {
+            if (next !== undefined)
+                return next;
+            return "font_normal";
+        }
+        Font_family() {
+            const obj = new this.$.$mol_switch();
+            obj.value = (next) => this.font_family(next);
+            obj.options = () => ({
+                font_serif: "Serif",
+                font_fantasy: "Fantasy",
+                font_monospace: "Monospace",
+                font_cursive: "Cursive"
+            });
+            return obj;
+        }
+        Font_size() {
+            const obj = new this.$.$mol_number();
+            obj.hint = () => "Размер шрифта";
+            return obj;
+        }
+        Color_hue() {
+            const obj = new this.$.$mol_number();
+            obj.hint = () => "hue";
+            return obj;
+        }
+        Color_luma() {
+            const obj = new this.$.$mol_number();
+            obj.hint = () => "luma";
+            return obj;
+        }
+        Color_satur() {
+            const obj = new this.$.$mol_number();
+            obj.hint = () => "satur";
+            return obj;
+        }
+        Config_theme() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Font_switcher(),
+                this.Font_family(),
+                this.Font_size(),
+                this.Color_hue(),
+                this.Color_luma(),
+                this.Color_satur()
+            ];
+            return obj;
+        }
+        Config_background() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [];
+            return obj;
+        }
+        Config_content() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [];
+            return obj;
+        }
+        Save_configs() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Сохранить настройки";
+            return obj;
+        }
+        Config_textarea() {
+            const obj = new this.$.$mol_textarea();
+            obj.sidebar_showed = () => true;
+            obj.value = (next) => this.configs();
+            obj.enabled = () => false;
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "configs", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Copy_settings", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Branding_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Reset_configs", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Random_configs", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Dice_icon_normal", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "random_checked_normal", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Random_timer_normal", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Dice_icon_hard", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "random_checked_hard", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Random_timer_hard", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Dice_icon_hell", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "random_checked_hell", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Random_timer_hell", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Timer_dice_list", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "brand_type", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Switch_brand_type", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "font_style", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Font_switcher", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "font_family", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Font_family", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Font_size", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Color_hue", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Color_luma", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Color_satur", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Config_theme", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Config_background", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Config_content", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Save_configs", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Config_textarea", null);
+    $.$dosha_branding = $dosha_branding;
+})($ || ($ = {}));
+//dosha/branding/-view.tree/branding.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $dosha_branding extends $.$dosha_branding {
+            config_theme() {
+                return 'config_theme';
+            }
+            config_background() {
+                return 'config_background';
+            }
+            config_content() {
+                return 'config_content';
+            }
+            config_all() {
+                return 'config_all';
+            }
+        }
+        $$.$dosha_branding = $dosha_branding;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//dosha/branding/branding.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("dosha/branding/branding.view.css", "[dosha_branding_timer_dice_list] {\n\tflex-direction: row;\n\tmin-height: 20px!important;\n\tjustify-content: space-around;\n}\n");
+})($ || ($ = {}));
+//dosha/branding/-css/branding.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $dosha_client_profile extends $mol_page {
         title() {
             return "🧢 Профиль";
@@ -27228,7 +27596,8 @@ var $;
         body() {
             return [
                 this.Profile_form(),
-                this.Company_form()
+                this.Company_form(),
+                this.Branding()
             ];
         }
         username(next) {
@@ -27340,6 +27709,11 @@ var $;
             ];
             return obj;
         }
+        Branding() {
+            const obj = new this.$.$dosha_branding();
+            obj.title = () => "Брендинг";
+            return obj;
+        }
     }
     __decorate([
         $mol_mem
@@ -27395,6 +27769,9 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client_profile.prototype, "Company_form", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Branding", null);
     $.$dosha_client_profile = $dosha_client_profile;
 })($ || ($ = {}));
 //dosha/client/profile/-view.tree/profile.view.tree.ts
@@ -27824,7 +28201,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("dosha/client/client.view.css", ":root {\n\t--mol_theme_hue: 180deg;\n\t--mol_theme_luma: -1;\n\t--mol_theme_satur: 1;\n\t--mol_theme_image: none;\n}\n\n[dosha_client] {\n\tfont-family: \"TT Commons\",Helvetica,Arial,sans-serif;\n}\n\n[mol_button] {\n\tborder-radius: 2rem;\n\ttext-transform: uppercase;\n\t/* font-size: 0.75rem; */\n\talign-items: center;\n\tjustify-content: center;\n}\n");
+    $mol_style_attach("dosha/client/client.view.css", ":root {\n\t--mol_theme_hue: 180deg;\n\t/* --mol_theme_luma: -1;\n\t--mol_theme_satur: 1;\n\t--mol_theme_image: none; */\n}\n\n[dosha_client] {\n\tfont-family: \"TT Commons\",Helvetica,Arial,sans-serif;\n}\n\n[mol_button] {\n\tborder-radius: 2rem;\n\ttext-transform: uppercase;\n\t/* font-size: 0.75rem; */\n\talign-items: center;\n\tjustify-content: center;\n}\n");
 })($ || ($ = {}));
 //dosha/client/-css/client.view.css.ts
 

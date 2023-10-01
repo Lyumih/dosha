@@ -424,6 +424,11 @@
     "$mol_offline_install",
     "$mol_offline",
     "$dosha_client_profile",
+    "$dosha_branding",
+    "$mol_icon_dice_d6",
+    "$mol_icon_dice",
+    "$mol_icon_dice_d12",
+    "$mol_icon_dice_d20",
     "$dosha_company",
     "$dosha_company_report"
   ],

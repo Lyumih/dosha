@@ -7508,6 +7508,74 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_dice_d6 extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_dice_d12 extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_dice_d20 extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $dosha_branding extends $mol_page {
+        configs(next?: any): string;
+        title(): string;
+        tools(): readonly any[];
+        body(): readonly any[];
+        Copy_settings(): $$.$mol_button_copy;
+        Branding_text(): $$.$mol_text;
+        Reset_configs(): $mol_button_major;
+        Random_configs(): $mol_button_minor;
+        Dice_icon_normal(): $mol_icon_dice_d6;
+        random_checked_normal(next?: any): boolean;
+        Random_timer_normal(): $mol_check_icon;
+        Dice_icon_hard(): $mol_icon_dice_d12;
+        random_checked_hard(next?: any): boolean;
+        Random_timer_hard(): $mol_check_icon;
+        Dice_icon_hell(): $mol_icon_dice_d20;
+        random_checked_hell(next?: any): boolean;
+        Random_timer_hell(): $mol_check_icon;
+        Timer_dice_list(): $$.$mol_list;
+        brand_type(next?: any): string;
+        Switch_brand_type(): $$.$mol_switch;
+        font_style(next?: any): string;
+        Font_switcher(): $$.$mol_switch;
+        font_family(next?: any): string;
+        Font_family(): $$.$mol_switch;
+        Font_size(): $$.$mol_number;
+        Color_hue(): $$.$mol_number;
+        Color_luma(): $$.$mol_number;
+        Color_satur(): $$.$mol_number;
+        Config_theme(): $$.$mol_list;
+        Config_background(): $$.$mol_list;
+        Config_content(): $$.$mol_list;
+        Save_configs(): $mol_button_major;
+        Config_textarea(): $$.$mol_textarea;
+    }
+}
+
+declare namespace $.$$ {
+    class $dosha_branding extends $.$dosha_branding {
+        config_theme(): string;
+        config_background(): string;
+        config_content(): string;
+        config_all(): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $dosha_client_profile extends $mol_page {
         title(): string;
         body(): readonly any[];
@@ -7529,6 +7597,7 @@ declare namespace $ {
         update_company(next?: any): any;
         Company_form_save(): $mol_button_major;
         Company_form(): $$.$mol_form_draft;
+        Branding(): $$.$dosha_branding;
     }
 }
 
