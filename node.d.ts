@@ -4384,6 +4384,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $dosha_client_city extends $mol_page {
+        title(): string;
+        body(): readonly any[];
+        City_label(): $$.$mol_text;
+    }
+}
+
+declare namespace $ {
     class $mol_svg_group extends $mol_svg {
         dom_name(): string;
     }
@@ -5098,10 +5106,15 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $dosha_client_city extends $mol_page {
+    class $dosha_client_partners extends $mol_page {
         title(): string;
         body(): readonly any[];
-        City_label(): $$.$mol_text;
+        Partners_text(): $$.$mol_text;
+        Partners_list(): $$.$mol_text;
+        Add_gift_send(): $mol_button_minor;
+        Add_gift_link(): $$.$mol_string;
+        Add_gift_text(): $$.$mol_textarea;
+        Gift(): $$.$mol_list;
     }
 }
 
@@ -7495,19 +7508,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $dosha_client_partners extends $mol_page {
-        title(): string;
-        body(): readonly any[];
-        Partners_text(): $$.$mol_text;
-        Partners_list(): $$.$mol_text;
-        Add_gift_send(): $mol_button_minor;
-        Add_gift_link(): $$.$mol_string;
-        Add_gift_text(): $$.$mol_textarea;
-        Gift(): $$.$mol_list;
-    }
-}
-
-declare namespace $ {
     class $dosha_client_profile extends $mol_page {
         title(): string;
         body(): readonly any[];
@@ -7586,16 +7586,17 @@ declare namespace $ {
         History_page(): $dosha_client_history;
         Found_page(): $$.$dosha_client_found;
         Training_page(): $dosha_client_training;
-        Rating_page(): $dosha_client_rating;
         City_page(): $dosha_client_city;
+        Rating_page(): $dosha_client_rating;
+        Partners_page(): $dosha_client_partners;
         chat_pages(): $mol_page[];
         Chat(): $$.$mol_chat;
         Chat_open(): $mol_view;
         Chat_page(): $mol_page;
         Persentation_page(): $$.$hyoo_page;
-        Partners_page(): $dosha_client_partners;
         Profile_page(): $$.$dosha_client_profile;
         Company_page(): $dosha_company;
+        Joke(): $$.$mol_text;
         Secure(): $$.$mol_book2_catalog;
     }
 }

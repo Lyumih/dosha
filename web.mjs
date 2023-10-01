@@ -12023,7 +12023,7 @@ var $;
         }
         Waiting_founds_label() {
             const obj = new this.$.$mol_text();
-            obj.text = () => "Фонды, которые скоро добавим в работу";
+            obj.text = () => "Фонды, которые скоро добавим";
             return obj;
         }
         found_new_title(id) {
@@ -12417,6 +12417,31 @@ var $;
     $.$dosha_client_training = $dosha_client_training;
 })($ || ($ = {}));
 //dosha/client/training/-view.tree/training.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $dosha_client_city extends $mol_page {
+        title() {
+            return "🏓 Ваш город";
+        }
+        body() {
+            return [
+                this.City_label()
+            ];
+        }
+        City_label() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "Найдите совместные увлечения в вашем городе";
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $dosha_client_city.prototype, "City_label", null);
+    $.$dosha_client_city = $dosha_client_city;
+})($ || ($ = {}));
+//dosha/client/city/-view.tree/city.view.tree.ts
 ;
 "use strict";
 var $;
@@ -15655,27 +15680,73 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $dosha_client_city extends $mol_page {
+    class $dosha_client_partners extends $mol_page {
         title() {
-            return "🏓 Ваш город";
+            return "🎁 Партнёры";
         }
         body() {
             return [
-                this.City_label()
+                this.Partners_text(),
+                this.Partners_list(),
+                this.Gift()
             ];
         }
-        City_label() {
+        Partners_text() {
             const obj = new this.$.$mol_text();
-            obj.text = () => "Найдите совместные увлечения в вашем городе";
+            obj.text = () => "# Наши друзья и партнёры";
+            return obj;
+        }
+        Partners_list() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "[Совиный дом](https://owldom.ru/) - чашечка кофе с совой\n[Тульский цирк](https://www.circus-tula.ru/) - 4 билет в подарок\n[Тульская филармония](https://www.filarmonia-tula.ru/) - Скидка 30%\n[SkyEng](https://skyeng.ru/) - дополнительных 3 занятия\n[Авиасейлс](https://www.aviasales.ru/) - багаж в подарок\n[Поленово](https://polenovo.ru/) - Льготный билет на выставку\n[GRAND FITNESS](https://www.fitnesskaluga.ru/) - +2 пробных дня\n[Яндекс Музыка](https://music.yandex.ru/) - месяц в подарок\n[Прыжок с парашютом](https://extreme71.ru/) - 4 человеку в подарок\n\n*И многое другое через 4 часа 24 минуты*";
+            return obj;
+        }
+        Add_gift_send() {
+            const obj = new this.$.$mol_button_minor();
+            obj.title = () => "Добавить подарок";
+            return obj;
+        }
+        Add_gift_link() {
+            const obj = new this.$.$mol_string();
+            obj.hint = () => "Сайт";
+            return obj;
+        }
+        Add_gift_text() {
+            const obj = new this.$.$mol_textarea();
+            obj.hint = () => "Мне хочется предложить вам мини подарок - ...";
+            return obj;
+        }
+        Gift() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Add_gift_send(),
+                this.Add_gift_link(),
+                this.Add_gift_text()
+            ];
             return obj;
         }
     }
     __decorate([
         $mol_mem
-    ], $dosha_client_city.prototype, "City_label", null);
-    $.$dosha_client_city = $dosha_client_city;
+    ], $dosha_client_partners.prototype, "Partners_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_partners.prototype, "Partners_list", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_partners.prototype, "Add_gift_send", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_partners.prototype, "Add_gift_link", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_partners.prototype, "Add_gift_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_partners.prototype, "Gift", null);
+    $.$dosha_client_partners = $dosha_client_partners;
 })($ || ($ = {}));
-//dosha/client/city/-view.tree/city.view.tree.ts
+//dosha/client/partners/-view.tree/partners.view.tree.ts
 ;
 "use strict";
 var $;
@@ -26658,77 +26729,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $dosha_client_partners extends $mol_page {
-        title() {
-            return "🎁 Партнёры";
-        }
-        body() {
-            return [
-                this.Partners_text(),
-                this.Partners_list(),
-                this.Gift()
-            ];
-        }
-        Partners_text() {
-            const obj = new this.$.$mol_text();
-            obj.text = () => "# Наши друзья и партнёры";
-            return obj;
-        }
-        Partners_list() {
-            const obj = new this.$.$mol_text();
-            obj.text = () => "[Совиный дом](https://owldom.ru/) - чашечка кофе с совой\n[Тульский цирк](https://www.circus-tula.ru/) - 4 билет в подарок\n[Тульская филармония](https://www.filarmonia-tula.ru/) - Скидка 30%\n[SkyEng](https://skyeng.ru/) - дополнительных 3 занятия\n[Авиасейлс](https://www.aviasales.ru/) - багаж в подарок\n[Поленово](https://polenovo.ru/) - Льготный билет на выставку\n[GRAND FITNESS](https://www.fitnesskaluga.ru/) - +2 пробных дня\n[Яндекс Музыка](https://music.yandex.ru/) - месяц в подарок\n[Прыжок с парашютом](https://extreme71.ru/) - 4 человеку в подарок\n\n*И многое другое через 4 часа 24 минуты*";
-            return obj;
-        }
-        Add_gift_send() {
-            const obj = new this.$.$mol_button_minor();
-            obj.title = () => "Добавить подарок";
-            return obj;
-        }
-        Add_gift_link() {
-            const obj = new this.$.$mol_string();
-            obj.hint = () => "Сайт";
-            return obj;
-        }
-        Add_gift_text() {
-            const obj = new this.$.$mol_textarea();
-            obj.hint = () => "Мне хочется предложить вам мини подарок - ...";
-            return obj;
-        }
-        Gift() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Add_gift_send(),
-                this.Add_gift_link(),
-                this.Add_gift_text()
-            ];
-            return obj;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $dosha_client_partners.prototype, "Partners_text", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_partners.prototype, "Partners_list", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_partners.prototype, "Add_gift_send", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_partners.prototype, "Add_gift_link", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_partners.prototype, "Add_gift_text", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_partners.prototype, "Gift", null);
-    $.$dosha_client_partners = $dosha_client_partners;
-})($ || ($ = {}));
-//dosha/client/partners/-view.tree/partners.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $dosha_client_profile extends $mol_page {
         title() {
             return "🧢 Профиль";
@@ -27146,12 +27146,16 @@ var $;
             const obj = new this.$.$dosha_client_training();
             return obj;
         }
+        City_page() {
+            const obj = new this.$.$dosha_client_city();
+            return obj;
+        }
         Rating_page() {
             const obj = new this.$.$dosha_client_rating();
             return obj;
         }
-        City_page() {
-            const obj = new this.$.$dosha_client_city();
+        Partners_page() {
+            const obj = new this.$.$dosha_client_partners();
             return obj;
         }
         chat_pages() {
@@ -27181,10 +27185,6 @@ var $;
             obj.title = () => "📽 Презентация";
             return obj;
         }
-        Partners_page() {
-            const obj = new this.$.$dosha_client_partners();
-            return obj;
-        }
         Profile_page() {
             const obj = new this.$.$dosha_client_profile();
             return obj;
@@ -27192,6 +27192,11 @@ var $;
         Company_page() {
             const obj = new this.$.$dosha_company();
             obj.menu_title = () => "🧮 Компания *";
+            return obj;
+        }
+        Joke() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "Шутка дня. \nКто зарабатывает 300к в секунду, тому и парсить 300 сайтов в минуту";
             return obj;
         }
         Secure() {
@@ -27215,13 +27220,14 @@ var $;
                 history: this.History_page(),
                 found: this.Found_page(),
                 training: this.Training_page(),
-                rating: this.Rating_page(),
                 city: this.City_page(),
+                rating: this.Rating_page(),
+                partners: this.Partners_page(),
                 chat: this.Chat_page(),
                 presentation: this.Persentation_page(),
-                partners: this.Partners_page(),
                 profile: this.Profile_page(),
-                company: this.Company_page()
+                company: this.Company_page(),
+                joke: this.Joke()
             });
             return obj;
         }
@@ -27267,10 +27273,13 @@ var $;
     ], $dosha_client.prototype, "Training_page", null);
     __decorate([
         $mol_mem
+    ], $dosha_client.prototype, "City_page", null);
+    __decorate([
+        $mol_mem
     ], $dosha_client.prototype, "Rating_page", null);
     __decorate([
         $mol_mem
-    ], $dosha_client.prototype, "City_page", null);
+    ], $dosha_client.prototype, "Partners_page", null);
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Chat", null);
@@ -27285,13 +27294,13 @@ var $;
     ], $dosha_client.prototype, "Persentation_page", null);
     __decorate([
         $mol_mem
-    ], $dosha_client.prototype, "Partners_page", null);
-    __decorate([
-        $mol_mem
     ], $dosha_client.prototype, "Profile_page", null);
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Company_page", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client.prototype, "Joke", null);
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Secure", null);
