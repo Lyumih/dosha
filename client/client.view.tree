@@ -26,14 +26,14 @@ $dosha_client $mol_view
 				city <= City_page $dosha_client_city
 				rating <= Rating_page $dosha_client_rating
 				partners <= Partners_page $dosha_client_partners
-				chat <= Chat_page $mol_page
+				chat <= Chat_page $mol_view
 					title \🎭 Чат
-					body /
+					sub /
+						<= Chat_open $mol_view
+							sub <= chat_pages
 						<= Chat $mol_chat
 							seed \dosha_chat_v1
 							pages => chat_pages
-						<= Chat_open $mol_view
-							sub <= chat_pages
 				presentation <= Persentation_page $hyoo_page
 					title \📽 Презентация
 				profile <= Profile_page $dosha_client_profile
