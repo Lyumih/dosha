@@ -11,6 +11,7 @@ $dosha_client $mol_view
 			plugins /
 				<= Theme $mol_theme_auto
 			menu_tools /
+				- <= Radio_record $mol_form - Добавить кнопку музыки какого-нибудь радио. Долгий тап (двойное) - выбор радиостанции (волны)
 				<= GitHub $mol_link_source uri \https://github.com/Lyumih/dosha
 				<= Lights $mol_lights_toggle
 				<= Logout $mol_button_minor
@@ -54,3 +55,4 @@ $dosha_client $mol_view
 					\	- А сколько команд с нами?
 					\	- 30.
 					\	- Спасибо, хакатон окончен.
+				- Не забыть про дивиз. "Добрый шаг как Добрый кола - приятное послевкусие.". Пасхалка №1

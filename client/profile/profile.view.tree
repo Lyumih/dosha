@@ -31,3 +31,5 @@ $dosha_client_profile $mol_page
 				<= Company_form_save $mol_button_major
 					title \Обновить компанию
 					click? <=> update_company? null
+		<= Branding $dosha_branding
+			title \Брендинг

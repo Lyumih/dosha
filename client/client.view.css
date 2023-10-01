@@ -1,8 +1,8 @@
 :root {
 	--mol_theme_hue: 180deg;
-	--mol_theme_luma: -1;
+	/* --mol_theme_luma: -1;
 	--mol_theme_satur: 1;
-	--mol_theme_image: none;
+	--mol_theme_image: none; */
 }
 
 [dosha_client] {

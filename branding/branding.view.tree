@@ -1,0 +1,82 @@
+- Брендирование приложения - фрактальная кастомизация приложения в целом и каждой страниц / элемента в частности.
+- Темы-переключатель - Компания, Отключена (стандартная), Своя. Все темы кроме тем Компаний хранятся в LocalStorage браузера.
+- Отдельная настройка - шрифт для слабовидящих (Увлечение / Уменьшение rem). Настройки можно включить / отключить по отдельности
+- Настройка 1: цвета, отступы, округления, шрифты (начертания).
+- Настройка 2: фон страниц - на всё приложение $mol_page, $mol_book2_catalog или на каждую страницу. Можно комбинировать. Только пары прозрачность - адрес страницы - ссылка на картинку. Логотип (фавикон)
+- Настройка 3: отключение страниц - список страниц - описание - если выключена - true (уменьшающийся список).
+- Шаринг данных - копировать / вставить / по ссылке / файлом json (csv) / qr-cod (апи какой-нибудь найти или свой в мол добавить). Каждая настройка (цвета, фоны, отключение страниц) - передаются по отдельности или 1 пакетом
+$dosha_branding $mol_page
+	configs? \
+	title \ДоШа Брендинг
+	tools /
+		<= Copy_settings $mol_button_copy
+			text <= configs
+		- <= Share_settings $mol_button_share
+	body /
+		<= Branding_text $mol_text text \
+			\# Создай свою уникальный стиль
+			\Жми "Восстановить" в любой ситуации
+		<= Reset_configs $mol_button_major
+			title \Восстановить
+		<= Random_configs $mol_button_minor
+			title \Случайно
+		- Добавить чекбокс изолированно / глобально. Hell кубик ставит на глобально. Pashalka №3
+		- Таймер 30 секунд. 3 таймера простой сложный адский (все 3 конфига)
+		<= Timer_dice_list $mol_list
+			rows /
+				<= Random_timer_normal $mol_check_icon
+					Icon <= Dice_icon_normal $mol_icon_dice_d6
+					checked? <=> random_checked_normal? false
+				<= Random_timer_hard $mol_check_icon
+					Icon <= Dice_icon_hard $mol_icon_dice_d12
+					checked? <=> random_checked_hard? false
+				<= Random_timer_hell $mol_check_icon
+					Icon <= Dice_icon_hell $mol_icon_dice_d20
+					checked? <=> random_checked_hell? false
+		<= Switch_brand_type $mol_switch
+			value? <=> brand_type? \brand_company
+			options *
+				brand_company \Компания
+				brand_standard \Стандарт
+				brand_personal \Личный
+		<= Config_theme $mol_list
+			rows /
+				- Fonts
+				<= Font_switcher $mol_switch
+					value? <=> font_style? \font_normal
+					options *
+						font_normal \Обычный
+						font_italic \Курсив
+						font_think \Тонкий
+						font_bold \Жирный
+				<= Font_family $mol_switch
+					value? <=> font_family? \font_normal
+					options *
+						font_serif \Serif
+						font_fantasy \Fantasy
+						font_monospace \Monospace
+						font_cursive \Cursive
+				<= Font_size $mol_number
+					hint \Размер шрифта
+				- Colors
+				<= Color_hue $mol_number
+					hint \hue
+				<= Color_luma $mol_number
+					hint \luma
+				<= Color_satur $mol_number
+					hint \satur
+				- Spaces / Borders
+		<= Config_background $mol_list
+			rows /
+				- All
+				- Custom pages
+		<= Config_content $mol_list
+			rows /
+				- Pages
+				- Buttons
+		<= Save_configs $mol_button_major
+			title \Сохранить настройки
+		<= Config_textarea $mol_textarea
+			sidebar_showed true
+			value? <= configs?
+			enabled false

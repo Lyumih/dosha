@@ -1,0 +1,5 @@
+[dosha_branding_timer_dice_list] {
+	flex-direction: row;
+	min-height: 20px!important;
+	justify-content: space-around;
+}
