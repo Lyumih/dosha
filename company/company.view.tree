@@ -3,8 +3,86 @@ $dosha_company $mol_book2_catalog
 	menu_title \ДоШа Компания
 	param \company
 	spreads *
+		settings <= Settings_page $mol_page
+			title \Настройки проекта
+			body /
+				<= Settings_text $mol_text text <= settings_values?
+				<= Settings_keep $mol_check_box
+					title \Разблокировать файлы настроек
+					checked? <=> safe? true
+				<= Settings_update $mol_button_major
+					enabled? <=> safe?
+					title \Обновить файл конфигурации dosha.production.yaml
+				<= Settings_change $mol_textarea
+					enabled? <=> safe?
+					value? <=> settings_values? \
+						\env:
+						\	# # Настройки проекта. Рассчитывается 1 пользователя по максимум
+						\	# Коэффициент монет за шаги:
+						\	# Авторизован через API фитнес часов:
+						\	# За 50000 шагов - максимум 30 монет в день
+						\	STEPS_AUTH: 30
+						\	# Пользователь не авторизован:
+						\	# За 50000 шагов - максимум 5 монеты в день
+						\	STEPS_NOT_AUTH: 5
+						\	# За отметку по тренировке - максимум 5 монеты в день
+						\	TRAINING_SIGN: 5
+						\	# За достижения - максимум 200 монет в день
+						\	ACHIEVEMENTS: 200
+						\	# За добрые дела - максимум 200 монет в день
+						\	GOODS_DEALS: 200
+						\	# За благотворительность - максимум 200 монет в день
+						\	CHARITY: 200
+						\	# Категорий равными долями - 6
+						\	CATEGORIES: 6
 		people <= People_page $mol_page
 			title \Пользователи
 			body /
-				<= People_text $mol_text text \Пользователи компании и статистика по ним
+				<= People_text $mol_text text \
+					\# Пользователи компании и статистика по ним
+					\- Сотрудников в компании: 490
+					\- Зарегистрированы в приложении: 368 (72%)
+					\- Активные пользователи: 330 (87%)
+					\- Оценка приложения: Позитивная
+					\- Максимальное кол-во собранных монет: 426 монет (Анисимова Мария, бухгалтер)
+					\- Минимальное кол-во собранных монет: 37 монет (Анисимова Мария, бухгалтер)
+					\- Создано мероприятий на платформе: 14
+					\- Реально проведено мероприятий в городе: 7
+				<= Download_report_partners $mol_button_download
+					file_name \dosha_detail_people_report.txt
+					title \Загрузить детальный отчёт по Пользователям
+					blob <= download? null
+		events <= Events_page $mol_page
+			title \Мероприятия
+			body /
+				<= Events_text $mol_text text \
+					\# Мероприятия за этот месяц
+					\Будут:
+					\- 21.10.2023 Финал по футболу среди подразделений. Вручение призов
+					\- 12.10.2023 Полуфинал по футболу среди подразделений
+					\Сейчас идут:
+					\- 01.10.2023 Хакатон Кокос 2023.
+					\Прошли:
+					\- 24.09.2023 Юбилей компании - 10 лет
+				<= Download_report_events $mol_button_download
+					file_name \dosha_detail_events.txt
+					title \Загрузить детальный отчёт по Мероприятиям
+					blob <= download?
+		budget <= Budget_page $mol_page
+			title \Бюджет
+			body /
+				<= Budget_text $mol_text text \
+					\# Бюджет компании на проект.
+					\Выделено: 120 000 руб. на 6 направлений. Освоен на 76%.
+					\- Номинация 1. Шаги. Бюджет освоен на 100%. 20 000 руб
+					\- Номинация 2. Тренировка. Бюджет освоен на 50%. 10 000 руб
+					\- Номинация 3. Достижения. Бюджет освоен на 10%. Осталось 18 000 руб.
+					\- Номинация 4. Добрые дела. Бюджет освоен на 30%. Осталось: 14 000 руб
+					\- Номинация 5. Благотворительность. Бюджет освоен на 100%. Осталось 0 руб.
+					\- Номинация 6. Призы за рейтинг. Бюджет освоен на 100%. Осталось 0 руб.
+				<= Download_report_budget $mol_button_download
+					file_name \dosha_detail_budget.xslx
+					title \Загрузить детальный отчёт по Бюджету проекта
+					blob <= download?
 		report <= Report_page $dosha_company_report
+		branding <= Branding_page $dosha_branding

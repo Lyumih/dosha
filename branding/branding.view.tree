@@ -8,7 +8,7 @@
 $dosha_branding $mol_page
 	configs? \
 	target_root \
-	title \ДоШа Брендинг
+	title \Брендинг
 	tools /
 		<= Copy_settings $mol_button_copy
 			text <= configs
@@ -41,6 +41,7 @@ $dosha_branding $mol_page
 				brand_company \Компания
 				brand_standard \Стандарт
 				brand_personal \Личный
+		- Не успел дореализовать сохранение
 		<= Config_theme $mol_list
 			rows /
 				- Fonts
