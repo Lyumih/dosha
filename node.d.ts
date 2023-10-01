@@ -7589,10 +7589,10 @@ declare namespace $ {
         City_page(): $dosha_client_city;
         Rating_page(): $dosha_client_rating;
         Partners_page(): $dosha_client_partners;
+        Chat_open(): $mol_view;
         chat_pages(): $mol_page[];
         Chat(): $$.$mol_chat;
-        Chat_open(): $mol_view;
-        Chat_page(): $mol_page;
+        Chat_page(): $mol_view;
         Persentation_page(): $$.$hyoo_page;
         Profile_page(): $$.$dosha_client_profile;
         Company_page(): $dosha_company;

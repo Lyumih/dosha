@@ -27650,6 +27650,11 @@ var $;
             const obj = new this.$.$dosha_client_partners();
             return obj;
         }
+        Chat_open() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => this.chat_pages();
+            return obj;
+        }
         chat_pages() {
             return this.Chat().pages();
         }
@@ -27658,17 +27663,12 @@ var $;
             obj.seed = () => "dosha_chat_v1";
             return obj;
         }
-        Chat_open() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => this.chat_pages();
-            return obj;
-        }
         Chat_page() {
-            const obj = new this.$.$mol_page();
+            const obj = new this.$.$mol_view();
             obj.title = () => "🎭 Чат";
-            obj.body = () => [
-                this.Chat(),
-                this.Chat_open()
+            obj.sub = () => [
+                this.Chat_open(),
+                this.Chat()
             ];
             return obj;
         }
@@ -27774,10 +27774,10 @@ var $;
     ], $dosha_client.prototype, "Partners_page", null);
     __decorate([
         $mol_mem
-    ], $dosha_client.prototype, "Chat", null);
+    ], $dosha_client.prototype, "Chat_open", null);
     __decorate([
         $mol_mem
-    ], $dosha_client.prototype, "Chat_open", null);
+    ], $dosha_client.prototype, "Chat", null);
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Chat_page", null);
