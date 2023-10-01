@@ -9707,15 +9707,7 @@ var $;
                     ...init?.headers
                 }
             };
-            if (develop_mode) {
-                return super.json(local_uri_db + url, initWithHeaders);
-            }
-            try {
-                return super.json((develop_mode ? local_uri_db : prod_uri_db) + url, initWithHeaders);
-            }
-            catch {
-                return super.json(local_uri_db + url, initWithHeaders);
-            }
+            return super.json((develop_mode ? local_uri_db : prod_uri_db) + url, initWithHeaders);
         }
         static json_post(url, init) {
             return this.json(url, { method: 'POST', ...init });
