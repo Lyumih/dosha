@@ -1,26 +1,57 @@
 namespace $.$$ {
 
-	const FoundationAttributesModel = $mol_data_record({
+	const FoundationModel = $dosha_strapi( $mol_data_record( {
 		title: $mol_data_string,
 		uri: $mol_data_string,
 		active: $mol_data_boolean,
-	})
-
-	const FoundationModel = $dosha_strapi(FoundationAttributesModel);
+	} ) )
 
 	export class $dosha_client_found extends $.$dosha_client_found {
 
+		current_found_title( next?: any ) {
+			return this.$.$dosha_client_auth_login.get_user().foundation?.title ?? "Автоматический"
+		}
+
+		current_found_uri() {
+			return this.$.$dosha_client_auth_login.get_user().foundation?.uri ?? 'https://trends.rbc.ru/trends/social/5f2d51b19a79476077e5f164'
+		}
+
+		clean_found_enabled( next?: any ) {
+			return this.$.$dosha_client_auth_login.get_user().foundation ?? false
+		}
+
+		clean_found( next?: any ) {
+			this.$.$dosha_fetch.json( 'users/' + this.$.$dosha_client_auth_login.get_user().id, {
+				method: 'PUT',
+				body: JSON.stringify( {
+					foundation: {
+						disconnect: [ this.$.$dosha_client_auth_login.get_user().foundation?.id ]
+					}
+				} )
+			} )
+			return this.$.$dosha_client_auth_login.update_user()
+		}
+
+		choose_active_found( id: any, next?: any ) {
+			this.$.$dosha_fetch.json( 'users/' + this.$.$dosha_client_auth_login.get_user().id, {
+				method: 'PUT',
+				body: JSON.stringify( {
+					foundation: {
+						connect: [ id ]
+					}
+				} )
+			} )
+			this.$.$dosha_client_auth_login.update_user()
+		}
+
 		/** Делаем запрос при старте компонента и сразу же наполняем его данными */
 		@$mol_mem
-		founds(): typeof FoundationModel.Value {
-			const request = $dosha_fetch.json( 'foundations' ) as typeof FoundationModel.Value
-			console.log( request, [ ...Object.values( request ) ] )
-			return request ?? {}
+		founds( next?: any ): typeof FoundationModel.Value {
+			return this.$.$dosha_fetch.json( 'foundations' ) as typeof FoundationModel.Value ?? {}
 		}
 
 		/** Так работаем со списком - мапим наши данные на Компоненты! */
 		active_founds(): readonly any[] {
-			console.log( 'active_founds', this.founds() )
 			return this.founds() ? this.founds().data.filter( ( data ) => data.attributes.active ).map( ( data ) => this.Found_active( data.id ) ) : []
 		}
 
@@ -48,21 +79,22 @@ namespace $.$$ {
 		}
 
 		add_new_found( next?: any ) {
-			console.log( 'test', next )
-			if( this.new_found_title() && this.new_found_uri() ) {
+			if( this.new_found_title() && new URL( this.new_found_uri() ) ) {
 				this.add_new_found_fetch( this.new_found_title(), this.new_found_uri() )
 				this.founds()
+			} else {
+				throw new Error( 'Не все поля заполнены' )
 			}
 		}
 
 		add_new_found_fetch( title: string, uri: string ) {
-			const url = 'https://dosha-api-default-rtdb.firebaseio.com/founds.json'
-			$mol_fetch.json( url, {
+			this.$.$dosha_fetch.json( 'foundations', {
 				method: 'POST',
-				body: JSON.stringify(
-					{ title, uri }
-				),
-			} ) as any | null
+				body: JSON.stringify( {
+					data: { title, uri }
+				} ),
+			} )
+			this.founds( true )
 		}
 	}
 }

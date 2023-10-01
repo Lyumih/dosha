@@ -19,11 +19,9 @@ namespace $.$$ {
 					} )
 				} )
 			}
-			console.log( 'Update role' )
 			const user_full = this.$.$dosha_fetch.json( 'users/me?populate=*' )
 			this.$.$mol_state_local.value( 'user', user_full )
 			$mol_state_arg.go( {} )
-			console.log( result )
 		}
 	}
 }
