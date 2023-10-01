@@ -2909,6 +2909,17 @@ declare namespace $ {
             updatedAt: string;
             createdAt: string;
         } | null;
+        coin: {
+            steps: number;
+            achievements: number;
+            goods: number;
+            charities: number;
+            id: number;
+            updatedAt: string;
+            createdAt: string;
+            trainings: number;
+            user_id: number;
+        } | null;
     }) => Readonly<{
         id: number;
         email: string;
@@ -2931,6 +2942,17 @@ declare namespace $ {
             id: number;
             updatedAt: string;
             createdAt: string;
+        }> | null;
+        coin: Readonly<{
+            steps: number;
+            achievements: number;
+            goods: number;
+            charities: number;
+            id: number;
+            updatedAt: string;
+            createdAt: string;
+            trainings: number;
+            user_id: number;
         }> | null;
     }>) & {
         config: {
@@ -3040,6 +3062,83 @@ declare namespace $ {
                     createdAt: string;
                 }> | null;
             };
+            coin: ((val: {
+                steps: number;
+                achievements: number;
+                goods: number;
+                charities: number;
+                id: number;
+                updatedAt: string;
+                createdAt: string;
+                trainings: number;
+                user_id: number;
+            } | null) => Readonly<{
+                steps: number;
+                achievements: number;
+                goods: number;
+                charities: number;
+                id: number;
+                updatedAt: string;
+                createdAt: string;
+                trainings: number;
+                user_id: number;
+            }> | null) & {
+                config: ((val: {
+                    steps: number;
+                    achievements: number;
+                    goods: number;
+                    charities: number;
+                    id: number;
+                    updatedAt: string;
+                    createdAt: string;
+                    trainings: number;
+                    user_id: number;
+                }) => Readonly<{
+                    steps: number;
+                    achievements: number;
+                    goods: number;
+                    charities: number;
+                    id: number;
+                    updatedAt: string;
+                    createdAt: string;
+                    trainings: number;
+                    user_id: number;
+                }>) & {
+                    config: {
+                        id: (val: number) => number;
+                        achievements: (val: number) => number;
+                        charities: (val: number) => number;
+                        goods: (val: number) => number;
+                        steps: (val: number) => number;
+                        trainings: (val: number) => number;
+                        user_id: (val: number) => number;
+                        createdAt: (val: string) => string;
+                        updatedAt: (val: string) => string;
+                    };
+                    Value: Readonly<{
+                        steps: number;
+                        achievements: number;
+                        goods: number;
+                        charities: number;
+                        id: number;
+                        updatedAt: string;
+                        createdAt: string;
+                        trainings: number;
+                        user_id: number;
+                    }>;
+                };
+                Value: Readonly<{
+                    steps: number;
+                    achievements: number;
+                    goods: number;
+                    charities: number;
+                    id: number;
+                    updatedAt: string;
+                    createdAt: string;
+                    trainings: number;
+                    user_id: number;
+                }> | null;
+            };
         };
         Value: Readonly<{
             id: number;
@@ -3063,6 +3162,17 @@ declare namespace $ {
                 id: number;
                 updatedAt: string;
                 createdAt: string;
+            }> | null;
+            coin: Readonly<{
+                steps: number;
+                achievements: number;
+                goods: number;
+                charities: number;
+                id: number;
+                updatedAt: string;
+                createdAt: string;
+                trainings: number;
+                user_id: number;
             }> | null;
         }>;
     };
@@ -3090,6 +3200,17 @@ declare namespace $ {
                 updatedAt: string;
                 createdAt: string;
             } | null;
+            coin: {
+                steps: number;
+                achievements: number;
+                goods: number;
+                charities: number;
+                id: number;
+                updatedAt: string;
+                createdAt: string;
+                trainings: number;
+                user_id: number;
+            } | null;
         };
         jwt: string;
     }) => Readonly<{
@@ -3115,6 +3236,17 @@ declare namespace $ {
                 id: number;
                 updatedAt: string;
                 createdAt: string;
+            }> | null;
+            coin: Readonly<{
+                steps: number;
+                achievements: number;
+                goods: number;
+                charities: number;
+                id: number;
+                updatedAt: string;
+                createdAt: string;
+                trainings: number;
+                user_id: number;
             }> | null;
         }>;
         jwt: string;
@@ -3144,6 +3276,17 @@ declare namespace $ {
                     updatedAt: string;
                     createdAt: string;
                 } | null;
+                coin: {
+                    steps: number;
+                    achievements: number;
+                    goods: number;
+                    charities: number;
+                    id: number;
+                    updatedAt: string;
+                    createdAt: string;
+                    trainings: number;
+                    user_id: number;
+                } | null;
             }) => Readonly<{
                 id: number;
                 email: string;
@@ -3166,6 +3309,17 @@ declare namespace $ {
                     id: number;
                     updatedAt: string;
                     createdAt: string;
+                }> | null;
+                coin: Readonly<{
+                    steps: number;
+                    achievements: number;
+                    goods: number;
+                    charities: number;
+                    id: number;
+                    updatedAt: string;
+                    createdAt: string;
+                    trainings: number;
+                    user_id: number;
                 }> | null;
             }>) & {
                 config: {
@@ -3275,6 +3429,83 @@ declare namespace $ {
                             createdAt: string;
                         }> | null;
                     };
+                    coin: ((val: {
+                        steps: number;
+                        achievements: number;
+                        goods: number;
+                        charities: number;
+                        id: number;
+                        updatedAt: string;
+                        createdAt: string;
+                        trainings: number;
+                        user_id: number;
+                    } | null) => Readonly<{
+                        steps: number;
+                        achievements: number;
+                        goods: number;
+                        charities: number;
+                        id: number;
+                        updatedAt: string;
+                        createdAt: string;
+                        trainings: number;
+                        user_id: number;
+                    }> | null) & {
+                        config: ((val: {
+                            steps: number;
+                            achievements: number;
+                            goods: number;
+                            charities: number;
+                            id: number;
+                            updatedAt: string;
+                            createdAt: string;
+                            trainings: number;
+                            user_id: number;
+                        }) => Readonly<{
+                            steps: number;
+                            achievements: number;
+                            goods: number;
+                            charities: number;
+                            id: number;
+                            updatedAt: string;
+                            createdAt: string;
+                            trainings: number;
+                            user_id: number;
+                        }>) & {
+                            config: {
+                                id: (val: number) => number;
+                                achievements: (val: number) => number;
+                                charities: (val: number) => number;
+                                goods: (val: number) => number;
+                                steps: (val: number) => number;
+                                trainings: (val: number) => number;
+                                user_id: (val: number) => number;
+                                createdAt: (val: string) => string;
+                                updatedAt: (val: string) => string;
+                            };
+                            Value: Readonly<{
+                                steps: number;
+                                achievements: number;
+                                goods: number;
+                                charities: number;
+                                id: number;
+                                updatedAt: string;
+                                createdAt: string;
+                                trainings: number;
+                                user_id: number;
+                            }>;
+                        };
+                        Value: Readonly<{
+                            steps: number;
+                            achievements: number;
+                            goods: number;
+                            charities: number;
+                            id: number;
+                            updatedAt: string;
+                            createdAt: string;
+                            trainings: number;
+                            user_id: number;
+                        }> | null;
+                    };
                 };
                 Value: Readonly<{
                     id: number;
@@ -3298,6 +3529,17 @@ declare namespace $ {
                         id: number;
                         updatedAt: string;
                         createdAt: string;
+                    }> | null;
+                    coin: Readonly<{
+                        steps: number;
+                        achievements: number;
+                        goods: number;
+                        charities: number;
+                        id: number;
+                        updatedAt: string;
+                        createdAt: string;
+                        trainings: number;
+                        user_id: number;
                     }> | null;
                 }>;
             };
@@ -3325,6 +3567,17 @@ declare namespace $ {
                     id: number;
                     updatedAt: string;
                     createdAt: string;
+                }> | null;
+                coin: Readonly<{
+                    steps: number;
+                    achievements: number;
+                    goods: number;
+                    charities: number;
+                    id: number;
+                    updatedAt: string;
+                    createdAt: string;
+                    trainings: number;
+                    user_id: number;
                 }> | null;
             }>;
             jwt: string;
@@ -3899,6 +4152,7 @@ declare namespace $ {
         spreads(): Record<string, any>;
         Steps_page(): $$.$dosha_client_steps;
         Training_text(): $$.$mol_text;
+        training_check(next?: any): any;
         Training_check(): $mol_button_major;
         Training_page(): $mol_page;
         Achievements_text(): $$.$mol_text;
@@ -3921,7 +4175,10 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $dosha_client_coins extends $.$dosha_client_coins {
-        fetch_coins(): void;
+        coins_now(): {
+            trainings: number;
+        };
+        training_check(): void;
     }
 }
 
@@ -3943,7 +4200,6 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $dosha_client_coins_links extends $.$dosha_client_coins_links {
-        coins_result(next?: any): any;
         steps(): string;
         training(): string;
         achievements(): string;

@@ -9746,6 +9746,17 @@ var $;
         createdAt: $mol_data_string,
         updatedAt: $mol_data_string,
     }));
+    const Coin = $mol_data_nullable($mol_data_record({
+        id: $mol_data_number,
+        achievements: $mol_data_number,
+        charities: $mol_data_number,
+        goods: $mol_data_number,
+        steps: $mol_data_number,
+        trainings: $mol_data_number,
+        user_id: $mol_data_number,
+        createdAt: $mol_data_string,
+        updatedAt: $mol_data_string,
+    }));
     $.$dosha_client_auth_login_user_model = $mol_data_record({
         id: $mol_data_number,
         email: $mol_data_string,
@@ -9757,6 +9768,7 @@ var $;
         confirmed: $mol_data_boolean,
         company: Company,
         foundation: Foundation,
+        coin: Coin,
     });
     $.$dosha_client_auth_login_jwt_model = $mol_data_record({
         jwt: $mol_data_string,
@@ -11647,7 +11659,7 @@ var $;
         }
         Add_dosha_save() {
             const obj = new this.$.$mol_button_major();
-            obj.title = () => "Добавить шаги за сегодня. +37 👟";
+            obj.title = () => "Добавить шаги за сегодня.";
             obj.click = (next) => this.add_today_steps();
             return obj;
         }
@@ -12264,9 +12276,15 @@ var $;
             obj.text = () => "Просто ежедневный спорт.\nСамая любимая моя рутина";
             return obj;
         }
+        training_check(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
         Training_check() {
             const obj = new this.$.$mol_button_major();
-            obj.title = () => "Отметиться за сегодня +25 🏋";
+            obj.title = () => "Отметиться за сегодня";
+            obj.click = (next) => this.training_check(next);
             return obj;
         }
         Training_page() {
@@ -12293,7 +12311,7 @@ var $;
         }
         Send_achievements() {
             const obj = new this.$.$mol_button_major();
-            obj.title = () => "Это уже История! +50 🏆";
+            obj.title = () => "Это уже История!";
             return obj;
         }
         Achievements_page() {
@@ -12323,7 +12341,7 @@ var $;
         }
         Goods_send() {
             const obj = new this.$.$mol_button_major();
-            obj.title = () => "Поделиться историей. +30 👑";
+            obj.title = () => "Поделиться историей.";
             return obj;
         }
         Goods_page() {
@@ -12353,7 +12371,7 @@ var $;
         }
         Charities_send() {
             const obj = new this.$.$mol_button_major();
-            obj.title = () => "Рассказать. +47 🏥";
+            obj.title = () => "Рассказать.";
             return obj;
         }
         Charities_page() {
@@ -12374,6 +12392,9 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client_coins.prototype, "Training_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins.prototype, "training_check", null);
     __decorate([
         $mol_mem
     ], $dosha_client_coins.prototype, "Training_check", null);
@@ -12435,10 +12456,26 @@ var $;
     var $$;
     (function ($$) {
         class $dosha_client_coins extends $.$dosha_client_coins {
-            fetch_coins() {
-                const result = this.$.$dosha_fetch.json('coins');
+            coins_now() {
+                const coins = Math.floor(Math.random() * 50);
+                return {
+                    trainings: coins,
+                };
+            }
+            training_check() {
+                this.$.$dosha_fetch.json_put('coins/' + this.$.$dosha_client_auth_login.get_user()?.coin?.id, {
+                    body: JSON.stringify({
+                        data: {
+                            trainings: (this.$.$dosha_client_auth_login.get_user()?.coin?.trainings || 0) + 25
+                        }
+                    })
+                });
+                this.$.$dosha_client_auth_login.update_user();
             }
         }
+        __decorate([
+            $mol_mem
+        ], $dosha_client_coins.prototype, "training_check", null);
         $$.$dosha_client_coins = $dosha_client_coins;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -12543,32 +12580,22 @@ var $;
     var $$;
     (function ($$) {
         class $dosha_client_coins_links extends $.$dosha_client_coins_links {
-            coins_result(next) {
-                return next ?? null;
-            }
             steps() {
-                if (this.coins_result()?.steps === undefined) {
-                    const result = this.$.$dosha_fetch_user.json('coins')?.data[0]?.attributes;
-                    this.coins_result(result ?? { steps: 0 });
-                }
-                return (this.coins_result()?.steps || 0) + ' 👟';
+                return (this.$.$dosha_client_auth_login.get_user()?.coin?.steps || 0) + ' 👟';
             }
             training() {
-                return (this.coins_result()?.training || 0) + ' 🏋';
+                return (this.$.$dosha_client_auth_login.get_user()?.coin?.trainings || 0) + ' 🏋';
             }
             achievements() {
-                return (this.coins_result()?.achievements || 0) + ' 🏆';
+                return (this.$.$dosha_client_auth_login.get_user()?.coin?.achievements || 0) + ' 🏆';
             }
             goods() {
-                return (this.coins_result()?.goods || 0) + ' 👑';
+                return (this.$.$dosha_client_auth_login.get_user()?.coin?.goods || 0) + ' 👑';
             }
             charity() {
-                return (this.coins_result()?.charity || 0) + ' 🏥';
+                return (this.$.$dosha_client_auth_login.get_user()?.coin?.charities || 0) + ' 🏥';
             }
         }
-        __decorate([
-            $mol_mem
-        ], $dosha_client_coins_links.prototype, "coins_result", null);
         __decorate([
             $mol_mem
         ], $dosha_client_coins_links.prototype, "steps", null);
