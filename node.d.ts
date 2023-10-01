@@ -3750,7 +3750,7 @@ declare namespace $ {
         Add_dosha(): $$.$mol_number;
         add_today_steps(next?: any): any;
         Add_dosha_save(): $mol_button_major;
-        Steps_history(): $$.$mol_text;
+        Steps_auto(): $mol_button_major;
     }
 }
 
@@ -3762,14 +3762,141 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_icon_upload extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_button_open extends $mol_button_minor {
+        sub(): readonly any[];
+        Icon(): $mol_icon_upload;
+        files(next?: any): readonly any[];
+        accept(): string;
+        multiple(): boolean;
+        Native(): $$.$mol_button_open_native;
+    }
+    class $mol_button_open_native extends $mol_view {
+        dom_name(): string;
+        files(next?: any): readonly any[];
+        attr(): Record<string, any>;
+        event(): Record<string, any>;
+        accept(): string;
+        multiple(): boolean;
+        picked(next?: any): any;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_button_open_native extends $.$mol_button_open_native {
+        dom_node(): HTMLInputElement;
+        picked(): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_attach extends $mol_view {
+        items(next?: any): readonly string[];
+        sub(): readonly any[];
+        Add(): $mol_button_open;
+        Item(id: any): $mol_button_minor;
+        content(): readonly $mol_view[];
+        Content(): $mol_row;
+        attach_title(): string;
+        attach_new(next?: any): any;
+        item_drop(id: any, event?: any): any;
+        item_uri(id: any): string;
+        Image(id: any): $$.$mol_image;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_attach extends $.$mol_attach {
+        attach_new(files: File[]): void;
+        content(): ($mol_button_minor | $mol_button_open)[];
+        item_uri(index: number): string;
+        item_drop(index: number, event?: Event): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_textarea extends $mol_stack {
+        attr(): Record<string, any>;
+        event(): Record<string, any>;
+        sub(): readonly any[];
+        symbols_alt(): Record<string, any>;
+        symbols_alt_shift(): Record<string, any>;
+        clickable(next?: any): boolean;
+        sidebar_showed(): boolean;
+        press(event?: any): any;
+        hover(event?: any): any;
+        value(next?: any): string;
+        hint(): string;
+        enabled(): boolean;
+        spellcheck(): boolean;
+        length_max(): number;
+        selection(next?: any): readonly number[];
+        submit(next?: any): any;
+        submit_with_ctrl(): boolean;
+        bring(): void;
+        Edit(): $mol_textarea_edit;
+        row_numb(id: any): number;
+        highlight(): string;
+        View(): $$.$mol_text_code;
+    }
+    class $mol_textarea_edit extends $mol_string {
+        dom_name(): string;
+        enter(): string;
+        field(): Record<string, any>;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_textarea extends $.$mol_textarea {
+        indent_inc(): void;
+        indent_dec(): void;
+        symbol_insert(event: KeyboardEvent): void;
+        hover(event: PointerEvent): void;
+        press(event: KeyboardEvent): void;
+        row_numb(index: number): number;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $dosha_client_coins extends $mol_book2_catalog {
         menu_title(): string;
         param(): string;
         spreads(): Record<string, any>;
         Steps_page(): $$.$dosha_client_steps;
+        Training_text(): $$.$mol_text;
+        Training_check(): $mol_button_major;
         Training_page(): $mol_page;
+        Achievements_text(): $$.$mol_text;
+        Add_achievements(): $$.$mol_attach;
+        Achievements_story(): $$.$mol_textarea;
+        Send_achievements(): $mol_button_major;
         Achievements_page(): $mol_page;
+        Goods_text(): $$.$mol_text;
+        Goods_attach(): $$.$mol_attach;
+        Goods_story(): $$.$mol_textarea;
+        Goods_send(): $mol_button_major;
         Goods_page(): $mol_page;
+        Charities_text(): $$.$mol_text;
+        Charities_attach(): $$.$mol_attach;
+        Charities_textarea(): $$.$mol_textarea;
+        Charities_send(): $mol_button_major;
         Charities_page(): $mol_page;
     }
 }
@@ -3811,42 +3938,6 @@ declare namespace $ {
         title(): string;
         body(): readonly any[];
         History_text(): $$.$mol_text;
-    }
-}
-
-declare namespace $ {
-    class $dosha_client_profile extends $mol_page {
-        title(): string;
-        body(): readonly any[];
-        username(next?: any): string;
-        Username_control(): $$.$mol_string;
-        Username_field(): $$.$mol_form_field;
-        email(next?: any): string;
-        Email_control(): $$.$mol_string;
-        Email_field(): $$.$mol_form_field;
-        update_profile(next?: any): any;
-        Profile_form_save(): $mol_button_major;
-        Profile_form(): $$.$mol_form_draft;
-        company(next?: any): string;
-        Company_control(): $$.$mol_string;
-        Company_field(): $$.$mol_form_field;
-        department(next?: any): string;
-        Department_control(): $$.$mol_string;
-        Department_field(): $$.$mol_form_field;
-        update_company(next?: any): any;
-        Company_form_save(): $mol_button_major;
-        Company_form(): $$.$mol_form_draft;
-    }
-}
-
-declare namespace $.$$ {
-    class $dosha_client_profile extends $.$dosha_client_profile {
-        username(next?: string): string;
-        email(next?: string): string;
-        company(next?: string): string;
-        department(next?: string): string;
-        update_profile(): void;
-        update_company(): void;
     }
 }
 
@@ -6615,52 +6706,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_textarea extends $mol_stack {
-        attr(): Record<string, any>;
-        event(): Record<string, any>;
-        sub(): readonly any[];
-        symbols_alt(): Record<string, any>;
-        symbols_alt_shift(): Record<string, any>;
-        clickable(next?: any): boolean;
-        sidebar_showed(): boolean;
-        press(event?: any): any;
-        hover(event?: any): any;
-        value(next?: any): string;
-        hint(): string;
-        enabled(): boolean;
-        spellcheck(): boolean;
-        length_max(): number;
-        selection(next?: any): readonly number[];
-        submit(next?: any): any;
-        submit_with_ctrl(): boolean;
-        bring(): void;
-        Edit(): $mol_textarea_edit;
-        row_numb(id: any): number;
-        highlight(): string;
-        View(): $$.$mol_text_code;
-    }
-    class $mol_textarea_edit extends $mol_string {
-        dom_name(): string;
-        enter(): string;
-        field(): Record<string, any>;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_textarea extends $.$mol_textarea {
-        indent_inc(): void;
-        indent_dec(): void;
-        symbol_insert(event: KeyboardEvent): void;
-        hover(event: PointerEvent): void;
-        press(event: KeyboardEvent): void;
-        row_numb(index: number): number;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     class $hyoo_page_side_edit extends $mol_page {
         title(next?: any): string;
         details(next?: any): string;
@@ -7458,6 +7503,42 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $dosha_client_profile extends $mol_page {
+        title(): string;
+        body(): readonly any[];
+        username(next?: any): string;
+        Username_control(): $$.$mol_string;
+        Username_field(): $$.$mol_form_field;
+        email(next?: any): string;
+        Email_control(): $$.$mol_string;
+        Email_field(): $$.$mol_form_field;
+        update_profile(next?: any): any;
+        Profile_form_save(): $mol_button_major;
+        Profile_form(): $$.$mol_form_draft;
+        company(next?: any): string;
+        Company_control(): $$.$mol_string;
+        Company_field(): $$.$mol_form_field;
+        department(next?: any): string;
+        Department_control(): $$.$mol_string;
+        Department_field(): $$.$mol_form_field;
+        update_company(next?: any): any;
+        Company_form_save(): $mol_button_major;
+        Company_form(): $$.$mol_form_draft;
+    }
+}
+
+declare namespace $.$$ {
+    class $dosha_client_profile extends $.$dosha_client_profile {
+        username(next?: string): string;
+        email(next?: string): string;
+        company(next?: string): string;
+        department(next?: string): string;
+        update_profile(): void;
+        update_company(): void;
+    }
+}
+
+declare namespace $ {
     class $dosha_company_report extends $mol_page {
         title(): string;
         body(): readonly any[];
@@ -7498,7 +7579,6 @@ declare namespace $ {
         Coins_links(): $$.$dosha_client_coins_links;
         Coins_page(): $$.$dosha_client_coins;
         History_page(): $dosha_client_history;
-        Profile_page(): $$.$dosha_client_profile;
         Found_page(): $$.$dosha_client_found;
         Training_page(): $dosha_client_training;
         Rating_page(): $dosha_client_rating;
@@ -7509,6 +7589,7 @@ declare namespace $ {
         Chat_page(): $mol_page;
         Persentation_page(): $$.$hyoo_page;
         Partners_page(): $dosha_client_partners;
+        Profile_page(): $$.$dosha_client_profile;
         Company_page(): $dosha_company;
         Secure(): $$.$mol_book2_catalog;
     }

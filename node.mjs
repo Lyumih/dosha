@@ -11546,7 +11546,7 @@ var $;
                 this.All_dosha(),
                 this.Add_dosha(),
                 this.Add_dosha_save(),
-                this.Steps_history()
+                this.Steps_auto()
             ];
         }
         all_dosha_label() {
@@ -11575,13 +11575,14 @@ var $;
         }
         Add_dosha_save() {
             const obj = new this.$.$mol_button_major();
-            obj.title = () => "Добавить шаги за сегодня";
+            obj.title = () => "Добавить шаги за сегодня. +37 👟";
             obj.click = (next) => this.add_today_steps();
             return obj;
         }
-        Steps_history() {
-            const obj = new this.$.$mol_text();
-            obj.text = () => "История шагов (список)";
+        Steps_auto() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Подключить автоматическое списание";
+            obj.enabled = () => false;
             return obj;
         }
     }
@@ -11605,7 +11606,7 @@ var $;
     ], $dosha_client_steps.prototype, "Add_dosha_save", null);
     __decorate([
         $mol_mem
-    ], $dosha_client_steps.prototype, "Steps_history", null);
+    ], $dosha_client_steps.prototype, "Steps_auto", null);
     $.$dosha_client_steps = $dosha_client_steps;
 })($ || ($ = {}));
 //dosha/client/steps/-view.tree/steps.view.tree.ts
@@ -11632,9 +11633,543 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $mol_style_attach("dosha/client/steps/steps.view.css", "[dosha_client_steps_body] {\n\tgap: var(--mol_gap_text);\n}\n");
+})($ || ($ = {}));
+//dosha/client/steps/-css/steps.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_upload extends $mol_icon {
+        path() {
+            return "M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z";
+        }
+    }
+    $.$mol_icon_upload = $mol_icon_upload;
+})($ || ($ = {}));
+//mol/icon/upload/-view.tree/upload.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_button_open extends $mol_button_minor {
+        sub() {
+            return [
+                this.Icon(),
+                this.Native()
+            ];
+        }
+        Icon() {
+            const obj = new this.$.$mol_icon_upload();
+            return obj;
+        }
+        files(next) {
+            if (next !== undefined)
+                return next;
+            return [];
+        }
+        accept() {
+            return "";
+        }
+        multiple() {
+            return true;
+        }
+        Native() {
+            const obj = new this.$.$mol_button_open_native();
+            obj.files = (next) => this.files(next);
+            obj.accept = () => this.accept();
+            obj.multiple = () => this.multiple();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_button_open.prototype, "Icon", null);
+    __decorate([
+        $mol_mem
+    ], $mol_button_open.prototype, "files", null);
+    __decorate([
+        $mol_mem
+    ], $mol_button_open.prototype, "Native", null);
+    $.$mol_button_open = $mol_button_open;
+    class $mol_button_open_native extends $mol_view {
+        dom_name() {
+            return "input";
+        }
+        files(next) {
+            if (next !== undefined)
+                return next;
+            return [];
+        }
+        attr() {
+            return {
+                type: "file",
+                accept: this.accept(),
+                multiple: this.multiple()
+            };
+        }
+        event() {
+            return {
+                change: (next) => this.picked(next)
+            };
+        }
+        accept() {
+            return "";
+        }
+        multiple() {
+            return true;
+        }
+        picked(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_button_open_native.prototype, "files", null);
+    __decorate([
+        $mol_mem
+    ], $mol_button_open_native.prototype, "picked", null);
+    $.$mol_button_open_native = $mol_button_open_native;
+})($ || ($ = {}));
+//mol/button/open/-view.tree/open.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_button_open_native extends $.$mol_button_open_native {
+            dom_node() {
+                return super.dom_node();
+            }
+            picked() {
+                const files = this.dom_node().files;
+                if (!files || !files.length)
+                    return;
+                this.files([...files]);
+            }
+        }
+        $$.$mol_button_open_native = $mol_button_open_native;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/button/open/open.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/open/open.view.css", "[mol_button_open_native] {\n\tposition: absolute;\n\tleft: 0;\n\ttop: -100%;\n\twidth: 100%;\n\theight: 200%;\n\tcursor: pointer;\n\topacity: 0;\n}\n");
+})($ || ($ = {}));
+//mol/button/open/-css/open.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_attach extends $mol_view {
+        items(next) {
+            if (next !== undefined)
+                return next;
+            return [];
+        }
+        sub() {
+            return [
+                this.Content()
+            ];
+        }
+        Add() {
+            const obj = new this.$.$mol_button_open();
+            obj.title = () => this.attach_title();
+            obj.files = (next) => this.attach_new(next);
+            return obj;
+        }
+        Item(id) {
+            const obj = new this.$.$mol_button_minor();
+            obj.click = (event) => this.item_drop(id, event);
+            obj.sub = () => [
+                this.Image(id)
+            ];
+            return obj;
+        }
+        content() {
+            return [];
+        }
+        Content() {
+            const obj = new this.$.$mol_row();
+            obj.sub = () => this.content();
+            return obj;
+        }
+        attach_title() {
+            return "";
+        }
+        attach_new(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        item_drop(id, event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        item_uri(id) {
+            return "";
+        }
+        Image(id) {
+            const obj = new this.$.$mol_image();
+            obj.title = () => "";
+            obj.uri = () => this.item_uri(id);
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_attach.prototype, "items", null);
+    __decorate([
+        $mol_mem
+    ], $mol_attach.prototype, "Add", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_attach.prototype, "Item", null);
+    __decorate([
+        $mol_mem
+    ], $mol_attach.prototype, "Content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_attach.prototype, "attach_new", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_attach.prototype, "item_drop", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_attach.prototype, "Image", null);
+    $.$mol_attach = $mol_attach;
+})($ || ($ = {}));
+//mol/attach/-view.tree/attach.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_attach extends $.$mol_attach {
+            attach_new(files) {
+                this.items([
+                    ...this.items(),
+                    ...files.map(file => URL.createObjectURL(file)),
+                ]);
+            }
+            content() {
+                return [...this.items().map((_, i) => this.Item(i)), this.Add()];
+            }
+            item_uri(index) {
+                return this.items()[index];
+            }
+            item_drop(index, event) {
+                const items = this.items();
+                this.items([
+                    ...items.slice(0, index),
+                    ...items.slice(index + 1),
+                ]);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_attach.prototype, "content", null);
+        $$.$mol_attach = $mol_attach;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/attach/attach.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/attach/attach.view.css", "[mol_attach_item] {\n\twidth: 6rem;\n\theight: 6rem;\n\tborder-radius: var(--mol_gap_round);\n\tpadding: 0;\n}\n\n[mol_attach_image] {\n\tbackground: var(--mol_theme_card);\n\twidth: 100%;\n\theight: 100%;\n}\n\n[mol_attach_add] {\n\tbackground: var(--mol_theme_card);\n\twidth: 6rem;\n\theight: 6rem;\n\talign-items: center;\n\tjustify-content: center;\n\toverflow: hidden;\n}\n\n[mol_attach_add_icon] {\n\twidth: 50%;\n\theight: 50%;\n}\n");
+})($ || ($ = {}));
+//mol/attach/-css/attach.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_textarea extends $mol_stack {
+        attr() {
+            return {
+                ...super.attr(),
+                mol_textarea_clickable: this.clickable(),
+                mol_textarea_sidebar_showed: this.sidebar_showed()
+            };
+        }
+        event() {
+            return {
+                keydown: (event) => this.press(event),
+                pointermove: (event) => this.hover(event)
+            };
+        }
+        sub() {
+            return [
+                this.Edit(),
+                this.View()
+            ];
+        }
+        symbols_alt() {
+            return {
+                comma: "<",
+                period: ">",
+                dash: "−",
+                equals: "≈",
+                graveAccent: "́",
+                forwardSlash: "÷",
+                E: "€",
+                X: "×",
+                C: "©",
+                P: "§",
+                H: "₽",
+                key0: "°",
+                key8: "•",
+                key2: "@",
+                key3: "#",
+                key4: "$",
+                key6: "^",
+                key7: "&",
+                bracketOpen: "[",
+                bracketClose: "]",
+                slashBack: "|"
+            };
+        }
+        symbols_alt_shift() {
+            return {
+                V: "✅",
+                X: "❌",
+                O: "⭕",
+                key1: "❗",
+                key4: "💲",
+                key7: "❓",
+                comma: "«",
+                period: "»",
+                semicolon: "“",
+                quoteSingle: "”",
+                dash: "—",
+                equals: "≠",
+                graveAccent: "̱",
+                bracketOpen: "{",
+                bracketClose: "}"
+            };
+        }
+        clickable(next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        sidebar_showed() {
+            return false;
+        }
+        press(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        hover(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        value(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        hint() {
+            return " ";
+        }
+        enabled() {
+            return true;
+        }
+        spellcheck() {
+            return true;
+        }
+        length_max() {
+            return +Infinity;
+        }
+        selection(next) {
+            if (next !== undefined)
+                return next;
+            return [];
+        }
+        submit(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        submit_with_ctrl() {
+            return true;
+        }
+        bring() {
+            return this.Edit().bring();
+        }
+        Edit() {
+            const obj = new this.$.$mol_textarea_edit();
+            obj.value = (next) => this.value(next);
+            obj.hint = () => this.hint();
+            obj.enabled = () => this.enabled();
+            obj.spellcheck = () => this.spellcheck();
+            obj.length_max = () => this.length_max();
+            obj.selection = (next) => this.selection(next);
+            obj.submit = (next) => this.submit(next);
+            obj.submit_with_ctrl = () => this.submit_with_ctrl();
+            return obj;
+        }
+        row_numb(id) {
+            return 0;
+        }
+        highlight() {
+            return "";
+        }
+        View() {
+            const obj = new this.$.$mol_text_code();
+            obj.text = () => this.value();
+            obj.render_visible_only = () => false;
+            obj.row_numb = (id) => this.row_numb(id);
+            obj.sidebar_showed = () => this.sidebar_showed();
+            obj.highlight = () => this.highlight();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_textarea.prototype, "clickable", null);
+    __decorate([
+        $mol_mem
+    ], $mol_textarea.prototype, "press", null);
+    __decorate([
+        $mol_mem
+    ], $mol_textarea.prototype, "hover", null);
+    __decorate([
+        $mol_mem
+    ], $mol_textarea.prototype, "value", null);
+    __decorate([
+        $mol_mem
+    ], $mol_textarea.prototype, "selection", null);
+    __decorate([
+        $mol_mem
+    ], $mol_textarea.prototype, "submit", null);
+    __decorate([
+        $mol_mem
+    ], $mol_textarea.prototype, "Edit", null);
+    __decorate([
+        $mol_mem
+    ], $mol_textarea.prototype, "View", null);
+    $.$mol_textarea = $mol_textarea;
+    class $mol_textarea_edit extends $mol_string {
+        dom_name() {
+            return "textarea";
+        }
+        enter() {
+            return "enter";
+        }
+        field() {
+            return {
+                ...super.field(),
+                scrollTop: 0
+            };
+        }
+    }
+    $.$mol_textarea_edit = $mol_textarea_edit;
+})($ || ($ = {}));
+//mol/textarea/-view.tree/textarea.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_textarea extends $.$mol_textarea {
+            indent_inc() {
+                let text = this.value();
+                let [from, to] = this.selection();
+                const rows = text.split('\n');
+                let start = 0;
+                for (let i = 0; i < rows.length; ++i) {
+                    let end = start + rows[i].length;
+                    if (end >= from && start <= to) {
+                        if (to === from || start !== to) {
+                            rows[i] = '\t' + rows[i];
+                            to += 1;
+                            end += 1;
+                        }
+                    }
+                    start = end + 1;
+                }
+                this.value(rows.join('\n'));
+                this.selection([from + 1, to]);
+            }
+            indent_dec() {
+                let text = this.value();
+                let [from, to] = this.selection();
+                const rows = text.split('\n');
+                let start = 0;
+                for (let i = 0; i < rows.length; ++i) {
+                    const end = start + rows[i].length;
+                    if (end >= from && start <= to && rows[i].startsWith('\t')) {
+                        rows[i] = rows[i].slice(1);
+                        to -= 1;
+                        if (start < from)
+                            from -= 1;
+                    }
+                    start = end + 1;
+                }
+                this.value(rows.join('\n'));
+                this.selection([from, to]);
+            }
+            symbol_insert(event) {
+                const symbol = event.shiftKey
+                    ? this.symbols_alt_shift()[$mol_keyboard_code[event.keyCode]]
+                    : this.symbols_alt()[$mol_keyboard_code[event.keyCode]];
+                if (!symbol)
+                    return;
+                document.execCommand('insertText', false, symbol);
+            }
+            hover(event) {
+                this.clickable(event.ctrlKey);
+            }
+            press(event) {
+                if (event.altKey && !event.ctrlKey) {
+                    this.symbol_insert(event);
+                }
+                else {
+                    switch (event.keyCode) {
+                        case !event.shiftKey && $mol_keyboard_code.tab:
+                            this.indent_inc();
+                            break;
+                        case event.shiftKey && $mol_keyboard_code.tab:
+                            this.indent_dec();
+                            break;
+                        default: return;
+                    }
+                }
+                event.preventDefault();
+            }
+            row_numb(index) {
+                return index;
+            }
+        }
+        $$.$mol_textarea = $mol_textarea;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/textarea/textarea.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/textarea/textarea.view.css", "[mol_textarea] {\n\tflex: 1 0 auto;\n\tflex-direction: column;\n\tvertical-align: top;\n\tmin-height: max-content;\n\twhite-space: pre-wrap;\n\tword-break: break-word;\n\tborder-radius: var(--mol_gap_round);\n\tfont-family: monospace;\n\tposition: relative;\n\ttab-size: 4;\n}\n\n[mol_textarea_view] {\n\tpointer-events: none;\n\twhite-space: inherit;\n\tfont-family: inherit;\n\ttab-size: inherit;\n}\n\n[mol_textarea_view_copy] {\n\tpointer-events: all;\n}\n\n[mol_textarea_clickable] > [mol_textarea_view] {\n\tpointer-events: all;\n}\n\n[mol_textarea_edit] {\n\tfont-family: inherit;\n\tpadding: var(--mol_gap_text);\n\tcolor: transparent !important;\n\tcaret-color: var(--mol_theme_text);\n\tresize: none;\n\ttext-align: inherit;\n\twhite-space: inherit;\n\tborder-radius: inherit;\n\toverflow-anchor: none;\n\tposition: absolute;\n\theight: 100%;\n\twidth: 100%;\n\ttab-size: inherit;\n}\n\n[mol_textarea_sidebar_showed] [mol_textarea_edit] {\n\tleft: 1.75rem;\n\twidth: calc( 100% - 1.75rem );\n}\n\n[mol_textarea_edit]:hover + [mol_textarea_view] {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_textarea_edit]:focus + [mol_textarea_view] {\n\tz-index: var(--mol_layer_focus);\n}\n");
+})($ || ($ = {}));
+//mol/textarea/-css/textarea.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $dosha_client_coins extends $mol_book2_catalog {
         menu_title() {
-            return "🪙 Монеты";
+            return "🪙 Монетка";
         }
         param() {
             return "coins";
@@ -11652,24 +12187,112 @@ var $;
             const obj = new this.$.$dosha_client_steps();
             return obj;
         }
+        Training_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "Просто ежедневный спорт.\nСамая любимая моя рутина";
+            return obj;
+        }
+        Training_check() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Отметиться за сегодня +25 🏋";
+            return obj;
+        }
         Training_page() {
             const obj = new this.$.$mol_page();
             obj.title = () => "🏋 Тренировка";
+            obj.body = () => [
+                this.Training_text(),
+                this.Training_check()
+            ];
+            return obj;
+        }
+        Achievements_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "Добивайтесь достижений в спорте\nИ пускай все о них узнают.\nВаши успехов будут добавлены в Историю";
+            return obj;
+        }
+        Add_achievements() {
+            const obj = new this.$.$mol_attach();
+            return obj;
+        }
+        Achievements_story() {
+            const obj = new this.$.$mol_textarea();
+            return obj;
+        }
+        Send_achievements() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Это уже История! +50 🏆";
             return obj;
         }
         Achievements_page() {
             const obj = new this.$.$mol_page();
             obj.title = () => "🏆 Достижения";
+            obj.body = () => [
+                this.Achievements_text(),
+                this.Add_achievements(),
+                this.Achievements_story(),
+                this.Send_achievements()
+            ];
+            return obj;
+        }
+        Goods_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "*Делайте добрые дела\nВдохновляйте других\nИ мир вокруг станет добрее*";
+            return obj;
+        }
+        Goods_attach() {
+            const obj = new this.$.$mol_attach();
+            return obj;
+        }
+        Goods_story() {
+            const obj = new this.$.$mol_textarea();
+            obj.hint = () => "Это было самое обыкновенное чудо...";
+            return obj;
+        }
+        Goods_send() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Поделиться историей. +30 👑";
             return obj;
         }
         Goods_page() {
             const obj = new this.$.$mol_page();
             obj.title = () => "👑 Добрые дела";
+            obj.body = () => [
+                this.Goods_text(),
+                this.Goods_attach(),
+                this.Goods_story(),
+                this.Goods_send()
+            ];
+            return obj;
+        }
+        Charities_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "Вы уже занимаетесь благотворительностью?\nПоделитесь с нами и получите небольшой\nКэшбэк в этот фонд";
+            return obj;
+        }
+        Charities_attach() {
+            const obj = new this.$.$mol_attach();
+            return obj;
+        }
+        Charities_textarea() {
+            const obj = new this.$.$mol_textarea();
+            obj.hint = () => "У нас в городе есть небольшой приют, которому я ...";
+            return obj;
+        }
+        Charities_send() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Рассказать. +47 🏥";
             return obj;
         }
         Charities_page() {
             const obj = new this.$.$mol_page();
             obj.title = () => "🏥 Благотворительность";
+            obj.body = () => [
+                this.Charities_text(),
+                this.Charities_attach(),
+                this.Charities_textarea(),
+                this.Charities_send()
+            ];
             return obj;
         }
     }
@@ -11678,13 +12301,55 @@ var $;
     ], $dosha_client_coins.prototype, "Steps_page", null);
     __decorate([
         $mol_mem
+    ], $dosha_client_coins.prototype, "Training_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins.prototype, "Training_check", null);
+    __decorate([
+        $mol_mem
     ], $dosha_client_coins.prototype, "Training_page", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins.prototype, "Achievements_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins.prototype, "Add_achievements", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins.prototype, "Achievements_story", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins.prototype, "Send_achievements", null);
     __decorate([
         $mol_mem
     ], $dosha_client_coins.prototype, "Achievements_page", null);
     __decorate([
         $mol_mem
+    ], $dosha_client_coins.prototype, "Goods_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins.prototype, "Goods_attach", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins.prototype, "Goods_story", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins.prototype, "Goods_send", null);
+    __decorate([
+        $mol_mem
     ], $dosha_client_coins.prototype, "Goods_page", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins.prototype, "Charities_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins.prototype, "Charities_attach", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins.prototype, "Charities_textarea", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_coins.prototype, "Charities_send", null);
     __decorate([
         $mol_mem
     ], $dosha_client_coins.prototype, "Charities_page", null);
@@ -11863,7 +12528,7 @@ var $;
         }
         History_text() {
             const obj = new this.$.$mol_text();
-            obj.text = () => "Истории, которые по отделу";
+            obj.text = () => "# Ваши интересные истории\nПока ещё нет новых историй";
             return obj;
         }
     }
@@ -11873,257 +12538,6 @@ var $;
     $.$dosha_client_history = $dosha_client_history;
 })($ || ($ = {}));
 //dosha/client/history/-view.tree/history.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $dosha_client_profile extends $mol_page {
-        title() {
-            return "🧢 Профиль";
-        }
-        body() {
-            return [
-                this.Profile_form(),
-                this.Company_form()
-            ];
-        }
-        username(next) {
-            if (next !== undefined)
-                return next;
-            return "";
-        }
-        Username_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.username(next);
-            return obj;
-        }
-        Username_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Логин";
-            obj.Content = () => this.Username_control();
-            return obj;
-        }
-        email(next) {
-            if (next !== undefined)
-                return next;
-            return "";
-        }
-        Email_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.email(next);
-            obj.type = () => "email";
-            return obj;
-        }
-        Email_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Email";
-            obj.Content = () => this.Email_control();
-            return obj;
-        }
-        update_profile(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
-        Profile_form_save() {
-            const obj = new this.$.$mol_button_major();
-            obj.title = () => "Обновить профиль";
-            obj.click = (next) => this.update_profile(next);
-            return obj;
-        }
-        Profile_form() {
-            const obj = new this.$.$mol_form_draft();
-            obj.form_fields = () => [
-                this.Username_field(),
-                this.Email_field()
-            ];
-            obj.buttons = () => [
-                this.Profile_form_save()
-            ];
-            return obj;
-        }
-        company(next) {
-            if (next !== undefined)
-                return next;
-            return "";
-        }
-        Company_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.company(next);
-            return obj;
-        }
-        Company_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Компания";
-            obj.Content = () => this.Company_control();
-            return obj;
-        }
-        department(next) {
-            if (next !== undefined)
-                return next;
-            return "";
-        }
-        Department_control() {
-            const obj = new this.$.$mol_string();
-            obj.value = (next) => this.department(next);
-            return obj;
-        }
-        Department_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Подразделение";
-            obj.Content = () => this.Department_control();
-            return obj;
-        }
-        update_company(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
-        Company_form_save() {
-            const obj = new this.$.$mol_button_major();
-            obj.title = () => "Обновить компанию";
-            obj.click = (next) => this.update_company(next);
-            return obj;
-        }
-        Company_form() {
-            const obj = new this.$.$mol_form_draft();
-            obj.form_fields = () => [
-                this.Company_field(),
-                this.Department_field()
-            ];
-            obj.buttons = () => [
-                this.Company_form_save()
-            ];
-            return obj;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "username", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "Username_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "Username_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "email", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "Email_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "Email_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "update_profile", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "Profile_form_save", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "Profile_form", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "company", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "Company_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "Company_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "department", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "Department_control", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "Department_field", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "update_company", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "Company_form_save", null);
-    __decorate([
-        $mol_mem
-    ], $dosha_client_profile.prototype, "Company_form", null);
-    $.$dosha_client_profile = $dosha_client_profile;
-})($ || ($ = {}));
-//dosha/client/profile/-view.tree/profile.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $dosha_client_profile extends $.$dosha_client_profile {
-            username(next) {
-                return next ?? this.$.$dosha_client_auth_login.get_user().username;
-            }
-            email(next) {
-                return next ?? this.$.$dosha_client_auth_login.get_user().email;
-            }
-            company(next) {
-                return next ?? this.$.$dosha_client_auth_login.get_user().company?.company ?? '';
-            }
-            department(next) {
-                return next ?? this.$.$dosha_client_auth_login.get_user().company?.department ?? '';
-            }
-            update_profile() {
-                $dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
-                    method: 'PUT',
-                    body: JSON.stringify({
-                        username: this.username(),
-                        email: this.email(),
-                    })
-                });
-                this.$.$dosha_client_auth_login.update_user();
-            }
-            update_company() {
-                if (this.company() && this.department()) {
-                    const d = '$';
-                    const uri = `companies?filters[${d}and][0][company][${d}eqi]=${this.company()}&filters[${d}and][1][department][${d}eqi]=${this.department()}`;
-                    const result = this.$.$dosha_fetch.json(uri);
-                    if (result && result.data.length > 0) {
-                        $dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
-                            method: 'PUT',
-                            body: JSON.stringify({
-                                company: {
-                                    connect: [result.data[0].id]
-                                }
-                            })
-                        });
-                        this.$.$dosha_client_auth_login.update_user();
-                    }
-                    else {
-                        throw Error('Компания не найдена');
-                    }
-                }
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $dosha_client_profile.prototype, "username", null);
-        __decorate([
-            $mol_mem
-        ], $dosha_client_profile.prototype, "email", null);
-        __decorate([
-            $mol_mem
-        ], $dosha_client_profile.prototype, "company", null);
-        __decorate([
-            $mol_mem
-        ], $dosha_client_profile.prototype, "department", null);
-        __decorate([
-            $mol_mem
-        ], $dosha_client_profile.prototype, "update_company", null);
-        $$.$dosha_client_profile = $dosha_client_profile;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//dosha/client/profile/profile.view.ts
 ;
 "use strict";
 var $;
@@ -23290,282 +23704,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_textarea extends $mol_stack {
-        attr() {
-            return {
-                ...super.attr(),
-                mol_textarea_clickable: this.clickable(),
-                mol_textarea_sidebar_showed: this.sidebar_showed()
-            };
-        }
-        event() {
-            return {
-                keydown: (event) => this.press(event),
-                pointermove: (event) => this.hover(event)
-            };
-        }
-        sub() {
-            return [
-                this.Edit(),
-                this.View()
-            ];
-        }
-        symbols_alt() {
-            return {
-                comma: "<",
-                period: ">",
-                dash: "−",
-                equals: "≈",
-                graveAccent: "́",
-                forwardSlash: "÷",
-                E: "€",
-                X: "×",
-                C: "©",
-                P: "§",
-                H: "₽",
-                key0: "°",
-                key8: "•",
-                key2: "@",
-                key3: "#",
-                key4: "$",
-                key6: "^",
-                key7: "&",
-                bracketOpen: "[",
-                bracketClose: "]",
-                slashBack: "|"
-            };
-        }
-        symbols_alt_shift() {
-            return {
-                V: "✅",
-                X: "❌",
-                O: "⭕",
-                key1: "❗",
-                key4: "💲",
-                key7: "❓",
-                comma: "«",
-                period: "»",
-                semicolon: "“",
-                quoteSingle: "”",
-                dash: "—",
-                equals: "≠",
-                graveAccent: "̱",
-                bracketOpen: "{",
-                bracketClose: "}"
-            };
-        }
-        clickable(next) {
-            if (next !== undefined)
-                return next;
-            return false;
-        }
-        sidebar_showed() {
-            return false;
-        }
-        press(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        hover(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        value(next) {
-            if (next !== undefined)
-                return next;
-            return "";
-        }
-        hint() {
-            return " ";
-        }
-        enabled() {
-            return true;
-        }
-        spellcheck() {
-            return true;
-        }
-        length_max() {
-            return +Infinity;
-        }
-        selection(next) {
-            if (next !== undefined)
-                return next;
-            return [];
-        }
-        submit(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
-        submit_with_ctrl() {
-            return true;
-        }
-        bring() {
-            return this.Edit().bring();
-        }
-        Edit() {
-            const obj = new this.$.$mol_textarea_edit();
-            obj.value = (next) => this.value(next);
-            obj.hint = () => this.hint();
-            obj.enabled = () => this.enabled();
-            obj.spellcheck = () => this.spellcheck();
-            obj.length_max = () => this.length_max();
-            obj.selection = (next) => this.selection(next);
-            obj.submit = (next) => this.submit(next);
-            obj.submit_with_ctrl = () => this.submit_with_ctrl();
-            return obj;
-        }
-        row_numb(id) {
-            return 0;
-        }
-        highlight() {
-            return "";
-        }
-        View() {
-            const obj = new this.$.$mol_text_code();
-            obj.text = () => this.value();
-            obj.render_visible_only = () => false;
-            obj.row_numb = (id) => this.row_numb(id);
-            obj.sidebar_showed = () => this.sidebar_showed();
-            obj.highlight = () => this.highlight();
-            return obj;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_textarea.prototype, "clickable", null);
-    __decorate([
-        $mol_mem
-    ], $mol_textarea.prototype, "press", null);
-    __decorate([
-        $mol_mem
-    ], $mol_textarea.prototype, "hover", null);
-    __decorate([
-        $mol_mem
-    ], $mol_textarea.prototype, "value", null);
-    __decorate([
-        $mol_mem
-    ], $mol_textarea.prototype, "selection", null);
-    __decorate([
-        $mol_mem
-    ], $mol_textarea.prototype, "submit", null);
-    __decorate([
-        $mol_mem
-    ], $mol_textarea.prototype, "Edit", null);
-    __decorate([
-        $mol_mem
-    ], $mol_textarea.prototype, "View", null);
-    $.$mol_textarea = $mol_textarea;
-    class $mol_textarea_edit extends $mol_string {
-        dom_name() {
-            return "textarea";
-        }
-        enter() {
-            return "enter";
-        }
-        field() {
-            return {
-                ...super.field(),
-                scrollTop: 0
-            };
-        }
-    }
-    $.$mol_textarea_edit = $mol_textarea_edit;
-})($ || ($ = {}));
-//mol/textarea/-view.tree/textarea.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_textarea extends $.$mol_textarea {
-            indent_inc() {
-                let text = this.value();
-                let [from, to] = this.selection();
-                const rows = text.split('\n');
-                let start = 0;
-                for (let i = 0; i < rows.length; ++i) {
-                    let end = start + rows[i].length;
-                    if (end >= from && start <= to) {
-                        if (to === from || start !== to) {
-                            rows[i] = '\t' + rows[i];
-                            to += 1;
-                            end += 1;
-                        }
-                    }
-                    start = end + 1;
-                }
-                this.value(rows.join('\n'));
-                this.selection([from + 1, to]);
-            }
-            indent_dec() {
-                let text = this.value();
-                let [from, to] = this.selection();
-                const rows = text.split('\n');
-                let start = 0;
-                for (let i = 0; i < rows.length; ++i) {
-                    const end = start + rows[i].length;
-                    if (end >= from && start <= to && rows[i].startsWith('\t')) {
-                        rows[i] = rows[i].slice(1);
-                        to -= 1;
-                        if (start < from)
-                            from -= 1;
-                    }
-                    start = end + 1;
-                }
-                this.value(rows.join('\n'));
-                this.selection([from, to]);
-            }
-            symbol_insert(event) {
-                const symbol = event.shiftKey
-                    ? this.symbols_alt_shift()[$mol_keyboard_code[event.keyCode]]
-                    : this.symbols_alt()[$mol_keyboard_code[event.keyCode]];
-                if (!symbol)
-                    return;
-                document.execCommand('insertText', false, symbol);
-            }
-            hover(event) {
-                this.clickable(event.ctrlKey);
-            }
-            press(event) {
-                if (event.altKey && !event.ctrlKey) {
-                    this.symbol_insert(event);
-                }
-                else {
-                    switch (event.keyCode) {
-                        case !event.shiftKey && $mol_keyboard_code.tab:
-                            this.indent_inc();
-                            break;
-                        case event.shiftKey && $mol_keyboard_code.tab:
-                            this.indent_dec();
-                            break;
-                        default: return;
-                    }
-                }
-                event.preventDefault();
-            }
-            row_numb(index) {
-                return index;
-            }
-        }
-        $$.$mol_textarea = $mol_textarea;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//mol/textarea/textarea.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/textarea/textarea.view.css", "[mol_textarea] {\n\tflex: 1 0 auto;\n\tflex-direction: column;\n\tvertical-align: top;\n\tmin-height: max-content;\n\twhite-space: pre-wrap;\n\tword-break: break-word;\n\tborder-radius: var(--mol_gap_round);\n\tfont-family: monospace;\n\tposition: relative;\n\ttab-size: 4;\n}\n\n[mol_textarea_view] {\n\tpointer-events: none;\n\twhite-space: inherit;\n\tfont-family: inherit;\n\ttab-size: inherit;\n}\n\n[mol_textarea_view_copy] {\n\tpointer-events: all;\n}\n\n[mol_textarea_clickable] > [mol_textarea_view] {\n\tpointer-events: all;\n}\n\n[mol_textarea_edit] {\n\tfont-family: inherit;\n\tpadding: var(--mol_gap_text);\n\tcolor: transparent !important;\n\tcaret-color: var(--mol_theme_text);\n\tresize: none;\n\ttext-align: inherit;\n\twhite-space: inherit;\n\tborder-radius: inherit;\n\toverflow-anchor: none;\n\tposition: absolute;\n\theight: 100%;\n\twidth: 100%;\n\ttab-size: inherit;\n}\n\n[mol_textarea_sidebar_showed] [mol_textarea_edit] {\n\tleft: 1.75rem;\n\twidth: calc( 100% - 1.75rem );\n}\n\n[mol_textarea_edit]:hover + [mol_textarea_view] {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_textarea_edit]:focus + [mol_textarea_view] {\n\tz-index: var(--mol_layer_focus);\n}\n");
-})($ || ($ = {}));
-//mol/textarea/-css/textarea.view.css.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $hyoo_page_side_edit extends $mol_page {
         title(next) {
             return this.side().title(next);
@@ -27037,6 +27175,257 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $dosha_client_profile extends $mol_page {
+        title() {
+            return "🧢 Профиль";
+        }
+        body() {
+            return [
+                this.Profile_form(),
+                this.Company_form()
+            ];
+        }
+        username(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Username_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.username(next);
+            return obj;
+        }
+        Username_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Логин";
+            obj.Content = () => this.Username_control();
+            return obj;
+        }
+        email(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Email_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.email(next);
+            obj.type = () => "email";
+            return obj;
+        }
+        Email_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Email";
+            obj.Content = () => this.Email_control();
+            return obj;
+        }
+        update_profile(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Profile_form_save() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Обновить профиль";
+            obj.click = (next) => this.update_profile(next);
+            return obj;
+        }
+        Profile_form() {
+            const obj = new this.$.$mol_form_draft();
+            obj.form_fields = () => [
+                this.Username_field(),
+                this.Email_field()
+            ];
+            obj.buttons = () => [
+                this.Profile_form_save()
+            ];
+            return obj;
+        }
+        company(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Company_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.company(next);
+            return obj;
+        }
+        Company_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Компания";
+            obj.Content = () => this.Company_control();
+            return obj;
+        }
+        department(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Department_control() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.department(next);
+            return obj;
+        }
+        Department_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Подразделение";
+            obj.Content = () => this.Department_control();
+            return obj;
+        }
+        update_company(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Company_form_save() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Обновить компанию";
+            obj.click = (next) => this.update_company(next);
+            return obj;
+        }
+        Company_form() {
+            const obj = new this.$.$mol_form_draft();
+            obj.form_fields = () => [
+                this.Company_field(),
+                this.Department_field()
+            ];
+            obj.buttons = () => [
+                this.Company_form_save()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "username", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Username_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Username_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "email", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Email_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Email_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "update_profile", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Profile_form_save", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Profile_form", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "company", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Company_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Company_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "department", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Department_control", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Department_field", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "update_company", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Company_form_save", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_profile.prototype, "Company_form", null);
+    $.$dosha_client_profile = $dosha_client_profile;
+})($ || ($ = {}));
+//dosha/client/profile/-view.tree/profile.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $dosha_client_profile extends $.$dosha_client_profile {
+            username(next) {
+                return next ?? this.$.$dosha_client_auth_login.get_user().username;
+            }
+            email(next) {
+                return next ?? this.$.$dosha_client_auth_login.get_user().email;
+            }
+            company(next) {
+                return next ?? this.$.$dosha_client_auth_login.get_user().company?.company ?? '';
+            }
+            department(next) {
+                return next ?? this.$.$dosha_client_auth_login.get_user().company?.department ?? '';
+            }
+            update_profile() {
+                $dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        username: this.username(),
+                        email: this.email(),
+                    })
+                });
+                this.$.$dosha_client_auth_login.update_user();
+            }
+            update_company() {
+                if (this.company() && this.department()) {
+                    const d = '$';
+                    const uri = `companies?filters[${d}and][0][company][${d}eqi]=${this.company()}&filters[${d}and][1][department][${d}eqi]=${this.department()}`;
+                    const result = this.$.$dosha_fetch.json(uri);
+                    if (result && result.data.length > 0) {
+                        $dosha_fetch.json('users/' + this.$.$dosha_client_auth_login.get_user().id, {
+                            method: 'PUT',
+                            body: JSON.stringify({
+                                company: {
+                                    connect: [result.data[0].id]
+                                }
+                            })
+                        });
+                        this.$.$dosha_client_auth_login.update_user();
+                    }
+                    else {
+                        throw Error('Компания не найдена');
+                    }
+                }
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $dosha_client_profile.prototype, "username", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_profile.prototype, "email", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_profile.prototype, "company", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_profile.prototype, "department", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_client_profile.prototype, "update_company", null);
+        $$.$dosha_client_profile = $dosha_client_profile;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//dosha/client/profile/profile.view.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $dosha_company_report extends $mol_page {
         title() {
             return "Отчёт";
@@ -27195,10 +27584,6 @@ var $;
             const obj = new this.$.$dosha_client_history();
             return obj;
         }
-        Profile_page() {
-            const obj = new this.$.$dosha_client_profile();
-            return obj;
-        }
         Found_page() {
             const obj = new this.$.$dosha_client_found();
             return obj;
@@ -27246,6 +27631,10 @@ var $;
             const obj = new this.$.$dosha_client_partners();
             return obj;
         }
+        Profile_page() {
+            const obj = new this.$.$dosha_client_profile();
+            return obj;
+        }
         Company_page() {
             const obj = new this.$.$dosha_company();
             obj.menu_title = () => "🧮 Компания *";
@@ -27270,7 +27659,6 @@ var $;
             obj.spreads = () => ({
                 coins: this.Coins_page(),
                 history: this.History_page(),
-                profile: this.Profile_page(),
                 found: this.Found_page(),
                 training: this.Training_page(),
                 rating: this.Rating_page(),
@@ -27278,6 +27666,7 @@ var $;
                 chat: this.Chat_page(),
                 presentation: this.Persentation_page(),
                 partners: this.Partners_page(),
+                profile: this.Profile_page(),
                 company: this.Company_page()
             });
             return obj;
@@ -27318,9 +27707,6 @@ var $;
     ], $dosha_client.prototype, "History_page", null);
     __decorate([
         $mol_mem
-    ], $dosha_client.prototype, "Profile_page", null);
-    __decorate([
-        $mol_mem
     ], $dosha_client.prototype, "Found_page", null);
     __decorate([
         $mol_mem
@@ -27346,6 +27732,9 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Partners_page", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client.prototype, "Profile_page", null);
     __decorate([
         $mol_mem
     ], $dosha_client.prototype, "Company_page", null);

@@ -849,23 +849,168 @@ $dosha_client_steps $mol_page
 			value? <=> add_dosha? 0
 			value_max 40000
 		<= Add_dosha_save $mol_button_major
-			title \Добавить шаги за сегодня
+			title \Добавить шаги за сегодня. +37 👟
 			click? <= add_today_steps? null
-		<= Steps_history $mol_text text \История шагов (список)
+		<= Steps_auto $mol_button_major
+			title \Подключить автоматическое списание
+			enabled false
 
+$mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
+
+$mol_button_open $mol_button_minor
+	sub /
+		<= Icon $mol_icon_upload
+		<= Native $mol_button_open_native
+			files?next <=> files?next /
+			accept <= accept \
+			multiple <= multiple true
+
+$mol_button_open_native $mol_view
+	dom_name \input
+	files?next /
+	attr *
+		type \file
+		accept <= accept \
+		multiple <= multiple true
+	event *
+		change?next <=> picked?next null
+
+$mol_attach $mol_view
+	items? /string
+	sub /
+		<= Content $mol_row
+			sub <= content /$mol_view
+	Add $mol_button_open
+		title <= attach_title \
+		files? <=> attach_new? null
+	Item* $mol_button_minor
+		click?event <=> item_drop*?event null
+		sub /
+			<= Image* $mol_image
+				title \
+				uri <= item_uri* \
+
+$mol_textarea $mol_stack
+	attr *
+		^
+		mol_textarea_clickable <= clickable? false
+		mol_textarea_sidebar_showed <= sidebar_showed false
+	event *
+		keydown?event <=> press?event null
+		pointermove?event <=> hover?event null
+	sub /
+		<= Edit $mol_textarea_edit
+			value? <=> value? \
+			hint <= hint \ 
+			enabled <= enabled true
+			spellcheck <= spellcheck true
+			length_max <= length_max +Infinity
+			selection? <=> selection? /number
+			bring => bring
+			submit? <=> submit? null
+			submit_with_ctrl <= submit_with_ctrl true
+		<= View $mol_text_code
+			text <= value
+			render_visible_only false
+			row_numb* <= row_numb* 0
+			sidebar_showed <= sidebar_showed
+			highlight <= highlight \
+	symbols_alt *
+		comma \<
+		period \>
+		dash \−
+		equals \≈
+		graveAccent \́
+		forwardSlash \÷
+		E \€
+		X \×
+		C \©
+		P \§
+		H \₽
+		key0 \°
+		key8 \•
+		key2 \@
+		key3 \#
+		key4 \$
+		key6 \^
+		key7 \&
+		bracketOpen \[
+		bracketClose \]
+		slashBack \|
+	symbols_alt_shift *
+		V \✅
+		X \❌
+		O \⭕
+		key1 \❗
+		key4 \💲
+		key7 \❓
+		comma \«
+		period \»
+		semicolon \“
+		quoteSingle \”
+		dash \—
+		equals \≠
+		graveAccent \̱
+		bracketOpen \{
+		bracketClose \}
+
+$mol_textarea_edit $mol_string
+	dom_name \textarea
+	enter \enter
+	field *
+		^
+		scrollTop 0
+
+- Единственная возможность заработать монеты - это втянуться в спорт и благотворительность. Из этих активностей будет собираться статистика и раздел истории
 $dosha_client_coins $mol_book2_catalog
-	menu_title \🪙 Монеты
+	menu_title \🪙 Монетка
 	param \coins
 	spreads *
 		steps <= Steps_page $dosha_client_steps
 		training <= Training_page $mol_page
 			title \🏋 Тренировка
+			body /
+				<= Training_text $mol_text text \
+					\Просто ежедневный спорт.
+					\Самая любимая моя рутина
+				<= Training_check $mol_button_major
+					title \Отметиться за сегодня +25 🏋
 		achievements <= Achievements_page $mol_page
 			title \🏆 Достижения
+			body /
+				<= Achievements_text $mol_text text \
+					\Добивайтесь достижений в спорте
+					\И пускай все о них узнают.
+					\Ваши успехов будут добавлены в Историю
+				<= Add_achievements $mol_attach
+				- Сделать минимальное кол-во символов - 100 на текстареа и 1 картинку для зарабатывания баллов
+				<= Achievements_story $mol_textarea
+				<= Send_achievements $mol_button_major
+					title \Это уже История! +50 🏆
 		goods <= Goods_page $mol_page
 			title \👑 Добрые дела
+			body /
+				<= Goods_text $mol_text text \
+					\*Делайте добрые дела
+					\Вдохновляйте других
+					\И мир вокруг станет добрее*
+				<= Goods_attach $mol_attach
+				<= Goods_story $mol_textarea
+					hint \Это было самое обыкновенное чудо...
+				<= Goods_send $mol_button_major
+					title \Поделиться историей. +30 👑
 		charities <= Charities_page $mol_page
 			title \🏥 Благотворительность
+			body /
+				<= Charities_text $mol_text text \
+					\Вы уже занимаетесь благотворительностью?
+					\Поделитесь с нами и получите небольшой
+					\Кэшбэк в этот фонд
+				<= Charities_attach $mol_attach
+				<= Charities_textarea $mol_textarea
+					hint \У нас в городе есть небольшой приют, которому я ...
+				<= Charities_send $mol_button_major
+					title \Рассказать. +47 🏥
 
 $dosha_client_coins_links $mol_view
 	sub /
@@ -895,46 +1040,16 @@ $dosha_client_coins_links $mol_view
 				client \coins
 				coins \charities
 
-- История пользователя, сколько заработал, куда и что пошло, в какие фонды.
-- Истории - сборник из добрых дел, благотворительности - общий по компании / отделу. Добавить фильтрации
+- История пользователя, сколько заработал, куда и что пошло, в какие фонды - не актуально
+- Истории - сборник из добрых дел, спортивных достижений, благотворительности - общий по компании / отделу, и мировая (если дали добро на публикацию. Добавить фильтрацию
+- Лайки - увеличивает коэффициент. Дизлайки скрывают пост - самомодерация первой линии
 $dosha_client_history $mol_page
 	title \📅 Истории
 	body /
-		<= History_text $mol_text text \Истории, которые по отделу
-
-- Страница с профилем пользователя. Личная информация, контакты, должность, изменение настроек.
-$dosha_client_profile $mol_page
-	title \🧢 Профиль
-	body /
-		<= Profile_form $mol_form_draft
-			form_fields /
-				<= Username_field $mol_form_field
-					name \Логин
-					Content <= Username_control $mol_string
-						value? <=> username? \
-				<= Email_field $mol_form_field
-					name \Email
-					Content <= Email_control $mol_string
-						value? <=> email? \
-						type \email
-			buttons /
-				<= Profile_form_save $mol_button_major
-					title \Обновить профиль
-					click? <=> update_profile? null
-		<= Company_form $mol_form_draft
-			form_fields /
-				<= Company_field $mol_form_field
-					name \Компания
-					Content <= Company_control $mol_string
-						value? <=> company? \
-				<= Department_field $mol_form_field
-					name \Подразделение
-					Content <= Department_control $mol_string
-						value? <=> department? \
-			buttons /
-				<= Company_form_save $mol_button_major
-					title \Обновить компанию
-					click? <=> update_company? null
+		<= History_text $mol_text text \
+			\# Ваши интересные истории
+			\Пока ещё нет новых историй
+		- Добавить бесконечную ленту $mol_infity и $mol_list
 
 - Страница с фондами. Выбрать фонд, предложить новый, сколько уже было перевено средств в фонды и какие
 $dosha_client_found $mol_page
@@ -1981,77 +2096,6 @@ $mol_icon_shield $mol_icon path \M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.
 
 $mol_icon_shield_account $mol_icon path \M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5C13.66,5 15,6.34 15,8C15,9.66 13.66,11 12,11C10.34,11 9,9.66 9,8C9,6.34 10.34,5 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z
 
-$mol_textarea $mol_stack
-	attr *
-		^
-		mol_textarea_clickable <= clickable? false
-		mol_textarea_sidebar_showed <= sidebar_showed false
-	event *
-		keydown?event <=> press?event null
-		pointermove?event <=> hover?event null
-	sub /
-		<= Edit $mol_textarea_edit
-			value? <=> value? \
-			hint <= hint \ 
-			enabled <= enabled true
-			spellcheck <= spellcheck true
-			length_max <= length_max +Infinity
-			selection? <=> selection? /number
-			bring => bring
-			submit? <=> submit? null
-			submit_with_ctrl <= submit_with_ctrl true
-		<= View $mol_text_code
-			text <= value
-			render_visible_only false
-			row_numb* <= row_numb* 0
-			sidebar_showed <= sidebar_showed
-			highlight <= highlight \
-	symbols_alt *
-		comma \<
-		period \>
-		dash \−
-		equals \≈
-		graveAccent \́
-		forwardSlash \÷
-		E \€
-		X \×
-		C \©
-		P \§
-		H \₽
-		key0 \°
-		key8 \•
-		key2 \@
-		key3 \#
-		key4 \$
-		key6 \^
-		key7 \&
-		bracketOpen \[
-		bracketClose \]
-		slashBack \|
-	symbols_alt_shift *
-		V \✅
-		X \❌
-		O \⭕
-		key1 \❗
-		key4 \💲
-		key7 \❓
-		comma \«
-		period \»
-		semicolon \“
-		quoteSingle \”
-		dash \—
-		equals \≠
-		graveAccent \̱
-		bracketOpen \{
-		bracketClose \}
-
-$mol_textarea_edit $mol_string
-	dom_name \textarea
-	enter \enter
-	field *
-		^
-		scrollTop 0
-
 $hyoo_page_side_edit $mol_page
 	side $hyoo_page_side
 		title? => title?
@@ -2452,6 +2496,40 @@ $dosha_client_partners $mol_page
 	body /
 		<= Partners_text $mol_text text \Партнёры, акции и друзья компании
 
+- Страница с профилем пользователя. Личная информация, контакты, должность, изменение настроек.
+$dosha_client_profile $mol_page
+	title \🧢 Профиль
+	body /
+		<= Profile_form $mol_form_draft
+			form_fields /
+				<= Username_field $mol_form_field
+					name \Логин
+					Content <= Username_control $mol_string
+						value? <=> username? \
+				<= Email_field $mol_form_field
+					name \Email
+					Content <= Email_control $mol_string
+						value? <=> email? \
+						type \email
+			buttons /
+				<= Profile_form_save $mol_button_major
+					title \Обновить профиль
+					click? <=> update_profile? null
+		<= Company_form $mol_form_draft
+			form_fields /
+				<= Company_field $mol_form_field
+					name \Компания
+					Content <= Company_control $mol_string
+						value? <=> company? \
+				<= Department_field $mol_form_field
+					name \Подразделение
+					Content <= Department_control $mol_string
+						value? <=> department? \
+			buttons /
+				<= Company_form_save $mol_button_major
+					title \Обновить компанию
+					click? <=> update_company? null
+
 $dosha_company_report $mol_page
 	title \Отчёт
 	body /
@@ -2494,7 +2572,6 @@ $dosha_client $mol_view
 			spreads *
 				coins <= Coins_page $dosha_client_coins
 				history <= History_page $dosha_client_history
-				profile <= Profile_page $dosha_client_profile
 				found <= Found_page $dosha_client_found
 				training <= Training_page $dosha_client_training
 				rating <= Rating_page $dosha_client_rating
@@ -2510,6 +2587,7 @@ $dosha_client $mol_view
 				presentation <= Persentation_page $hyoo_page
 					title \📽 Презентация
 				partners <= Partners_page $dosha_client_partners
+				profile <= Profile_page $dosha_client_profile
 				- Отдельное приложение ДоШа Компания
 				company <= Company_page $dosha_company
 					menu_title \🧮 Компания *
