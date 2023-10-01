@@ -11904,7 +11904,7 @@ var $;
         }
         History_text() {
             const obj = new this.$.$mol_text();
-            obj.text = () => "# Ваши интересные истории\nПока ещё нет новых историй";
+            obj.text = () => "# Ваши интересные истории\nСкоро появятся истории новых историй";
             return obj;
         }
     }
@@ -26664,18 +26664,64 @@ var $;
         }
         body() {
             return [
-                this.Partners_text()
+                this.Partners_text(),
+                this.Partners_list(),
+                this.Gift()
             ];
         }
         Partners_text() {
             const obj = new this.$.$mol_text();
-            obj.text = () => "Партнёры, акции и друзья компании";
+            obj.text = () => "# Наши друзья и партнёры";
+            return obj;
+        }
+        Partners_list() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "[Совиный дом](https://owldom.ru/) - чашечка кофе с совой\n[Тульский цирк](https://www.circus-tula.ru/) - 4 билет в подарок\n[Тульская филармония](https://www.filarmonia-tula.ru/) - Скидка 30%\n[SkyEng](https://skyeng.ru/) - дополнительных 3 занятия\n[Авиасейлс](https://www.aviasales.ru/) - багаж в подарок\n[Поленово](https://polenovo.ru/) - Льготный билет на выставку\n[GRAND FITNESS](https://www.fitnesskaluga.ru/) - +2 пробных дня\n[Яндекс Музыка](https://music.yandex.ru/) - месяц в подарок\n[Прыжок с парашютом](https://extreme71.ru/) - 4 человеку в подарок\n\n*И многое другое через 4 часа 24 минуты*";
+            return obj;
+        }
+        Add_gift_send() {
+            const obj = new this.$.$mol_button_minor();
+            obj.title = () => "Добавить подарок";
+            return obj;
+        }
+        Add_gift_link() {
+            const obj = new this.$.$mol_string();
+            obj.hint = () => "Сайт";
+            return obj;
+        }
+        Add_gift_text() {
+            const obj = new this.$.$mol_textarea();
+            obj.hint = () => "Мне хочется предложить вам мини подарок - ...";
+            return obj;
+        }
+        Gift() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Add_gift_send(),
+                this.Add_gift_link(),
+                this.Add_gift_text()
+            ];
             return obj;
         }
     }
     __decorate([
         $mol_mem
     ], $dosha_client_partners.prototype, "Partners_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_partners.prototype, "Partners_list", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_partners.prototype, "Add_gift_send", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_partners.prototype, "Add_gift_link", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_partners.prototype, "Add_gift_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_client_partners.prototype, "Gift", null);
     $.$dosha_client_partners = $dosha_client_partners;
 })($ || ($ = {}));
 //dosha/client/partners/-view.tree/partners.view.tree.ts

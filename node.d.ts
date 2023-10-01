@@ -7499,6 +7499,11 @@ declare namespace $ {
         title(): string;
         body(): readonly any[];
         Partners_text(): $$.$mol_text;
+        Partners_list(): $$.$mol_text;
+        Add_gift_send(): $mol_button_minor;
+        Add_gift_link(): $$.$mol_string;
+        Add_gift_text(): $$.$mol_textarea;
+        Gift(): $$.$mol_list;
     }
 }
 
