@@ -2536,19 +2536,21 @@ $mol_icon_dice_d20 $mol_icon path \M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.
 - Шаринг данных - копировать / вставить / по ссылке / файлом json (csv) / qr-cod (апи какой-нибудь найти или свой в мол добавить). Каждая настройка (цвета, фоны, отключение страниц) - передаются по отдельности или 1 пакетом
 $dosha_branding $mol_page
 	configs? \
+	target_root \
 	title \ДоШа Брендинг
 	tools /
 		<= Copy_settings $mol_button_copy
 			text <= configs
-		- <= Share_settings $mol_button_share
+		- <= Share_settings $mol_button_share - Что-то можно отправить, пока не решил
 	body /
 		<= Branding_text $mol_text text \
-			\# Создай свою уникальный стиль
-			\Жми "Восстановить" в любой ситуации
+			\# Создай свой уникальный стиль
+			\*Всегда есть кнопка "Восстановить"*
 		<= Reset_configs $mol_button_major
 			title \Восстановить
 		<= Random_configs $mol_button_minor
 			title \Случайно
+			click? <=> random? null
 		- Добавить чекбокс изолированно / глобально. Hell кубик ставит на глобально. Pashalka №3
 		- Таймер 30 секунд. 3 таймера простой сложный адский (все 3 конфига)
 		<= Timer_dice_list $mol_list
@@ -2571,29 +2573,37 @@ $dosha_branding $mol_page
 		<= Config_theme $mol_list
 			rows /
 				- Fonts
-				<= Font_switcher $mol_switch
-					value? <=> font_style? \font_normal
+				<= Font_style_switcher $mol_switch
+					value? <=> font_style? \normal
 					options *
-						font_normal \Обычный
-						font_italic \Курсив
-						font_think \Тонкий
-						font_bold \Жирный
-				<= Font_family $mol_switch
-					value? <=> font_family? \font_normal
+						normal \Обычный
+						italic \Курсив
+						think \Тонкий
+						bold \Жирный
+				<= Font_family_switcher $mol_switch
+					value? <=> font_family? \serif
 					options *
-						font_serif \Serif
-						font_fantasy \Fantasy
-						font_monospace \Monospace
-						font_cursive \Cursive
-				<= Font_size $mol_number
-					hint \Размер шрифта
+						serif \serif
+						fantasy \fantasy
+						monospace \monospace
+						cursive \cursive
 				- Colors
 				<= Color_hue $mol_number
 					hint \hue
+					value? <=> hue? null
+					value_min 0
+					value_max 360
+					precision_change 10
 				<= Color_luma $mol_number
 					hint \luma
 				<= Color_satur $mol_number
 					hint \satur
+				<= Font_size_text $mol_text text \Размер шрифта
+				<= Font_size $mol_number
+					hint \Размер шрифта
+					value? <=> font_size? null
+					value_min 4
+					value_max 64
 				- Spaces / Borders
 		<= Config_background $mol_list
 			rows /
@@ -2607,7 +2617,7 @@ $dosha_branding $mol_page
 			title \Сохранить настройки
 		<= Config_textarea $mol_textarea
 			sidebar_showed true
-			value? <= configs?
+			value? <= config_all? \
 			enabled false
 
 - Страница с профилем пользователя. Личная информация, контакты, должность, изменение настроек.

@@ -7420,12 +7420,14 @@ declare namespace $ {
 declare namespace $ {
     class $dosha_branding extends $mol_page {
         configs(next?: any): string;
+        target_root(): string;
         title(): string;
         tools(): readonly any[];
         body(): readonly any[];
         Copy_settings(): $$.$mol_button_copy;
         Branding_text(): $$.$mol_text;
         Reset_configs(): $mol_button_major;
+        random(next?: any): any;
         Random_configs(): $mol_button_minor;
         Dice_icon_normal(): $mol_icon_dice_d6;
         random_checked_normal(next?: any): boolean;
@@ -7440,27 +7442,30 @@ declare namespace $ {
         brand_type(next?: any): string;
         Switch_brand_type(): $$.$mol_switch;
         font_style(next?: any): string;
-        Font_switcher(): $$.$mol_switch;
+        Font_style_switcher(): $$.$mol_switch;
         font_family(next?: any): string;
-        Font_family(): $$.$mol_switch;
-        Font_size(): $$.$mol_number;
+        Font_family_switcher(): $$.$mol_switch;
+        hue(next?: any): any;
         Color_hue(): $$.$mol_number;
         Color_luma(): $$.$mol_number;
         Color_satur(): $$.$mol_number;
+        Font_size_text(): $$.$mol_text;
+        font_size(next?: any): any;
+        Font_size(): $$.$mol_number;
         Config_theme(): $$.$mol_list;
         Config_background(): $$.$mol_list;
         Config_content(): $$.$mol_list;
         Save_configs(): $mol_button_major;
+        config_all(next?: any): string;
         Config_textarea(): $$.$mol_textarea;
     }
 }
 
 declare namespace $.$$ {
     class $dosha_branding extends $.$dosha_branding {
-        config_theme(): string;
-        config_background(): string;
-        config_content(): string;
-        config_all(): string;
+        font_style(next?: any): string;
+        font_size(next?: any): any;
+        hue(next?: any): any;
     }
 }
 

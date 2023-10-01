@@ -27263,6 +27263,9 @@ var $;
                 return next;
             return "";
         }
+        target_root() {
+            return "";
+        }
         title() {
             return "ДоШа Брендинг";
         }
@@ -27292,7 +27295,7 @@ var $;
         }
         Branding_text() {
             const obj = new this.$.$mol_text();
-            obj.text = () => "# Создай свою уникальный стиль\nЖми \"Восстановить\" в любой ситуации";
+            obj.text = () => "# Создай свой уникальный стиль\n*Всегда есть кнопка \"Восстановить\"*";
             return obj;
         }
         Reset_configs() {
@@ -27300,9 +27303,15 @@ var $;
             obj.title = () => "Восстановить";
             return obj;
         }
+        random(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
         Random_configs() {
             const obj = new this.$.$mol_button_minor();
             obj.title = () => "Случайно";
+            obj.click = (next) => this.random(next);
             return obj;
         }
         Dice_icon_normal() {
@@ -27377,43 +27386,47 @@ var $;
         font_style(next) {
             if (next !== undefined)
                 return next;
-            return "font_normal";
+            return "normal";
         }
-        Font_switcher() {
+        Font_style_switcher() {
             const obj = new this.$.$mol_switch();
             obj.value = (next) => this.font_style(next);
             obj.options = () => ({
-                font_normal: "Обычный",
-                font_italic: "Курсив",
-                font_think: "Тонкий",
-                font_bold: "Жирный"
+                normal: "Обычный",
+                italic: "Курсив",
+                think: "Тонкий",
+                bold: "Жирный"
             });
             return obj;
         }
         font_family(next) {
             if (next !== undefined)
                 return next;
-            return "font_normal";
+            return "serif";
         }
-        Font_family() {
+        Font_family_switcher() {
             const obj = new this.$.$mol_switch();
             obj.value = (next) => this.font_family(next);
             obj.options = () => ({
-                font_serif: "Serif",
-                font_fantasy: "Fantasy",
-                font_monospace: "Monospace",
-                font_cursive: "Cursive"
+                serif: "serif",
+                fantasy: "fantasy",
+                monospace: "monospace",
+                cursive: "cursive"
             });
             return obj;
         }
-        Font_size() {
-            const obj = new this.$.$mol_number();
-            obj.hint = () => "Размер шрифта";
-            return obj;
+        hue(next) {
+            if (next !== undefined)
+                return next;
+            return null;
         }
         Color_hue() {
             const obj = new this.$.$mol_number();
             obj.hint = () => "hue";
+            obj.value = (next) => this.hue(next);
+            obj.value_min = () => 0;
+            obj.value_max = () => 360;
+            obj.precision_change = () => 10;
             return obj;
         }
         Color_luma() {
@@ -27426,15 +27439,34 @@ var $;
             obj.hint = () => "satur";
             return obj;
         }
+        Font_size_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => "Размер шрифта";
+            return obj;
+        }
+        font_size(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Font_size() {
+            const obj = new this.$.$mol_number();
+            obj.hint = () => "Размер шрифта";
+            obj.value = (next) => this.font_size(next);
+            obj.value_min = () => 4;
+            obj.value_max = () => 64;
+            return obj;
+        }
         Config_theme() {
             const obj = new this.$.$mol_list();
             obj.rows = () => [
-                this.Font_switcher(),
-                this.Font_family(),
-                this.Font_size(),
+                this.Font_style_switcher(),
+                this.Font_family_switcher(),
                 this.Color_hue(),
                 this.Color_luma(),
-                this.Color_satur()
+                this.Color_satur(),
+                this.Font_size_text(),
+                this.Font_size()
             ];
             return obj;
         }
@@ -27453,10 +27485,15 @@ var $;
             obj.title = () => "Сохранить настройки";
             return obj;
         }
+        config_all(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
         Config_textarea() {
             const obj = new this.$.$mol_textarea();
             obj.sidebar_showed = () => true;
-            obj.value = (next) => this.configs();
+            obj.value = (next) => this.config_all();
             obj.enabled = () => false;
             return obj;
         }
@@ -27473,6 +27510,9 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_branding.prototype, "Reset_configs", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "random", null);
     __decorate([
         $mol_mem
     ], $dosha_branding.prototype, "Random_configs", null);
@@ -27517,16 +27557,16 @@ var $;
     ], $dosha_branding.prototype, "font_style", null);
     __decorate([
         $mol_mem
-    ], $dosha_branding.prototype, "Font_switcher", null);
+    ], $dosha_branding.prototype, "Font_style_switcher", null);
     __decorate([
         $mol_mem
     ], $dosha_branding.prototype, "font_family", null);
     __decorate([
         $mol_mem
-    ], $dosha_branding.prototype, "Font_family", null);
+    ], $dosha_branding.prototype, "Font_family_switcher", null);
     __decorate([
         $mol_mem
-    ], $dosha_branding.prototype, "Font_size", null);
+    ], $dosha_branding.prototype, "hue", null);
     __decorate([
         $mol_mem
     ], $dosha_branding.prototype, "Color_hue", null);
@@ -27536,6 +27576,15 @@ var $;
     __decorate([
         $mol_mem
     ], $dosha_branding.prototype, "Color_satur", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Font_size_text", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "font_size", null);
+    __decorate([
+        $mol_mem
+    ], $dosha_branding.prototype, "Font_size", null);
     __decorate([
         $mol_mem
     ], $dosha_branding.prototype, "Config_theme", null);
@@ -27550,6 +27599,9 @@ var $;
     ], $dosha_branding.prototype, "Save_configs", null);
     __decorate([
         $mol_mem
+    ], $dosha_branding.prototype, "config_all", null);
+    __decorate([
+        $mol_mem
     ], $dosha_branding.prototype, "Config_textarea", null);
     $.$dosha_branding = $dosha_branding;
 })($ || ($ = {}));
@@ -27561,19 +27613,37 @@ var $;
     var $$;
     (function ($$) {
         class $dosha_branding extends $.$dosha_branding {
-            config_theme() {
-                return 'config_theme';
+            font_style(next) {
+                const style = document.documentElement.style;
+                if (next === 'normal') {
+                    style.setProperty('font-weight', 'normal');
+                    style.setProperty('font-style', 'normal');
+                }
+                if (next === 'italic')
+                    style.setProperty('font-style', 'italic');
+                if (next === 'think' || next === 'bold')
+                    style.setProperty('font-weight', next);
+                return next ?? 'normal';
             }
-            config_background() {
-                return 'config_background';
+            font_size(next) {
+                document.documentElement.style.setProperty('font-size', `${next}px`);
+                return next ?? 16;
             }
-            config_content() {
-                return 'config_content';
-            }
-            config_all() {
-                return 'config_all';
+            hue(next) {
+                if (next)
+                    document.documentElement.style.setProperty('--mol_theme_hue', `${next}deg`);
+                return next ?? 0;
             }
         }
+        __decorate([
+            $mol_mem
+        ], $dosha_branding.prototype, "font_style", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_branding.prototype, "font_size", null);
+        __decorate([
+            $mol_mem
+        ], $dosha_branding.prototype, "hue", null);
         $$.$dosha_branding = $dosha_branding;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -27582,7 +27652,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("dosha/branding/branding.view.css", "[dosha_branding_timer_dice_list] {\n\tflex-direction: row;\n\tmin-height: 20px!important;\n\tjustify-content: space-around;\n}\n");
+    $mol_style_attach("dosha/branding/branding.view.css", "[dosha_branding_timer_dice_list] {\n\tflex-direction: row;\n\tmin-height: 30px!important;\n\tjustify-content: space-around;\n}\n\n\n[dosha_branding_font_style_switcher_option]:nth-child(1) {\n\tfont-style: normal;\n\tfont-weight: normal;\n}\n[dosha_branding_font_style_switcher_option]:nth-child(2) {\n\tfont-style: italic;\n}\n[dosha_branding_font_style_switcher_option]:nth-child(3) {\n\tfont-weight: lighter;\n}\n[dosha_branding_font_style_switcher_option]:nth-child(4) {\n\tfont-weight: bold;\n}\n\n[dosha_branding_font_family_switcher_option]:nth-child(1) {\n\tfont-family: serif;\n}\n[dosha_branding_font_family_switcher_option]:nth-child(2) {\n\tfont-family: \"fantasy\";\n}\n[dosha_branding_font_family_switcher_option]:nth-child(3) {\n\tfont-family: \"monospace\"!important;\n}\n[dosha_branding_font_family_switcher_option]:nth-child(4) {\n\tfont-family: \"cursive\";\n}\n");
 })($ || ($ = {}));
 //dosha/branding/-css/branding.view.css.ts
 ;
