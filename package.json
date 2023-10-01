@@ -203,6 +203,7 @@
     "$mol_labeler",
     "$mol_button_major",
     "$mol_form_draft",
+    "$mol_wire_race",
     "$mol_data_nullable",
     "$mol_data",
     "$mol_data_value",

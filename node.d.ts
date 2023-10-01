@@ -1242,6 +1242,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_check_list extends $mol_view {
+        dictionary(): Record<string, any>;
         Option(id: any): $$.$mol_check;
         options(): Record<string, any>;
         keys(): readonly string[];
@@ -1261,6 +1262,8 @@ declare namespace $.$$ {
         options(): {
             [key: string]: string;
         };
+        dictionary(next?: Record<string, boolean>): Record<string, boolean>;
+        option_checked(id: string, next?: boolean | null): boolean;
         keys(): readonly string[];
         items(): $mol_check[];
         option_title(key: string): string;
@@ -2759,17 +2762,32 @@ declare namespace $ {
     }
 }
 
+declare namespace $ {
+    function $mol_wire_race<Tasks extends ((...args: any) => any)[]>(...tasks: Tasks): {
+        [index in keyof Tasks]: index extends number ? ReturnType<Tasks[index]> : Tasks[index];
+    };
+}
+
 declare namespace $.$$ {
-    class $mol_form_draft extends $.$mol_form_draft {
+    type Primitive = string | number | boolean;
+    type Value = readonly Primitive[] | Primitive | Record<string, boolean>;
+    export class $mol_form_draft extends $.$mol_form_draft {
+        list_string(field: string, next?: readonly string[] | null): string[];
+        dictionary_bool(field: string, next?: Record<string, boolean> | null): Record<string, boolean>;
         value_str(field: string, next?: string | null): string;
         value_numb(field: string, next?: boolean | null): number;
         value_bool(field: string, next?: boolean | null): boolean;
-        value(field: string, next?: string | number | boolean | null): any;
-        state(next?: Record<string, string | number | boolean | null> | null): Record<string, string | number | boolean | null>;
+        model_pick(field: string, next?: Value | null): Value;
+        state_pick(field: string, next?: Value | null): Value | null;
+        value<T extends Value>(field: string, next?: T | null): T;
+        value_changed(field: string): boolean;
+        state(next?: Record<string, Value | null> | null): Record<string, Value | null>;
         changed(): boolean;
         submit_allowed(): boolean;
+        reset(next?: unknown): void;
         submit(next?: Event): void;
     }
+    export {};
 }
 
 declare namespace $ {
