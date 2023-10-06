@@ -580,6 +580,15 @@ $mol_form $mol_list
 
 $mol_form_draft $mol_form
 	model $mol_object2
+	changed false
+	value_str*? \
+	value_bool*? false
+	value_number*? 0
+	dictionary_bool*? *
+	list_string*? /string
+	value_changed* false
+	reset? null
+
 
 - Страница авторизации. Упрощенная - без востановления пароля и регистрации на данный момент
 $dosha_client_auth_login $mol_view
