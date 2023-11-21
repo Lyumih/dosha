@@ -2444,7 +2444,7 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_hotkey extends $.$mol_hotkey {
         key(): {
-            [x: number]: ((event: KeyboardEvent) => void) | undefined;
+            readonly [x: number]: ((event: KeyboardEvent) => void) | undefined;
             readonly backspace?: ((event: KeyboardEvent) => void) | undefined;
             readonly tab?: ((event: KeyboardEvent) => void) | undefined;
             readonly enter?: ((event: KeyboardEvent) => void) | undefined;
@@ -4218,11 +4218,11 @@ declare namespace $ {
     }) => Readonly<{
         data: readonly Readonly<{
             id: number;
-            attributes: {
+            attributes: Readonly<{
                 [x: string]: any;
                 [x: number]: any;
                 [x: symbol]: any;
-            };
+            }>;
         }>[];
         meta: Readonly<{
             pagination: Readonly<{
@@ -4243,11 +4243,11 @@ declare namespace $ {
                 };
             }[]) => readonly Readonly<{
                 id: number;
-                attributes: {
+                attributes: Readonly<{
                     [x: string]: any;
                     [x: number]: any;
                     [x: symbol]: any;
-                };
+                }>;
             }>[]) & {
                 config: ((val: {
                     id: number;
@@ -4258,11 +4258,11 @@ declare namespace $ {
                     };
                 }) => Readonly<{
                     id: number;
-                    attributes: {
+                    attributes: Readonly<{
                         [x: string]: any;
                         [x: number]: any;
                         [x: symbol]: any;
-                    };
+                    }>;
                 }>) & {
                     config: {
                         id: (val: number) => number;
@@ -4285,20 +4285,20 @@ declare namespace $ {
                     };
                     Value: Readonly<{
                         id: number;
-                        attributes: {
+                        attributes: Readonly<{
                             [x: string]: any;
                             [x: number]: any;
                             [x: symbol]: any;
-                        };
+                        }>;
                     }>;
                 };
                 Value: readonly Readonly<{
                     id: number;
-                    attributes: {
+                    attributes: Readonly<{
                         [x: string]: any;
                         [x: number]: any;
                         [x: symbol]: any;
-                    };
+                    }>;
                 }>[];
             };
             meta: ((val: {
@@ -4355,11 +4355,11 @@ declare namespace $ {
         Value: Readonly<{
             data: readonly Readonly<{
                 id: number;
-                attributes: {
+                attributes: Readonly<{
                     [x: string]: any;
                     [x: number]: any;
                     [x: symbol]: any;
-                };
+                }>;
             }>[];
             meta: Readonly<{
                 pagination: Readonly<{
@@ -4394,11 +4394,11 @@ declare namespace $.$$ {
     }) => Readonly<{
         data: readonly Readonly<{
             id: number;
-            attributes: {
+            attributes: Readonly<{
                 [x: string]: any;
                 [x: number]: any;
                 [x: symbol]: any;
-            };
+            }>;
         }>[];
         meta: Readonly<{
             pagination: Readonly<{
@@ -4419,11 +4419,11 @@ declare namespace $.$$ {
                 };
             }[]) => readonly Readonly<{
                 id: number;
-                attributes: {
+                attributes: Readonly<{
                     [x: string]: any;
                     [x: number]: any;
                     [x: symbol]: any;
-                };
+                }>;
             }>[]) & {
                 config: ((val: {
                     id: number;
@@ -4434,11 +4434,11 @@ declare namespace $.$$ {
                     };
                 }) => Readonly<{
                     id: number;
-                    attributes: {
+                    attributes: Readonly<{
                         [x: string]: any;
                         [x: number]: any;
                         [x: symbol]: any;
-                    };
+                    }>;
                 }>) & {
                     config: {
                         id: (val: number) => number;
@@ -4461,20 +4461,20 @@ declare namespace $.$$ {
                     };
                     Value: Readonly<{
                         id: number;
-                        attributes: {
+                        attributes: Readonly<{
                             [x: string]: any;
                             [x: number]: any;
                             [x: symbol]: any;
-                        };
+                        }>;
                     }>;
                 };
                 Value: readonly Readonly<{
                     id: number;
-                    attributes: {
+                    attributes: Readonly<{
                         [x: string]: any;
                         [x: number]: any;
                         [x: symbol]: any;
-                    };
+                    }>;
                 }>[];
             };
             meta: ((val: {
@@ -4531,11 +4531,11 @@ declare namespace $.$$ {
         Value: Readonly<{
             data: readonly Readonly<{
                 id: number;
-                attributes: {
+                attributes: Readonly<{
                     [x: string]: any;
                     [x: number]: any;
                     [x: symbol]: any;
-                };
+                }>;
             }>[];
             meta: Readonly<{
                 pagination: Readonly<{
@@ -4562,11 +4562,11 @@ declare namespace $.$$ {
         founds(next?: any): typeof FoundationModel.Value;
         active_founds(): readonly any[];
         new_founds(): readonly any[];
-        get_found(id: string): {
+        get_found(id: string): Readonly<{
             [x: string]: any;
             [x: number]: any;
             [x: symbol]: any;
-        } | undefined;
+        }> | undefined;
         found_active_title(id: string): string;
         found_active_uri(id: string): string;
         found_new_title(id: string): string;
