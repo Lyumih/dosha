@@ -2481,6 +2481,9 @@ var $;
         }
         prefix() { return this.name + '('; }
         postfix() { return ')'; }
+        static linear_gradient(value) {
+            return new $mol_style_func('linear-gradient', value);
+        }
         static calc(value) {
             return new $mol_style_func('calc', value);
         }
@@ -3882,7 +3885,7 @@ var $;
                     this.status([null]);
                 }
                 catch (error) {
-                    this.status([error]);
+                    Promise.resolve().then(() => this.status([error]));
                     $mol_fail_hidden(error);
                 }
             }
@@ -11275,6 +11278,12 @@ var $;
         spread_ids_filtered() {
             return [];
         }
+        menu_tools() {
+            return [];
+        }
+        addon_tools() {
+            return [];
+        }
         pages() {
             return [
                 this.Menu()
@@ -11290,9 +11299,6 @@ var $;
         }
         menu_title() {
             return "";
-        }
-        menu_tools() {
-            return [];
         }
         menu_head() {
             return [
@@ -11361,7 +11367,10 @@ var $;
         Menu() {
             const obj = new this.$.$mol_page();
             obj.title = () => this.menu_title();
-            obj.tools = () => this.menu_tools();
+            obj.tools = () => [
+                ...this.menu_tools(),
+                ...this.addon_tools()
+            ];
             obj.head = () => this.menu_head();
             obj.body = () => this.menu_body();
             obj.foot = () => this.menu_foot();
@@ -21032,13 +21041,14 @@ var $;
                 element.dispatchEvent(event);
                 $mol_assert_not(clicked);
             },
-            'Store error'($) {
+            async 'Store error'($) {
                 const clicker = $mol_button.make({
                     $,
                     click: (event) => $.$mol_fail(new Error('Test error')),
                 });
                 const event = $mol_dom_context.document.createEvent('mouseevent');
                 $mol_assert_fail(() => clicker.event_activate(event), 'Test error');
+                await Promise.resolve();
                 $mol_assert_equal(clicker.status()[0].message, 'Test error');
             },
         });
